@@ -1,0 +1,9 @@
+---
+depoyment:
+  tasks:
+    - composer install
+    - npm install
+    - npm run build
+    - php artisan migrate
+    - php artisan cache:clear
+    - php artisan config:clear
