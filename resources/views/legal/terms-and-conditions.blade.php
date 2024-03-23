@@ -19,7 +19,7 @@
         <li><strong>{{ __('Affiliate') }}</strong> {{ __('means an entity that controls, is controlled by or is under common control with a party, where "control" means ownership of 50% or more of the shares, equity interest or other securities entitled to vote for election of directors or other managing authority.') }}</li>
         <li><strong>{{ __('Account') }}</strong> {{ __('means a unique account created for You to access our Service or parts of our Service.') }}</li>
         <li><strong>{{ __('Country') }}</strong> {{ __('refers to: :country', ['country' => 'United Kingdom']) }}</li>
-        <li><strong>{{ __('Company') }}</strong> {{ __('(referred to as either "the Company", "We", "Us" or "Our" in this Agreement) refers to :company, :address.', ['company' => 'Courier Asssistant LTD', 'address' => '22 The Close, Holywell, Flintshire, CH8 7JR']) }}</li>
+        <li><strong>{{ __('Company') }}</strong> {{ __('(referred to as either "the Company", "We", "Us" or "Our" in this Agreement) refers to :company, :address.', ['company' => 'Amazon Logistics Assistant LTD', 'address' => '22 The Close, Holywell, Flintshire, CH8 7JR']) }}</li>
         <li><strong>{{ __('Content') }}</strong> {{ __('refers to content such as text, images, or other information that can be posted, uploaded, linked to or otherwise made available by You, regardless of the form of that content.') }}</li>
         <li><strong>{{ __('Device') }}</strong> {{ __('means any device that can access the Service such as a computer, a cellphone or a digital tablet.') }}</li>
         <li><strong>{{ __('Feedback') }}</strong> {{ __('means feedback, innovations or suggestions sent by You regarding the attributes, performance or features of our Service.') }}</li>
@@ -28,7 +28,7 @@
         <li><strong>{{ __('Terms and Conditions') }}</strong> {{ __('(also referred as "Terms") mean these Terms and Conditions that form the entire agreement between You and the Company regarding the use of the Service.') }}</li>
         <li><strong>{{ __('Third-party Social Media Service') }}</strong> {{ __('means any services or content (including data, information, products or services) provided by a third-party that may be displayed, included or made available by the Service.') }}</li>
         <li>
-          <strong>{{ __('Website') }}</strong> {{ __('refers to :name, accessible from ', ['name' => 'Courier Asssistant']) }}<a href="https://courierasssistant.com"
+          <strong>{{ __('Website') }}</strong> {{ __('refers to :name, accessible from ', ['name' => 'Courier Assistant']) }}<a href="https://courierasssistant.com"
             rel="external nofollow noopener"
             target="_blank">https://courierasssistant.com</a>
         </li>
