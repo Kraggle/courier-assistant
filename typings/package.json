@@ -1,0 +1,10 @@
+{
+    "name": "@types/custom",
+    "version": "1.0.0",
+    "description": "TypeScript definitions for custom scripts",
+    "main": "",
+    "types": "index.d.ts",
+    "scripts": {},
+    "typesPublisherContentHash": "17df5653a5067844edec22dd9a557b0d2905fb37c9981bc924f2709b7f69a87c",
+    "typeScriptVersion": "3.0"
+}
