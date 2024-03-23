@@ -1,6 +1,8 @@
 ---
 depoyment:
   tasks:
+    - export DEPLOYPATH=/home/courier-assistant/
+    - /bin.cp -r * $DEPLOYPATH
     - composer install
     - npm install
     - npm run build
