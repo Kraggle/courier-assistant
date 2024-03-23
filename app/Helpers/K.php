@@ -302,7 +302,7 @@ class K {
      */
     public static function getContents(string $path) {
         try {
-            return file_get_contents(Vite::asset($path));
+            return file_get_contents($path);
         } catch (\Throwable $th) {
             //throw $th;
         }
