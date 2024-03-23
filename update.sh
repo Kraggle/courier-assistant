@@ -3,8 +3,8 @@
 echo "Updating courierassistant.com"
 
 git pull
-npm install
-npm run build
+# npm install
+# npm run build
 composer install
 php artisan migrate
 php artisan cache:clear
