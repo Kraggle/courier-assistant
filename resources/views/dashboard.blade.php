@@ -10,7 +10,7 @@
 @endphp
 {{-- @log(K::firstDayOfWeek($weeks[0])->format('Y-m-d')) --}}
 
-<x-layout.app :title="__('dashboard')">
+<x-layout.app :title="__('home')">
 
   <x-section.wrap class="flex justify-center gap-3 sm:gap-6">
     <x-button.icon x-data=""
