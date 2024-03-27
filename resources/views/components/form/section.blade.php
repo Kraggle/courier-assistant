@@ -1,7 +1,7 @@
 @php
   $label = $attributes->has('label') ? $attributes->get('label') : '';
-
-  $gap = 'gap-4 md:gap-6';
+  $padding = $attributes->has('padding') ? $attributes->get('padding') : 'p-4 md:p-6';
+  $gap = $attributes->has('gap') ? $attributes->get('gap') : 'gap-4 md:gap-6';
 @endphp
 
 <div {!! $attributes->merge(['class' => 'relative']) !!}>
@@ -13,7 +13,7 @@
         :value="$label" />
     </div>
   @endif
-  <div class="{{ $gap }} flex flex-col rounded-md border border-gray-300 p-4 md:p-6">
+  <div class="{{ "$gap $padding" }} flex flex-col rounded-md border border-gray-300">
     {{ $slot }}
   </div>
 </div>

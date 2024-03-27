@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-PjRFo3Pm.css",
+    "file": "assets/app-J4ZCYz_Z.css",
     "isEntry": true,
     "src": "resources/css/app.css"
   },
@@ -21,11 +21,11 @@
     "src": "resources/images/flags/ro.svg"
   },
   "resources/images/icon-color.svg": {
-    "file": "assets/icon-color-YpP0PVQu.svg",
+    "file": "assets/icon-color-IRyp0YNt.svg",
     "src": "resources/images/icon-color.svg"
   },
   "resources/images/icon.svg": {
-    "file": "assets/icon-6P4qLDHc.svg",
+    "file": "assets/icon-sT7Y5wmE.svg",
     "src": "resources/images/icon.svg"
   },
   "resources/images/logo-ala.svg": {
@@ -36,32 +36,44 @@
     "file": "assets/logo-color-ala-aIikVClO.svg",
     "src": "resources/images/logo-color-ala.svg"
   },
+  "resources/images/logo-google.png": {
+    "file": "assets/logo-google-7I0Rb48n.png",
+    "src": "resources/images/logo-google.png"
+  },
+  "resources/images/logo.png": {
+    "file": "assets/logo-bRNVUOMB.png",
+    "src": "resources/images/logo.png"
+  },
   "resources/images/logo.svg": {
-    "file": "assets/logo-QZpUS_sq.svg",
+    "file": "assets/logo-p5ZmwAIN.svg",
     "src": "resources/images/logo.svg"
   },
+  "resources/images/marker.png": {
+    "file": "assets/marker-v5RbE_HP.png",
+    "src": "resources/images/marker.png"
+  },
   "resources/images/no-image.svg": {
-    "file": "assets/no-image-EE32MSJz.svg",
+    "file": "assets/no-image-_Is7cDln.svg",
     "src": "resources/images/no-image.svg"
   },
   "resources/images/no-pdf.svg": {
-    "file": "assets/no-pdf-9o3OFrjf.svg",
+    "file": "assets/no-pdf-y3Xw7F3n.svg",
     "src": "resources/images/no-pdf.svg"
   },
   "resources/images/stripe-powered.svg": {
-    "file": "assets/stripe-powered-D8WAaO2S.svg",
+    "file": "assets/stripe-powered-2gtvQ6XJ.svg",
     "src": "resources/images/stripe-powered.svg"
   },
   "resources/js/app.js": {
     "css": [
       "assets/app-C64i7G0l.css"
     ],
-    "file": "assets/app-__FVemBC.js",
+    "file": "assets/app-GUjgHXp7.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   },
   "resources/js/map.js": {
-    "file": "assets/map-XVUmOvvP.js",
+    "file": "assets/map-iMjRlgva.js",
     "isEntry": true,
     "src": "resources/js/map.js"
   }

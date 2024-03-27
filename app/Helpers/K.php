@@ -11,7 +11,6 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Vite;
 
 class K {
-
     /**
      * Change an elements name e.g. `name[value]` to
      * dot notation e.g. `name.value`.

@@ -47,6 +47,7 @@
 {{-- script used to refresh a page if a set time has elapsed and to open the modal in the same way as it was opened before the reload to keep the input values, this prevents the user filling in a form then it failing because their session has ended --}}
 @pushOnce('scripts')
   <script type="module">
+    let doneOld = false;
     $(() => {
       const modal = K.urlParam('modal'),
         success = {{ session()->has('success') ? 0 : 1 }};
@@ -88,14 +89,14 @@
                 $td = $('<td></td>', {
                   class: 'px-2 py-2 first-of-type:pl-4 md:first-of-type:pl-6 last-of-type:pr-4 md:last-of-type:pr-6'
                 }),
-                $div = $('<div></div>', {
+                $div = $('<div />', {
                   class: 'whitespace-nowrap'
                 }),
                 dateReplace = 'T00:00:00.000000Z';
 
               K.each(value, (i, v) => {
                 const $row = $tr.clone(),
-                  $a = $('<div></div>'),
+                  $a = $('<div />'),
                   $o = $a.clone(),
                   $n = $a.clone();
 
@@ -171,6 +172,9 @@
 
             {{-- console.log($el, field, value); --}}
           });
+
+          doneOld && $('.text-red-600', this.$root).remove();
+          doneOld = true;
         },
 
         closeModal() {

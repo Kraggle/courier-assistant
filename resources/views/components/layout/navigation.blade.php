@@ -17,6 +17,10 @@
                 'route' => 'dashboard',
             ],
             [
+                'title' => __('map'),
+                'route' => 'map.show',
+            ],
+            [
                 'title' => __('routes'),
                 'route' => 'route.show',
             ],

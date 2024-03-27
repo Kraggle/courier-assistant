@@ -107,7 +107,7 @@ const K = {
 		let length,
 			i = 0;
 
-		if (isArrayLike(obj)) {
+		if (K.isArray(obj)) {
 			length = obj.length;
 			for (; i < length; i++) {
 				if (callback.call(obj[i], i, obj[i]) === false) {
@@ -150,6 +150,10 @@ const K = {
 		return K.type(obj) === 'function';
 	},
 
+	isDate(obj) {
+		return Object.prototype.toString.call(obj) === '[object Date]';
+	},
+
 	/**
 	 * See if the passed in object is a plain object.
 	 *
@@ -174,6 +178,14 @@ const K = {
 		// Objects with prototype are plain iff they were constructed by a global Object function
 		const Ctor = hasOwn.call(proto, 'constructor') && proto.constructor;
 		return typeof Ctor === 'function' && fnToString.call(Ctor) === ObjectFunctionString;
+	},
+
+	isObject(obj) {
+		return Object.prototype.toString.call(obj) === '[object Object]';
+	},
+
+	isValue(obj) {
+		return !this.isObject(obj) && !this.isArray(obj);
 	},
 
 	/**
@@ -400,6 +412,67 @@ const K = {
 		// if we have gotten here we are all good, so return true
 		return true;
 	},
+
+	diff: (function() {
+		return {
+			CREATED: 'created',
+			UPDATED: 'updated',
+			REMOVED: 'deleted',
+			UNCHANGED: 'unchanged',
+
+			map(obj1, obj2) {
+				if (K.isFunction(obj1) || K.isFunction(obj2)) {
+					throw 'Cannot compare functions';
+				}
+
+				if (K.isValue(obj1) || K.isValue(obj2)) {
+					return {
+						type: this.compare(obj1, obj2),
+						data: {
+							new: obj1,
+							old: obj2
+						}
+					}
+				}
+
+				const diff = {};
+				for (const key in obj1) {
+					if (K.isFunction(obj1[key]))
+						continue;
+
+					let val2 = undefined;
+					if (obj2[key] !== undefined)
+						val2 = obj2[key];
+
+					const check = this.map(obj1[key], val2);
+					check && (diff[key] = check);
+				}
+
+				for (const key in obj2) {
+					if (K.isFunction(obj2[key]) || diff[key] !== undefined)
+						continue;
+
+					diff[key] = this.map(undefined, obj2[key]);
+				}
+
+				for (const key in diff)
+					if (diff[key].type == this.UNCHANGED)
+						delete diff[key];
+
+				return diff;
+			},
+
+			compare(val1, val2) {
+				if ((val1 === val2) || K.isDate(val1) && K.isDate(val2) && val1.getTime() === val2.getTime())
+					return this.UNCHANGED;
+				if (val1 === undefined)
+					return this.CREATED;
+				if (val2 === undefined)
+					return this.REMOVED;
+				return this.UPDATED;
+			}
+		}
+	})(),
 
 	isNull: obj => K.has(K.type(obj), ['null', 'undefined']),
 

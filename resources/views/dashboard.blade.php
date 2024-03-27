@@ -100,6 +100,12 @@
       <span class="block">{{ Msg::add(__('expense')) }}</span>
     </x-button.icon>
 
+    {{-- <x-button.icon :href="route('map.show')"
+      color="bg-yellow-600 hover:bg-yellow-700 focus:bg-yellow-700 active:bg-yellow-700"
+      icon="fa-thin fa-map-location-dot">
+      <span class="block">{{ __('map') }}</span>
+    </x-button.icon> --}}
+
   </x-section.wrap>
 
   @define($tab = request()->get('tab') ?? 0)

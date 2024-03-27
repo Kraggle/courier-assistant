@@ -73,7 +73,7 @@ class Rate extends Model {
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function logs(): Collection {
-        return Activity::where('subject_type', 'App\Models\Rate')->where('subject_id', $this->id)->get();
+        return Activity::where('subject_type', self::class)->where('subject_id', $this->id)->get();
     }
 
     /**
@@ -91,7 +91,7 @@ class Rate extends Model {
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function changeLogs(): Collection {
-        return Activity::where('subject_type', 'App\Models\Rate')->where('subject_id', $this->id)->where('event', 'updated')->orderBy('created_at', 'desc')->get();
+        return Activity::where('subject_type', self::class)->where('subject_id', $this->id)->where('event', 'updated')->orderBy('created_at', 'desc')->get();
     }
 
     /**
@@ -109,7 +109,7 @@ class Rate extends Model {
      * @return Activity
      */
     public function createLog(): ?Activity {
-        return Activity::where('subject_type', 'App\Models\Rate')->where('subject_id', $this->id)->where('event', 'created')->get()->first();
+        return Activity::where('subject_type', self::class)->where('subject_id', $this->id)->where('event', 'created')->get()->first();
     }
 
     /**

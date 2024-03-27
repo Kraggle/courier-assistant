@@ -6,14 +6,15 @@ use App\Http\Middleware\Subscribed;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DSPController;
+use App\Http\Controllers\InfoController;
 use App\Http\Controllers\TaxController;
 use App\Http\Controllers\RateController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\DepotController;
 use App\Http\Controllers\RouteController;
 use App\Http\Controllers\RefuelController;
 use App\Http\Controllers\WizardController;
 use App\Http\Controllers\ExpenseController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\StripeWebhookController;
@@ -76,7 +77,6 @@ Route::middleware(['auth', Subscribed::class])->group(function () {
 
 Route::middleware(['auth', Subscribed::class, Ready::class])->group(function () {
     Route::get('/', [Controller::class, 'dashboard'])->name('dashboard');
-    Route::get('/map', [Controller::class, 'map'])->name('map');
 
     Route::controller(VehicleController::class)->group(function () {
         Route::get('/vehicle', 'show')->name('vehicle.show');
@@ -134,6 +134,15 @@ Route::middleware(['auth', Subscribed::class, Ready::class])->group(function () 
     Route::controller(TaxController::class)->group(function () {
         Route::get('/taxes/{year}', 'show')->name('tax.show');
         Route::post('/tax/{tax}/edit', 'edit')->name('tax.edit');
+    });
+
+    Route::controller(InfoController::class)->group(function () {
+        Route::get('/map', 'show')->name('map.show');
+        Route::put('/info', 'add')->name('info.add');
+        Route::get('/info', 'info')->name('info.get');
+        Route::patch('/info', 'update')->name('info.update');
+        Route::delete('/info', 'destroy')->name('info.destroy');
+        Route::get('/google', 'keys')->name('google');
     });
 });
 

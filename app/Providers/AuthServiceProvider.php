@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+use App\Models\Info;
 use App\Models\User;
 use App\Models\Vehicle;
 use Illuminate\Support\Facades\Gate;
@@ -28,6 +29,10 @@ class AuthServiceProvider extends ServiceProvider {
 
         Gate::define('is-ready', function (User $user) {
             return $user->hasDSP();
+        });
+
+        Gate::define('delete-info', function (User $user, Info $info) {
+            return $user->id == 1 || $user->name == $info->creator;
         });
     }
 }
