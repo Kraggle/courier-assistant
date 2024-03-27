@@ -129,11 +129,10 @@
 
       /* Change markers on zoom */
       google.core.event.addListener(google.map, 'zoom_changed', function() {
-        var zoom = google.map.getZoom();
-        // iterate over markers and call setVisible
-        // for (i = 0; i < locations.length; i++) {
-        // 	markers[i].setVisible(zoom <= 15);
-        // }
+        const zoom = google.map.getZoom();
+        google.markers.forEach(marker => {
+          marker.map = zoom >= 16 ? google.map : null;
+        });
       });
 
       google.infos.forEach(info => {
@@ -212,6 +211,8 @@
         // gmpDraggable: true,
         content: buildContent(data)
       });
+
+      google.markers.push(marker);
 
       if (adding) {
         toggleMarker();
