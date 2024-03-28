@@ -79,15 +79,18 @@
     const google = {
       addingMarkers: false,
       buttons: {},
-      markers: []
+      markers: [],
+      hasLoc: !!K.urlParam('lat'),
+      center: {
+        lat: Number(K.urlParam('lat') || 53.27640),
+        lng: Number(K.urlParam('lng') || -3.22189),
+      },
+      hasZoom: !!K.urlParam('zoom'),
+      zoom: Number(K.urlParam('zoom') || 14)
     };
 
     (async () => {
-      const initialPos = {
-          lat: 53.27640,
-          lng: -3.22189
-        },
-        keys = await fetchJSON('/google'),
+      const keys = await fetchJSON('/google'),
         loader = new Loader({
           apiKey: keys.api,
           version: "weekly",
@@ -100,8 +103,8 @@
       {{-- console.log(google); --}}
 
       google.map = new google.maps.Map(document.getElementById('map'), {
-        center: initialPos,
-        zoom: 14,
+        center: google.center,
+        zoom: google.zoom,
         mapId: keys.id,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         streetViewControl: false,
@@ -128,11 +131,12 @@
       });
 
       /* Change markers on zoom */
-      google.core.event.addListener(google.map, 'zoom_changed', function() {
-        const zoom = google.map.getZoom();
-        google.markers.forEach(marker => {
-          marker.map = zoom >= 16 ? google.map : null;
-        });
+      google.core.event.addListener(google.map, 'zoom_changed', zoomChanged);
+
+      /* Change markers on zoom */
+      google.core.event.addListener(google.map, 'dragend', function() {
+        K.addURLParam('lat', google.map.center.lat());
+        K.addURLParam('lng', google.map.center.lng());
       });
 
       google.infos.forEach(info => {
@@ -141,7 +145,8 @@
 
       google.buttons.add.on('click', toggleMarker);
       google.buttons.pos.on('click', toGeoLocation);
-      toGeoLocation();
+      !google.hasLoc && toGeoLocation();
+      zoomChanged();
 
       const user = new google.marker.AdvancedMarkerElement({
         map: google.map,
@@ -171,6 +176,13 @@
       return json;
     }
 
+    function zoomChanged() {
+      const zoom = google.map.getZoom();
+      K.addURLParam('zoom', zoom);
+      google.markers.forEach(marker => {
+        marker.map = zoom >= 16 ? google.map : null;
+      });
+    }
 
     function toggleMarker() {
       if (google.addingMarkers) {
