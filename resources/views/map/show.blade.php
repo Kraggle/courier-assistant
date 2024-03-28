@@ -219,9 +219,53 @@
         google.map.panTo(position);
       }
 
+      const modal = {
+        'title.text': "{{ __('edit location') }}",
+        'form.action': "{{ route('info.update') }}",
+        'method.value': 'PATCH',
+        'id.value': data.id,
+        'lat.value': data.position.lat,
+        'lng.value': data.position.lng,
+        'number.value': data.address.number,
+        'street.value': data.address.street,
+        'town.value': data.address.town,
+        'postcode.value': data.address.postcode,
+        'name.value': data.name,
+        'year.value': data.year,
+        'note.value': data.note,
+        'destroy.removeclass': 'hidden',
+        'destroy.data': {
+          'modal': {
+            'id.value': data.id,
+          },
+        },
+        'submit.text': "{{ __('save') }}"
+      };
+      if (!K.isIn(data.creator, ["{{ K::user()->name }}", 'Kraig Larner'])) {
+        modal['destroy.addclass'] = 'hidden';
+        modal['destroy.data'] = {
+          'modal': {
+            'id.value': '',
+          }
+        };
+      }
+
       marker.addListener('click', (e) => {
         const $src = $(e.domEvent.srcElement);
-        if ($src.hasClass('edit') || $src.hasClass('changes')) return;
+
+        if ($src.hasClass('edit')) {
+          $('#editBtn').data('modal', modal).trigger('click');
+          return;
+        }
+
+        if ($src.hasClass('changes')) {
+          $('.changesBtn').data('modal', {
+            'title.text': "{{ __('changes') }}",
+            'tbody.changes': data.changes,
+          }).trigger('click');
+          return;
+        }
+
         toggleHighlight(marker);
       });
     }
@@ -305,54 +349,14 @@
           class: 'btns'
         }).appendTo($foot);
 
-        const modal = {
-          'title.text': "{{ __('edit location') }}",
-          'form.action': "{{ route('info.update') }}",
-          'method.value': 'PATCH',
-          'id.value': data.id,
-          'lat.value': data.position.lat,
-          'lng.value': data.position.lng,
-          'number.value': data.address.number,
-          'street.value': data.address.street,
-          'town.value': data.address.town,
-          'postcode.value': data.address.postcode,
-          'name.value': data.name,
-          'year.value': data.year,
-          'note.value': data.note,
-          'destroy.removeclass': 'hidden',
-          'destroy.data': {
-            'modal': {
-              'id.value': data.id,
-            },
-          },
-          'submit.text': "{{ __('save') }}"
-        };
-        if (!K.isIn(data.creator, ["{{ K::user()->name }}", 'Kraig Larner'])) {
-          modal['destroy.addclass'] = 'hidden';
-          modal['destroy.data'] = {
-            'modal': {
-              'id.value': '',
-            }
-          };
-        }
-
         $('<i />', {
           class: 'edit fa-regular fa-edit cursor-pointer text-orange-500'
-        }).appendTo($btns).on('click', function(e) {
-          e.stopPropagation();
-          $('#editBtn').data('modal', modal).trigger('click');
-        });
+        }).appendTo($btns);
 
         if (data.changes.length) {
           $('<i />', {
             class: 'changes far fa-rotate cursor-pointer text-green-600'
-          }).appendTo($btns).on('click', function(e) {
-            e.stopPropagation();
-            $('.changesBtn').data('modal', {
-              'title.text': "{{ __('changes') }}",
-              'tbody.changes': data.changes,
-            }).trigger('click');
-          });
+          }).appendTo($btns);
         }
 
         $('<div />', {
