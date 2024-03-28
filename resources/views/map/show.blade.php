@@ -365,11 +365,11 @@
           class: 'edit fa-regular fa-edit cursor-pointer text-orange-500'
         }).appendTo($btns);
 
-        if (data.changes.length) {
+        {{-- if (data.changes.length) {
           $('<i />', {
             class: 'changes far fa-rotate cursor-pointer text-green-600'
           }).appendTo($btns);
-        }
+        } --}}
 
         $('<div />', {
           class: 'creator',

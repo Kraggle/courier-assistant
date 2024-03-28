@@ -47,7 +47,7 @@ class Info extends Model {
      */
     protected $appends = [
         'creator',
-        'changes'
+        // 'changes'
     ];
 
     /**
