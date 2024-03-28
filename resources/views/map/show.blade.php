@@ -219,7 +219,9 @@
         google.map.panTo(position);
       }
 
-      marker.addListener('click', () => {
+      marker.addListener('click', (e) => {
+        const $src = $(e.domEvent.srcElement);
+        if ($src.hasClass('edit') || $src.hasClass('changes')) return;
         toggleHighlight(marker);
       });
     }
@@ -483,7 +485,7 @@
 
     .marker .btns {
       display: flex;
-      gap: 5px;
+      gap: 10px;
     }
 
     /*

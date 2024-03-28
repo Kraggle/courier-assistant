@@ -102,8 +102,8 @@ class TaxController extends Controller {
             $fuel_spend += $r->fuel_spend ?? 0;
             $time += $r->time ?? 0;
             $count += 1;
-            $total += $r->total ?? 0;
-            $actual += $r->actual ?? 0;
+            $total += $r->total_pay ?? 0;
+            $actual += $r->actual_pay ?? 0;
             $bonus += $r->bonus ?? 0;
             $miles += $r->miles ?? 0;
         }
