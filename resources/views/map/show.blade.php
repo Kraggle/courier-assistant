@@ -261,6 +261,11 @@
           return;
         }
 
+        if ($src.hasClass('name')) {
+          toClipboard($src.data('name'));
+          return;
+        }
+
         if ($src.hasClass('changes')) {
           $('.changesBtn').data('modal', {
             'title.text': "{{ __('changes') }}",
@@ -280,6 +285,15 @@
       } else {
         markerView.content.classList.add("highlight");
         markerView.zIndex = 1;
+      }
+    }
+
+    async function toClipboard(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        console.log('Copied to clipboard');
+      } catch (err) {
+        console.error('Could not copy text: ', err);
       }
     }
 
@@ -324,8 +338,12 @@
 
           $('<div />', {
             class: 'name',
-            text: data.name
+            data: {
+              name: data.name
+            },
+            html: '<span class="pointer-events-none">' + data.name + '</span><i class="pointer-events-none fa-regular fa-copy">'
           }).appendTo($name);
+
           $('<div />', {
             class: 'year',
             text: data.year
@@ -458,6 +476,7 @@
       font-size: 10px;
       border-bottom: 1px solid #E0E0E0;
       padding-bottom: 5px;
+      text-transform: uppercase;
     }
 
     .marker .note {
@@ -470,6 +489,14 @@
       display: flex;
       gap: 10px;
       justify-content: space-between;
+    }
+
+    .marker .fa-copy {
+      font-size: 8px;
+      margin-left: 4px;
+      position: relative;
+      top: -3px;
+      {{-- color: #40c95d; --}}
     }
 
     .marker .footer {
