@@ -23,10 +23,7 @@ class Info extends Model {
         'year',
         'position->lat',
         'position->lng',
-        'address->number',
-        'address->street',
-        'address->town',
-        'address->postcode',
+        'address',
         'note',
     ];
 
@@ -36,7 +33,6 @@ class Info extends Model {
      * @var array
      */
     protected $casts = [
-        'address' => 'object',
         'position' => 'object',
     ];
 
@@ -83,9 +79,7 @@ class Info extends Model {
                     function combine($array) {
                         $result = [];
                         foreach ($array as $k => $v) {
-                            if ($k == 'address')
-                                $result[$k] = "{$v['number']} {$v['street']}, {$v['town']}, {$v['postcode']}";
-                            else if ($k == 'position')
+                            if ($k == 'position')
                                 $result[$k] = "{$v['lat']}, {$v['lng']}";
                             else
                                 $result[$k] = $v;

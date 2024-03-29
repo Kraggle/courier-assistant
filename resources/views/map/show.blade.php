@@ -19,10 +19,7 @@
         'id.value' => '',
         'lat.value' => old('lat', ''),
         'lng.value' => old('lng', ''),
-        'number.value' => old('number', ''),
-        'street.value' => old('street', ''),
-        'town.value' => old('town', ''),
-        'postcode.value' => old('postcode', ''),
+        'address.value' => old('address', ''),
         'name.value' => old('name', ''),
         'year.value' => old('year', ''),
         'note.value' => old('note', ''),
@@ -41,10 +38,7 @@
         'id.value' => old('id', ''),
         'lat.value' => old('lat', ''),
         'lng.value' => old('lng', ''),
-        'number.value' => old('number', ''),
-        'street.value' => old('street', ''),
-        'town.value' => old('town', ''),
-        'postcode.value' => old('postcode', ''),
+        'address.value' => old('address', ''),
         'name.value' => old('name', ''),
         'year.value' => old('year', ''),
         'note.value' => old('note', ''),
@@ -238,10 +232,7 @@
         'id.value': data.id,
         'lat.value': data.position.lat,
         'lng.value': data.position.lng,
-        'number.value': data.address.number,
-        'street.value': data.address.street,
-        'town.value': data.address.town,
-        'postcode.value': data.address.postcode,
+        'address.value': data.address,
         'name.value': data.name,
         'year.value': data.year,
         'note.value': data.note,
@@ -319,16 +310,11 @@
           text: "{{ __('Location Information') }}"
         }).appendTo($detail);
 
-        const address = data.address;
-        if (address.number && address.street) {
-          const $address = $('<div />', {
-            class: 'address'
-          }).appendTo($detail);
-
+        if (data.address) {
           $('<div />', {
-            class: 'number',
-            text: `${address.number} ${address.street}` + (address.town ? `, ${address.town}` : '') + (address.postcode ? `, ${address.postcode}` : '')
-          }).appendTo($address);
+            class: 'address',
+            text: data.address
+          }).appendTo($detail);
         }
 
         if (data.name && data.year) {

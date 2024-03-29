@@ -53,10 +53,11 @@
     <x-form.error class="mt-2"
       :messages="$errors->get($key)" />
 
-    <div class="{{ $gap }} grid grid-cols-2">
+    <div class="{{ $gap }} grid grid-cols-3">
       {{-- name --}}
       @define($key = 'name')
-      <x-form.wrap :key="$key"
+      <x-form.wrap class="col-span-2"
+        :key="$key"
         :value="__('first name')"
         :help="__('The first name of the customer at this location.')">
 
@@ -84,74 +85,19 @@
       </x-form.wrap>
     </div>
 
-    <x-form.section padding="p-4"
-      :gap="$gap"
-      :label="__('address')">
+    {{-- address --}}
+    @define($key = 'address')
+    <x-form.wrap :key="$key"
+      :value="__('address')"
+      :help="__('The address of the location.')">
 
-      <div class="{{ $gap }} grid grid-cols-3">
-        {{-- number --}}
-        @define($key = 'number')
-        <x-form.wrap :key="$key"
-          :value="__('number')"
-          :help="__('The house name or number of the address.')">
+      <x-form.textarea x-ref="{{ $key }}"
+        class="block w-full"
+        id="{{ $key }}"
+        name="{{ $key }}"
+        placeholder="20 High St, Supertown, AB12 3DE" />
 
-          <x-form.text x-ref="{{ $key }}"
-            class="block w-full"
-            id="{{ $key }}"
-            name="{{ $key }}"
-            placeholder="21" />
-
-        </x-form.wrap>
-
-        {{-- street --}}
-        @define($key = 'street')
-        <x-form.wrap class="col-span-2"
-          :key="$key"
-          :value="__('street')"
-          :help="__('The street the address is on.')">
-
-          <x-form.text x-ref="{{ $key }}"
-            class="block w-full"
-            id="{{ $key }}"
-            name="{{ $key }}"
-            placeholder="High Street" />
-
-        </x-form.wrap>
-
-      </div>
-
-      <div class="{{ $gap }} grid grid-cols-3">
-        {{-- town --}}
-        @define($key = 'town')
-        <x-form.wrap class="col-span-2"
-          :key="$key"
-          :value="__('town/city')"
-          :help="__('The area the address is at.')">
-
-          <x-form.text x-ref="{{ $key }}"
-            class="block w-full"
-            id="{{ $key }}"
-            name="{{ $key }}"
-            placeholder="Supertown" />
-
-        </x-form.wrap>
-
-        {{-- postcode --}}
-        @define($key = 'postcode')
-        <x-form.wrap :key="$key"
-          :value="__('postcode')"
-          :help="__('The postcode of the address.')">
-
-          <x-form.text x-ref="{{ $key }}"
-            class="block w-full"
-            id="{{ $key }}"
-            name="{{ $key }}"
-            placeholder="AB12 3DE" />
-
-        </x-form.wrap>
-      </div>
-
-    </x-form.section>
+    </x-form.wrap>
 
     {{-- note --}}
     @define($key = 'note')
@@ -159,7 +105,7 @@
       :value="__('note')"
       :help="__('The note you want to display at this location.')">
 
-      <x-form.text x-ref="{{ $key }}"
+      <x-form.textarea x-ref="{{ $key }}"
         class="block w-full"
         id="{{ $key }}"
         name="{{ $key }}"
