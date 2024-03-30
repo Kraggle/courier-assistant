@@ -102,15 +102,17 @@
 
                 K.each(v.properties.attributes, (attr, val) => {
                   $a.append($div.clone().text(attr));
-                  $o.append($div.clone().text(v.properties.old[attr].replace(dateReplace, '')));
-                  $n.append($div.clone().text(val.replace(dateReplace, '')));
+                  $o.append($div.clone().text((v.properties.old[attr] || '').replace(dateReplace, '')));
+                  $n.append($div.clone().text((val || '').replace(dateReplace, '')));
                 });
 
-                $row.append($td.clone().text(v.date));
-                $row.append($td.clone().text(v.user));
-                $row.append($td.clone().html($a));
-                $row.append($td.clone().html($o));
-                $row.append($td.clone().html($n));
+                $row.append(
+                  $td.clone().text(v.date),
+                  $td.clone().text(v.user),
+                  $td.clone().html($a),
+                  $td.clone().html($o),
+                  $td.clone().html($n)
+                );
 
                 $el.append($row);
               });

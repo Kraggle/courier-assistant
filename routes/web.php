@@ -141,6 +141,7 @@ Route::middleware(['auth', Subscribed::class, Ready::class])->group(function () 
         Route::put('/info', 'add')->name('info.add');
         Route::get('/info', 'info')->name('info.get');
         Route::patch('/info', 'update')->name('info.update');
+        Route::patch('/info/loc', 'location')->name('info.location');
         Route::delete('/info', 'destroy')->name('info.destroy');
         Route::get('/google', 'keys')->name('google');
     });

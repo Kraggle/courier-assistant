@@ -44,9 +44,35 @@ class InfoController extends Controller {
     }
 
     /**
+     * Update an info blocks location.
+     * 
+     * @param Illuminate\Http\Request $request
+     * 
+     * @return \Illuminate\Http\JSONResponse
+     */
+    function location(Request $request) {
+
+        $request->validate([
+            'id' => ['required', 'exists:info,id'],
+            'lat' => ['required', 'numeric'],
+            'lng' => ['required', 'numeric'],
+        ]);
+
+        $info = Info::find($request->id);
+        $info->update([
+            'position->lat' => $request->lat,
+            'position->lng' => $request->lng,
+        ]);
+
+        return response()->json([
+            'success' => true
+        ]);
+    }
+
+    /**
      * Delete an info block.
      * 
-     * @param Request $request
+     * @param Illuminate\Http\Request $request
      * 
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -68,7 +94,7 @@ class InfoController extends Controller {
     /**
      * Get all info blocks.
      * 
-     * @return json
+     * @return \Illuminate\Http\JSONResponse
      */
     function info() {
         return response()->json(Info::all());
@@ -77,7 +103,7 @@ class InfoController extends Controller {
     /**
      * Get the Google Maps info.
      * 
-     * @return json
+     * @return \Illuminate\Http\JSONResponse
      */
     function keys() {
         return response()->json([

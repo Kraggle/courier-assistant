@@ -4,6 +4,20 @@
 
 <x-layout.app :title="__('map test')">
 
+  <div class="w-1/2 max-w-[84%] rounded-br-md bg-white p-3 shadow-md"
+    id="search-card">
+    <div class="flex flex-col gap-2">
+      {{-- <div class="text-xl font-bold uppercase"></div> --}}
+      <x-form.wrap class="-mt-1"
+        id="lookup-field"
+        value="{{ __('address lookup') }}">
+        <x-form.text class="w-full"
+          id="map-search"
+          placeholder="Enter a location..." />
+      </x-form.wrap>
+    </div>
+  </div>
+
   <img class="hidden"
     id="markerSrc"
     src="{{ Vite::asset('resources/images/marker.png') }}" />
@@ -68,352 +82,25 @@
     @include('modal.changes')
   @endpush
 
-  @vite('resources/js/map.js')
+  @php
+    $_K = [
+        'str' => [
+            'editLocation' => __('edit location'),
+            'save' => __('save'),
+            'username' => K::user()->name,
+            'locationInformation' => __('Location Information'),
+        ],
+        'route' => [
+            'infoUpdate' => route('info.update'),
+            'infoLocation' => route('info.location'),
+        ],
+    ];
+  @endphp
+
   <script type="module">
-    const google = {
-      addingMarkers: false,
-      buttons: {},
-      markers: [],
-      hasLoc: !!K.urlParam('lat'),
-      center: {
-        lat: Number(K.urlParam('lat') || 53.27640),
-        lng: Number(K.urlParam('lng') || -3.22189),
-      },
-      hasZoom: !!K.urlParam('zoom'),
-      zoom: Number(K.urlParam('zoom') || 14)
-    };
-
-    (async () => {
-      const keys = await fetchJSON('/google'),
-        loader = new Loader({
-          apiKey: keys.api,
-          version: "weekly",
-        });
-
-      google.core = await loader.importLibrary('core');
-      google.maps = await loader.importLibrary('maps');
-      google.marker = await loader.importLibrary('marker');
-      google.infos = await fetchJSON('/info');
-      {{-- console.log(google); --}}
-
-      google.map = new google.maps.Map(document.getElementById('map'), {
-        center: google.center,
-        zoom: google.zoom,
-        mapId: keys.id,
-        mapTypeId: google.maps.MapTypeId.ROADMAP,
-        streetViewControl: false,
-      });
-
-      google.infoWindow = new google.maps.InfoWindow();
-
-      const wrap = $('<div />', {
-        class: 'flex flex-col justify-center items-center rounded-sm shadow-sm bg-white mr-2'
-      });
-      google.buttons.add = createControl('fa-duotone fa-location-plus border-b', 'Add marker!');
-      google.buttons.pos = createControl('fa-duotone fa-circle-dot', 'Geolocation!');
-      wrap.append(google.buttons.add);
-      wrap.append(google.buttons.pos);
-
-      google.map.controls[google.core.ControlPosition.RIGHT_CENTER].push(wrap[0]);
-
-      google.map.addListener('click', e => {
-        if (!google.addingMarkers) return;
-        $('#infoBtn').trigger('click');
-        $('#lat').val(e.latLng.lat());
-        $('#lng').val(e.latLng.lng());
-        placeMarker(e.latLng);
-      });
-
-      /* Change markers on zoom */
-      google.core.event.addListener(google.map, 'zoom_changed', zoomChanged);
-
-      /* Change markers on zoom */
-      google.core.event.addListener(google.map, 'dragend', function() {
-        K.addURLParam('lat', google.map.center.lat());
-        K.addURLParam('lng', google.map.center.lng());
-      });
-
-      google.infos.forEach(info => {
-        placeMarker(new google.core.LatLng(info.position.lat, info.position.lng), info, false);
-      });
-
-      google.buttons.add.on('click', toggleMarker);
-      google.buttons.pos.on('click', toGeoLocation);
-      !google.hasLoc && toGeoLocation();
-      zoomChanged();
-
-      const user = new google.marker.AdvancedMarkerElement({
-        map: google.map,
-        content: $('<i />', {
-          class: 'fa-duotone fa-circle-dot text-blue-500 text-lg'
-        })[0]
-      });
-
-      trackLocation({
-        onSuccess: ({
-          coords: {
-            latitude: lat,
-            longitude: lng
-          }
-        }) => {
-          user.position = {
-            lat,
-            lng
-          };
-        }
-      });
-    })();
-
-    async function fetchJSON(url) {
-      const res = await fetch(url);
-      const json = await res.json();
-      return json;
-    }
-
-    function zoomChanged() {
-      const zoom = google.map.getZoom();
-      K.addURLParam('zoom', zoom);
-      google.markers.forEach(marker => {
-        marker.map = zoom >= 16 ? google.map : null;
-      });
-    }
-
-    function toggleMarker() {
-      if (google.addingMarkers) {
-        google.map.setOptions({
-          draggableCursor: ''
-        });
-        google.buttons.add.removeClass('text-blue-500').addClass('text-blue-700');
-        google.addingMarkers = false;
-      } else {
-        google.map.setOptions({
-          draggableCursor: `url(${$('#markerSrc').attr('src')}), auto`
-        });
-        google.buttons.add.addClass('text-blue-500').removeClass('text-blue-700');
-        google.addingMarkers = true;
-      }
-    }
-
-    function toGeoLocation() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
-          const pos = new google.core.LatLng(position.coords.latitude,
-            position.coords.longitude);
-
-          google.map.setCenter(pos);
-          google.map.setZoom(17);
-
-        }, () => {
-          handleLocationError(true, google.infoWindow.getPosition());
-        });
-      } else
-        handleLocationError(false, google.map.getCenter());
-    }
-
-    function placeMarker(position, data = null, adding = true) {
-      const marker = new google.marker.AdvancedMarkerElement({
-        position,
-        map: google.map,
-        // gmpDraggable: true,
-        content: buildContent(data)
-      });
-
-      google.markers.push(marker);
-
-      if (adding) {
-        toggleMarker();
-        google.map.panTo(position);
-      }
-
-      const modal = {
-        'title.text': "{{ __('edit location') }}",
-        'form.action': "{{ route('info.update') }}",
-        'method.value': 'PATCH',
-        'id.value': data.id,
-        'lat.value': data.position.lat,
-        'lng.value': data.position.lng,
-        'address.value': data.address,
-        'name.value': data.name,
-        'year.value': data.year,
-        'note.value': data.note,
-        'destroy.removeclass': 'hidden',
-        'destroy.data': {
-          'modal': {
-            'id.value': data.id,
-          },
-        },
-        'submit.text': "{{ __('save') }}"
-      };
-      if (!K.isIn(data.creator, ["{{ K::user()->name }}", 'Kraig Larner'])) {
-        modal['destroy.addclass'] = 'hidden';
-        modal['destroy.data'] = {
-          'modal': {
-            'id.value': '',
-          }
-        };
-      }
-
-      marker.addListener('click', (e) => {
-        const $src = $(e.domEvent.srcElement);
-
-        if ($src.hasClass('edit')) {
-          $('#editBtn').data('modal', modal).trigger('click');
-          return;
-        }
-
-        if ($src.hasClass('name')) {
-          toClipboard($src.data('name'));
-          return;
-        }
-
-        if ($src.hasClass('changes')) {
-          $('.changesBtn').data('modal', {
-            'title.text': "{{ __('changes') }}",
-            'tbody.changes': data.changes,
-          }).trigger('click');
-          return;
-        }
-
-        toggleHighlight(marker);
-      });
-    }
-
-    function toggleHighlight(markerView) {
-      if (markerView.content.classList.contains("highlight")) {
-        markerView.content.classList.remove("highlight");
-        markerView.zIndex = null;
-      } else {
-        markerView.content.classList.add("highlight");
-        markerView.zIndex = 1;
-      }
-    }
-
-    async function toClipboard(text) {
-      try {
-        await navigator.clipboard.writeText(text);
-        console.log('Copied to clipboard');
-      } catch (err) {
-        console.error('Could not copy text: ', err);
-      }
-    }
-
-    function buildContent(data) {
-      const $wrap = $('<div />', {
-        class: 'marker'
-      });
-
-      let icon = $('<i />');
-
-      if (data && data.name && data.year) {
-        icon.addClass('fa-solid fa-user');
-      } else {
-        icon.addClass('fa-solid fa-note');
-      }
-
-      $wrap.append($('<div />', {
-        class: 'icon',
-        html: icon
-      }));
-
-      if (data) {
-        const $detail = $('<div />', {
-          class: 'details'
-        }).appendTo($wrap);
-        $('<div />', {
-          class: 'title',
-          text: "{{ __('Location Information') }}"
-        }).appendTo($detail);
-
-        if (data.address) {
-          $('<div />', {
-            class: 'address',
-            text: data.address
-          }).appendTo($detail);
-        }
-
-        if (data.name && data.year) {
-          const $name = $('<div />', {
-            class: 'name-wrap'
-          }).appendTo($detail);
-
-          $('<div />', {
-            class: 'name',
-            data: {
-              name: data.name
-            },
-            html: '<span class="pointer-events-none">' + data.name + '</span><i class="pointer-events-none fa-regular fa-copy">'
-          }).appendTo($name);
-
-          $('<div />', {
-            class: 'year',
-            text: data.year
-          }).appendTo($name);
-        }
-
-        if (data.note) {
-          $('<div />', {
-            class: 'note',
-            text: data.note
-          }).appendTo($detail);
-        }
-
-        const $foot = $('<div />', {
-          class: 'footer'
-        }).appendTo($detail);
-
-        const $btns = $('<div />', {
-          class: 'btns'
-        }).appendTo($foot);
-
-        $('<i />', {
-          class: 'edit fa-regular fa-edit cursor-pointer text-orange-500'
-        }).appendTo($btns);
-
-        {{-- if (data.changes.length) {
-          $('<i />', {
-            class: 'changes far fa-rotate cursor-pointer text-green-600'
-          }).appendTo($btns);
-        } --}}
-
-        $('<div />', {
-          class: 'creator',
-          text: data.creator
-        }).appendTo($foot);
-      }
-
-      return $wrap[0];
-    }
-
-    function createControl(icon, title) {
-      const $btn = $('<button />', {
-        class: icon + ' text-center text-blue-700 hover:text-blue-400 text-xl w-10 h-10 transition',
-        title,
-        type: 'button'
-      });
-
-      return $btn;
-    }
-
-    function handleLocationError(browserHasGeolocation, pos) {
-      google.infoWindow.setPosition(pos);
-      google.infoWindow.setContent(
-        browserHasGeolocation ?
-        'Error: The Geolocation service failed.' :
-        'Error: Your browser doesn\'t support geolocation.'
-      );
-      google.infoWindow.open(google.map);
-    }
-
-    function trackLocation({
-      onSuccess,
-      onError = () => {}
-    }) {
-      if ('geolocation' in navigator === false)
-        return onError(new Error('Geolocation is not supported by this browser.'));
-
-      return navigator.geolocation.watchPosition(onSuccess, onError);
-    }
+    window._K = @json($_K);
   </script>
+  @vite('resources/js/map.js')
 
   <style>
     :root {
@@ -453,6 +140,10 @@
       transition: all 0.3s ease-out;
       width: 0;
       z-index: 1;
+    }
+
+    .marker.moving {
+      outline: #ffa5003b solid 8px;
     }
 
     .marker .icon {
@@ -510,11 +201,6 @@
     .marker .creator {
       color: #858585;
       font-size: 7px;
-    }
-
-    .marker .btns {
-      display: flex;
-      gap: 10px;
     }
 
     /*

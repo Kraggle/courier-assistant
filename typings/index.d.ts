@@ -145,7 +145,8 @@ interface Window {
     dayjs(): dayjs;
     tippy: Tippy<Props>;
     refreshAll(): void;
-    googleMaps: Loader;
+    loader: Loader;
+    _K: object;
 }
 
 interface ImportMeta {

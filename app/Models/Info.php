@@ -43,7 +43,7 @@ class Info extends Model {
      */
     protected $appends = [
         'creator',
-        // 'changes'
+        'changes'
     ];
 
     /**
@@ -76,20 +76,9 @@ class Info extends Model {
                 foreach ($this->changeLogs() as $log) {
                     // K::log($log);
 
-                    function combine($array) {
-                        $result = [];
-                        foreach ($array as $k => $v) {
-                            if ($k == 'position')
-                                $result[$k] = "{$v['lat']}, {$v['lng']}";
-                            else
-                                $result[$k] = $v;
-                        }
-                        return $result;
-                    }
-
                     $props = [
-                        'attributes' => combine($log->properties['attributes']),
-                        'old' => combine($log->properties['old'])
+                        'attributes' => $this->combine($log->properties['attributes']),
+                        'old' => $this->combine($log->properties['old'])
                     ];
 
                     $logs[] = [
@@ -101,6 +90,17 @@ class Info extends Model {
                 return $logs;
             }
         );
+    }
+
+    private function combine($array) {
+        $result = [];
+        foreach ($array as $k => $v) {
+            if ($k == 'position')
+                $result[$k] = "{$v['lat']}, {$v['lng']}";
+            else
+                $result[$k] = $v;
+        }
+        return $result;
     }
 
     /**

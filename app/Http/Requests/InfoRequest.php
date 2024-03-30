@@ -24,10 +24,7 @@ class InfoRequest extends FormRequest {
             'lng' => ['required', 'numeric'],
             'name' => ['nullable', 'string', 'max:55', 'required_without:note'],
             'year' => ['nullable', 'integer', 'min:1900', 'max:2222', 'required_with:name'],
-            'number' => ['nullable', 'string', 'required_with:name'],
-            'street' => ['nullable', 'string', 'required_with:name'],
-            'town' => ['nullable', 'string'],
-            'postcode' => ['nullable', 'string'],
+            'address' => ['nullable', 'string', 'required_with:name'],
             'note' => ['nullable', 'string', 'required_without:name'],
         ];
     }
@@ -36,10 +33,6 @@ class InfoRequest extends FormRequest {
         $this->merge([
             'position->lat' => $this->lat ?? null,
             'position->lng' => $this->lng ?? null,
-            'address->number' => $this->number ?? null,
-            'address->street' => $this->street ?? null,
-            'address->town' => $this->town ?? null,
-            'address->postcode' => $this->postcode ?? null,
         ]);
     }
 
