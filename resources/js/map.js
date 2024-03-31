@@ -106,13 +106,33 @@ const Google = {
 	// placeMarker(new Google.core.LatLng(52.78141, -3.21912))
 
 	// initAutoComplete();
-	initPostcodeLookup();
+	initAddressFinder();
 })();
 
-function initPostcodeLookup() {
+function generateLinks(coords) {
+	if (K.type(coords.lat) == 'number')
+		coords = new Google.core.LatLng(coords.lat, coords.lng);
+
+	return {
+		google: `https://www.google.com/maps/search/?api=1&query=${coords.lat()},${coords.lng()}`,
+		apple: `https://maps.apple.com/?ll=${coords.lat()},${coords.lng()}&z=10&q=result`,
+		waze: `https://www.waze.com/ul/?ll=${coords.lat()},${coords.lng()}&z=10`,
+	};
+}
+
+function initAddressFinder() {
 	const $search = $('#map-search'),
 		$card = $('#search-card'),
 		marker = new Google.marker.AdvancedMarkerElement();
+
+	marker.addListener('click', (e) => {
+		const $src = $(e.domEvent.srcElement);
+
+		if ($src.hasClass('link'))
+			return;
+
+		toggleHighlight(marker);
+	});
 
 	Google.map.controls[Google.core.ControlPosition.TOP_LEFT].push($card[0]);
 
@@ -149,6 +169,7 @@ function initPostcodeLookup() {
 			Google.map.setCenter(pos);
 			Google.map.setZoom(17);
 
+			marker.content = linkContent(pos, formatted);
 			marker.position = pos;
 			marker.map = Google.map;
 		},
@@ -266,6 +287,8 @@ function toGeoLocation() {
  * @param {boolean} [adding=true] Whether the marker is being added via a mouse click.
  */
 function placeMarker(position, data = null, adding = true) {
+
+	// console.log(generateLinks(position));
 
 	const marker = new Google.marker.AdvancedMarkerElement({
 		position,
@@ -398,6 +421,56 @@ async function toClipboard(text) {
 	} catch (err) {
 		console.error('Could not copy text: ', err);
 	}
+}
+
+/**
+ * Makes a marker with links to other maps.
+ * 
+ * @param {Object} position The data associated with the marker, if any.
+ */
+function linkContent(position, address) {
+	const $wrap = $('<div />', {
+		class: 'marker'
+	});
+
+	$wrap.append($('<div />', {
+		class: 'icon',
+		html: $('<i />', {
+			class: 'fa-solid fa-location-crosshairs'
+		})
+	}));
+
+	const $detail = $('<div />', {
+		class: 'details'
+	}).appendTo($wrap);
+
+	$('<div />', {
+		class: 'title',
+		text: _K.str.mapLinks
+	}).appendTo($detail);
+
+	$('<div />', {
+		class: 'address',
+		text: address
+	}).appendTo($detail);
+
+	const $foot = $('<div />', {
+		class: 'links btns flex justify-between text-3xl'
+	}).appendTo($detail);
+
+	/**
+	 * @type {Object}
+	 */
+	const links = generateLinks(position);
+	K.each(links, (at, link) => {
+		$('<a />', {
+			href: link,
+			target: '_blank',
+			html: `<i class="link fa-brands fa-${at} cursor-pointer"></i>`
+		}).appendTo($foot);
+	});
+
+	return $wrap[0];
 }
 
 /**

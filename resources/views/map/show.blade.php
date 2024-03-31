@@ -100,6 +100,7 @@
             'save' => __('save'),
             'username' => K::user()->name,
             'locationInformation' => __('Location Information'),
+            'mapLinks' => __('Map Service Links'),
         ],
         'route' => [
             'infoUpdate' => route('info.update'),
@@ -117,6 +118,10 @@
     :root {
       --note-color: #FF9800;
       --user-color: #0288D1;
+      --location-color: #f34343;
+      --google-color: #fbbc05;
+      --waze-color: #30c6f6;
+      --apple-color: #a8a8a8;
     }
 
     /*
@@ -266,6 +271,33 @@
 
     .marker:not(.highlight):has(.fa-user)::after {
       border-top: 9px solid var(--user-color);
+    }
+
+    /*
+    * location icon colors.
+    */
+    .marker.highlight:has(.fa-location-crosshairs) .icon {
+      color: var(--location-color);
+    }
+
+    .marker:not(.highlight):has(.fa-location-crosshairs) {
+      background-color: var(--location-color);
+    }
+
+    .marker:not(.highlight):has(.fa-location-crosshairs)::after {
+      border-top: 9px solid var(--location-color);
+    }
+
+    .marker .fa-apple {
+      color: var(--apple-color);
+    }
+
+    .marker .fa-waze {
+      color: var(--waze-color);
+    }
+
+    .marker .fa-google {
+      color: var(--google-color);
     }
   </style>
 </x-layout.app>
