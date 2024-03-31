@@ -4,7 +4,18 @@
 
 <x-layout.app :title="__('map test')">
 
-  <div class="w-1/2 max-w-[84%] rounded-br-md bg-white p-3 shadow-md"
+  <style>
+    .hover-first :first-child {
+      transform: scale(0);
+      transform-origin: right;
+    }
+
+    .hover-first:hover :first-child {
+      transform: scale(1);
+    }
+  </style>
+
+  <div class="hidden w-[84%] max-w-[500px] rounded-br-md bg-white p-3 font-sans shadow-md"
     id="search-card">
     <div class="flex flex-col gap-2">
       {{-- <div class="text-xl font-bold uppercase"></div> --}}
@@ -70,7 +81,7 @@
     class="changesBtn hidden"></button>
 
   <div class="mx-auto flex w-full flex-1 flex-col sm:max-w-7xl md:px-8">
-    <div class="w-full flex-1 overflow-hidden border border-gray-400 bg-white shadow-lg md:rounded-md"
+    <div class="min-h-[315px] w-full flex-1 overflow-hidden border border-gray-400 bg-white shadow-lg md:rounded-md"
       id="map">
 
     </div>

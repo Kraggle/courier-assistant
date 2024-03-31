@@ -1,5 +1,5 @@
 import { Loader } from '@googlemaps/js-api-loader';
-import { PostcodeLookup } from '@ideal-postcodes/postcode-lookup';
+import { AddressFinder } from '@ideal-postcodes/address-finder';
 import K, { timed } from './K.js';
 
 const update = timed(),
@@ -37,7 +37,7 @@ const Google = {
 	// Google.geocoding = await loader.importLibrary('geocoding');
 	Google.places = await loader.importLibrary('places');
 	Google.infos = await fetchJSON('/info');
-	console.log(Google);
+	// console.log(Google);
 
 	Google.map = new Google.maps.Map(document.getElementById('map'), {
 		center: Google.center,
@@ -51,30 +51,30 @@ const Google = {
 	Google.infoWindow = new Google.maps.InfoWindow();
 
 	const wrap = $('<div />', {
-		class: 'flex flex-col justify-center items-center rounded-sm shadow-sm bg-white mr-2'
+		class: 'flex flex-col justify-center items-center rounded-sm shadow-[#0000004d_0px_1px_4px_-1px] bg-white mr-2.5'
 	});
 	Google.buttons.add = createControl('fa-regular fa-location-plus text-xl border-b', 'Add marker!');
 	Google.buttons.pos = createControl('fa-regular fa-circle-dot text-base', 'Geolocation!');
 	wrap.append(Google.buttons.add);
 	wrap.append(Google.buttons.pos);
 
-	Google.map.controls[Google.core.ControlPosition.RIGHT_CENTER].push(wrap[0]);
+	Google.map.controls[Google.core.ControlPosition.RIGHT_TOP].push(wrap[0]);
 
 	Google.map.addListener('click', e => {
 		if (!Google.addingMarkers) return;
 		$('#infoBtn').trigger('click');
-		$('#lat').val(e.latLng.lat());
-		$('#lng').val(e.latLng.lng());
+		$('#lat').val(e.latLng.lat().toFixed(5));
+		$('#lng').val(e.latLng.lng().toFixed(5));
 		placeMarker(e.latLng);
 	});
 
-	/* Change markers on zoom */
+	/* Run function on zoom change */
 	Google.core.event.addListener(Google.map, 'zoom_changed', zoomChanged);
 
-	/* Change markers on zoom */
+	/* Set url lat and lng on dragend */
 	Google.core.event.addListener(Google.map, 'dragend', function() {
-		K.addURLParam('lat', Google.map.center.lat());
-		K.addURLParam('lng', Google.map.center.lng());
+		K.addURLParam('lat', Google.map.center.lat().toFixed(5));
+		K.addURLParam('lng', Google.map.center.lng().toFixed(5));
 	});
 
 	Google.infos.forEach(info => {
@@ -99,29 +99,67 @@ const Google = {
 				latitude: lat,
 				longitude: lng
 			}
-		}) => {
-			user.position = {
-				lat,
-				lng
-			};
-		}
+		}) => user.position = new Google.core.LatLng(lat, lng)
 	});
 
-	initAutoComplete();
 
 	// placeMarker(new Google.core.LatLng(52.78141, -3.21912))
 
-	// initPostcodeLookup();
+	// initAutoComplete();
+	initPostcodeLookup();
 })();
 
 function initPostcodeLookup() {
-	PostcodeLookup.setup({
+	const $search = $('#map-search'),
+		$card = $('#search-card'),
+		marker = new Google.marker.AdvancedMarkerElement();
+
+	Google.map.controls[Google.core.ControlPosition.TOP_LEFT].push($card[0]);
+
+	setTimeout(() => {
+		$card.removeClass('hidden');
+	}, 2000);
+
+	AddressFinder.setup({
 		apiKey: 'ak_luen9mkza3ZJx0FpImxZ0BKxKqOMe',
-		context: '#lookup-field',
-		onAddressPopulated: address => {
-			console.log(address);
-		}
+		inputField: '#map-search',
+
+		/**
+		 * @param {Object} a
+		 */
+		onAddressRetrieved: a => {
+			marker.map = null;
+			// console.log(a);
+
+			const pos = new Google.core.LatLng(a.latitude, a.longitude),
+				parts = [
+					a.line_1 || '',
+					a.line_2 || '',
+					a.line_3 || '',
+					a.postal_town,
+					a.postcode
+				];
+			let formatted = '';
+			parts.forEach(p => {
+				formatted += `${p ? `${formatted ? ', ' : ''}${p}` : ''}`;
+			});
+
+			$search.val(formatted);
+
+			Google.map.setCenter(pos);
+			Google.map.setZoom(17);
+
+			marker.position = pos;
+			marker.map = Google.map;
+		},
+		containerClass: 'relative',
+		mainClass: 'absolute shadow-sm z-50 mt-2 w-full rounded-md border border-gray-300 bg-white overflow-hidden',
+		listClass: 'max-h-40 overflow-y-auto [&>li]:cursor-pointer [&>li:not(:last-child)]:border-b [&>li]:border-gray-300 [&>li]:px-4 [&>li]:py-1 [&>li]:text-base hover:[&>li]:bg-gray-100',
+		messageClass: '!cursor-default italic hover:!bg-transparent',
+		toolbarClass: 'flex items-center justify-end border-t border-gray-300 bg-gray-100 px-3 py-1',
+		countryToggleClass: 'hover-first flex cursor-pointer items-center gap-2 whitespace-nowrap text-sm [&>*:first-child]:block [&>*:first-child]:overflow-hidden [&>*:first-child]:transition-all [&>*:last-child]:bg-gray-100 [&>*:last-child]:text-base [&>*:last-child]:font-bold [&>*]:align-baseline',
 	});
+
 }
 
 /**
@@ -156,7 +194,7 @@ function initAutoComplete() {
 		marker.map = Google.map;
 
 
-		console.log(place);
+		// console.log(place);
 	});
 }
 
@@ -175,7 +213,7 @@ async function fetchJSON(url) {
  * Changes the visibility of markers on zoom and saves it for reload.
  */
 function zoomChanged() {
-	const zoom = Google.map.getZoom();
+	const zoom = Google.map.getZoom().toFixed(2);
 	K.addURLParam('zoom', zoom);
 	K.each(Google.markers, (i, marker) => marker.map = zoom >= 16 ? Google.map : null);
 }
@@ -320,13 +358,13 @@ function placeMarker(position, data = null, adding = true) {
 					method: 'POST',
 					data: {
 						id: data.id,
-						lat: e.latLng.lat(),
-						lng: e.latLng.lng(),
+						lat: e.latLng.lat().toFixed(5),
+						lng: e.latLng.lng().toFixed(5),
 						_method: 'PATCH',
 						_token: $('[name="_token"]').first().val()
 					}
 				}).done(function(response) {
-					console.log(response);
+					// console.log(response);
 				});
 			}, 2000);
 		}
