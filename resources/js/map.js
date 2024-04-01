@@ -149,14 +149,14 @@ function initAddressFinder() {
 		 */
 		onAddressRetrieved: a => {
 			marker.map = null;
-			// console.log(a);
+			console.log(a);
 
 			const pos = new Google.core.LatLng(a.latitude, a.longitude),
 				parts = [
 					a.line_1 || '',
 					a.line_2 || '',
 					a.line_3 || '',
-					a.postal_town,
+					a.post_town,
 					a.postcode
 				];
 			let formatted = '';

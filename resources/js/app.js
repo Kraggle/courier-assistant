@@ -60,5 +60,7 @@ window.refreshAll = refreshAll;
 
 $(() => {
 	refreshAll();
-	Alpine.start();
+	setTimeout(() => {
+		Alpine.start();
+	}, 1000);
 });
