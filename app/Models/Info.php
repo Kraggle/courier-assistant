@@ -62,7 +62,7 @@ class Info extends Model {
      */
     protected function creator(): Attribute {
         return new Attribute(
-            get: fn () => $this->createLog()->causer->name
+            get: fn () => $this->createLog()->causer->name ?? User::find(1)->name
         );
     }
 
