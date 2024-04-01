@@ -375,7 +375,9 @@ class User extends Authenticatable {
      * Get the users tax years.
      */
     public function taxYears() {
-        $now   = K::date();
+        $newest = $this->routes->sortByDesc('date')->first();
+
+        $now   = $newest->date;
         $year  = $now->year;
         $month = $now->month;
         $start = K::date(($month > 3 ? $year : $year - 1) . "-04-01");
@@ -383,9 +385,6 @@ class User extends Authenticatable {
         $years = [];
 
         $routes = $this->routesByDate($start, $end)->take(1);
-
-        if ($routes->count() == 0)
-            return collect();
 
         do {
             $date = K::date($routes->first()->date);

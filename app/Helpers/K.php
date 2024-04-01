@@ -605,4 +605,12 @@ class K {
             $date->addDays(1);
         return $date;
     }
+
+    public static function type($value) {
+        return gettype($value);
+    }
+
+    public static function class($value) {
+        return get_class($value);
+    }
 }

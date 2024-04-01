@@ -35,7 +35,7 @@
             ],
         ];
 
-        if ($user->hasRoutes() && false) {
+        if ($user->hasRoutes()) {
             $links[] = [
                 'title' => __('taxes'),
                 'route' => 'tax.show',
