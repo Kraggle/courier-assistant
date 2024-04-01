@@ -451,7 +451,7 @@ function linkContent(position, address) {
 
 	$('<div />', {
 		class: 'address',
-		text: address
+		html: splitAddress(address)
 	}).appendTo($detail);
 
 	const $foot = $('<div />', {
@@ -471,6 +471,21 @@ function linkContent(position, address) {
 	});
 
 	return $wrap[0];
+}
+
+function splitAddress(address) {
+	if (address.length <= 30)
+		return address;
+
+	let middle = Math.floor(address.length / 2);
+	const before = address.lastIndexOf(' ', middle),
+		after = address.indexOf(' ', middle + 1);
+
+	if (before == -1 || (after != -1 && middle - before >= after - middle))
+		middle = after;
+	else middle = before;
+
+	return `${address.substr(0, middle)}<br>${address.substr(middle + 1)}`;
 }
 
 /**
@@ -505,7 +520,7 @@ function buildContent(data = null) {
 		if (data.address) {
 			$('<div />', {
 				class: 'address',
-				text: data.address
+				html: splitAddress(data.address)
 			}).appendTo($detail);
 		}
 

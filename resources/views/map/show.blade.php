@@ -184,6 +184,7 @@
       border-bottom: 1px solid #E0E0E0;
       padding-bottom: 5px;
       text-transform: uppercase;
+      max-width: 200px;
     }
 
     .marker .note {
