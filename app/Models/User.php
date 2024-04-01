@@ -384,6 +384,9 @@ class User extends Authenticatable {
 
         $routes = $this->routesByDate($start, $end)->take(1);
 
+        if ($routes->count() == 0)
+            return collect();
+
         do {
             $date = K::date($routes->first()->date);
 
@@ -400,6 +403,7 @@ class User extends Authenticatable {
 
         return collect($years);
     }
+
 
     /**
      * Get the users taxes.
