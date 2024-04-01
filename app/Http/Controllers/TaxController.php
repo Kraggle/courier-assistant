@@ -95,7 +95,7 @@ class TaxController extends Controller {
         $bonus = 0;
         $miles = 0;
 
-        $routes = Route::cursor()->where('user_id', $user->id)->where('date', '>=', K::dateString($start))->where('date', '<=', K::dateString($end));
+        $routes = Route::cursor()->where('user_id', $user->id)->where('date', '>=', $start)->where('date', '<=', $end);
         foreach ($routes as $r) {
             $mileage += $r->mileage ?? 0;
             $fuel_pay += $r->fuel_pay ?? 0;

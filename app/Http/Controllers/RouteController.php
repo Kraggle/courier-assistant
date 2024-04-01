@@ -121,7 +121,7 @@ class RouteController extends FilesController {
                 if (!isset($row['depot_id']))
                     $row['depot_id'] = $depot_id;
 
-                if (!$user->hasRoute($row['date']))
+                if ($user->hasRoute($row['date']))
                     return;
 
                 $row = K::castArray($row, [

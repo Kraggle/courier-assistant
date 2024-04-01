@@ -85,7 +85,7 @@ class User extends Authenticatable {
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function routesByDate($start, $end) {
-        return $this->routes->where('date', '>', K::date($start)->sub('day', 1))->where('date', '<=', K::date($end))->sortBy('date');
+        return $this->routes->where('date', '>=', K::dateString($start))->where('date', '<=', K::dateString($end))->sortBy('date');
     }
 
     /**
@@ -265,7 +265,7 @@ class User extends Authenticatable {
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function refuelsByDate($start, $end): Collection {
-        return $this->refuels->where('date', '>', K::date($start)->sub('day', 1))->where('date', '<=', K::date($end));
+        return $this->refuels->where('date', '>=', K::dateString($start))->where('date', '<=', K::dateString($end));
     }
 
     /**
@@ -368,7 +368,7 @@ class User extends Authenticatable {
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function expensesByDate($start, $end) {
-        return $this->expenses->where('date', '>', K::date($start)->sub('day', 1))->where('date', '<=', K::date($end))->sortBy('date');
+        return $this->expenses->where('date', '>=', K::dateString($start))->where('date', '<=', K::dateString($end))->sortBy('date');
     }
 
     /**
