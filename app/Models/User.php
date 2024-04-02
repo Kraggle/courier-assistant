@@ -85,7 +85,7 @@ class User extends Authenticatable {
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function routesByDate($start, $end) {
-        return $this->routes->where('date', '>=', K::dateString($start))->where('date', '<=', K::dateString($end))->sortBy('date');
+        return $this->routes->where('date', '>=', K::dateString($start))->where('date', '<', K::dateString($end->copy()->add(1, 'day')))->sortBy('date');
     }
 
     /**
@@ -95,8 +95,8 @@ class User extends Authenticatable {
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function routesByWeek($date) {
-        $start = K::date($date)->startOfWeek();
-        $end = $start->clone()->endOfWeek();
+        $start = K::firstDayOfWeek($date);
+        $end = K::lastDayOfWeek($start->clone());
 
         return $this->routesByDate($start, $end);
     }

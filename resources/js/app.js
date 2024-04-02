@@ -62,5 +62,5 @@ $(() => {
 	refreshAll();
 	setTimeout(() => {
 		Alpine.start();
-	}, 1000);
+	}, window.location.pathname == '/map' ? 1000 : 0);
 });

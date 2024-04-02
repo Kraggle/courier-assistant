@@ -1,6 +1,6 @@
 @php
   $last_route = $user->route();
-  $date = K::date();
+  $date = K::date()->startOfDay();
   $weeks = [$date->copy(), $date->copy()->sub('week', 1), $date->copy()->sub('week', 2), $date->copy()->sub('week', 3)];
 @endphp
 
