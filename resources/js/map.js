@@ -107,6 +107,14 @@ const Google = {
 
 	// initAutoComplete();
 	initAddressFinder();
+
+	// const marker = new Google.marker.AdvancedMarkerElement({
+	// 	map: Google.map,
+	// 	position: Google.center,
+	// 	content: linkContent(Google.center, '99 fake address')
+	// });
+	// marker.address = '99 fake address';
+	// markerHandlers(marker);
 })();
 
 function generateLinks(coords) {
@@ -124,21 +132,9 @@ function initAddressFinder() {
 	const $search = $('#map-search'),
 		$card = $('#search-card'),
 		marker = new Google.marker.AdvancedMarkerElement();
-
-	marker.addListener('click', (e) => {
-		const $src = $(e.domEvent.srcElement);
-
-		if ($src.hasClass('link'))
-			return;
-
-		toggleHighlight(marker);
-	});
+	markerHandlers(marker);
 
 	Google.map.controls[Google.core.ControlPosition.TOP_LEFT].push($card[0]);
-
-	setTimeout(() => {
-		$card.removeClass('hidden');
-	}, 2000);
 
 	AddressFinder.setup({
 		apiKey: 'ak_luen9mkza3ZJx0FpImxZ0BKxKqOMe',
@@ -172,6 +168,7 @@ function initAddressFinder() {
 			marker.content = linkContent(pos, formatted);
 			marker.position = pos;
 			marker.map = Google.map;
+			marker.address = formatted;
 		},
 		containerClass: 'relative',
 		mainClass: 'absolute shadow-sm z-50 mt-2 w-full rounded-md border border-gray-300 bg-white overflow-hidden',
@@ -288,13 +285,13 @@ function toGeoLocation() {
  */
 function placeMarker(position, data = null, adding = true) {
 
-	// console.log(generateLinks(position));
-
 	const marker = new Google.marker.AdvancedMarkerElement({
 		position,
 		map: Google.map,
 		content: buildContent(data)
 	});
+	marker.data = data;
+	markerHandlers(marker);
 
 	Google.markers.push(marker);
 
@@ -302,47 +299,68 @@ function placeMarker(position, data = null, adding = true) {
 		toggleMarker();
 		Google.map.panTo(position);
 	}
+}
 
-	/**
-	 * @type {Object}
-	 */
-	let modal = {};
-	if (data) {
-		modal = {
-			'title.text': _K.str.editLocation,
-			'form.action': _K.route.infoUpdate,
-			'method.value': 'PATCH',
-			'id.value': data.id,
-			'lat.value': data.position.lat,
-			'lng.value': data.position.lng,
-			'address.value': data.address,
-			'name.value': data.name,
-			'year.value': data.year,
-			'note.value': data.note,
-			'destroy.removeclass': 'hidden',
-			'destroy.data': {
-				'modal': {
-					'id.value': data.id,
-				},
-			},
-			'submit.text': _K.str.save
-		};
-		if (!K.isIn(data.creator, [_K.str.username, 'Kraig Larner'])) {
-			modal['destroy.addclass'] = 'hidden';
-			modal['destroy.data'] = {
-				'modal': {
-					'id.value': '',
-				}
-			};
-
-			delete modal['destroy.removeclass'];
-		}
+/**
+ * Toggles the highlighting of a marker.
+ * 
+ * @param marker - The marker to highlight or unhighlight.
+ */
+function toggleHighlight(marker) {
+	if (marker.content.classList.contains("highlight")) {
+		marker.content.classList.remove("highlight");
+		marker.zIndex = null;
+	} else {
+		marker.content.classList.add("highlight");
+		marker.zIndex = 1;
 	}
+}
+
+function markerHandlers(marker) {
 
 	marker.addListener('click', (e) => {
-		const $src = $(e.domEvent.srcElement);
+		const $src = $(e.domEvent.srcElement),
+			data = marker.data || null;
+
+		/**
+		 * @type {Object}
+		 */
+		let modal = {};
+
+		if ($src.hasClass('link'))
+			return;
 
 		if ($src.hasClass('edit')) {
+			modal = {
+				'title.text': _K.str.editLocation,
+				'form.action': _K.route.infoUpdate,
+				'method.value': 'PATCH',
+				'id.value': data.id,
+				'lat.value': data.position.lat,
+				'lng.value': data.position.lng,
+				'address.value': data.address,
+				'name.value': data.name,
+				'year.value': data.year,
+				'note.value': data.note,
+				'destroy.removeclass': 'hidden',
+				'destroy.data': {
+					'modal': {
+						'id.value': data.id,
+					},
+				},
+				'submit.text': _K.str.save
+			};
+			if (!K.isIn(data.creator, [_K.str.username, 'Kraig Larner'])) {
+				modal['destroy.addclass'] = 'hidden';
+				modal['destroy.data'] = {
+					'modal': {
+						'id.value': '',
+					}
+				};
+
+				delete modal['destroy.removeclass'];
+			}
+
 			$('#editBtn').data('modal', modal).trigger('click');
 			return;
 		}
@@ -362,6 +380,26 @@ function placeMarker(position, data = null, adding = true) {
 			}
 		}
 
+		if ($src.hasClass('save')) {
+			modal = {
+				'title.text': _K.str.addLocation,
+				'form.action': _K.route.infoAdd,
+				'method.value': 'PUT',
+				'id.value': '',
+				'lat.value': marker.position.lat,
+				'lng.value': marker.position.lng,
+				'address.value': marker.address,
+				'name.value': '',
+				'year.value': '',
+				'note.value': '',
+				'destroy.addclass': 'hidden',
+				'submit.text': _K.str.add
+			};
+
+			$('#infoBtn').data('modal', modal).trigger('click');
+			return;
+		}
+
 		if ($src.hasClass('changes')) {
 			$('.changesBtn').data('modal', {
 				'tbody.changes': data.changes,
@@ -374,6 +412,8 @@ function placeMarker(position, data = null, adding = true) {
 	});
 
 	marker.addListener('dragend', (e) => {
+		const data = marker.data || null;
+
 		if (data && marker.content.classList.contains("moving")) {
 			update.run(() => {
 				$.ajax({
@@ -392,21 +432,6 @@ function placeMarker(position, data = null, adding = true) {
 			}, 2000);
 		}
 	});
-}
-
-/**
- * Toggles the highlighting of a marker.
- * 
- * @param marker - The marker to highlight or unhighlight.
- */
-function toggleHighlight(marker) {
-	if (marker.content.classList.contains("highlight")) {
-		marker.content.classList.remove("highlight");
-		marker.zIndex = null;
-	} else {
-		marker.content.classList.add("highlight");
-		marker.zIndex = 1;
-	}
 }
 
 /**
@@ -430,7 +455,7 @@ async function toClipboard(text) {
  */
 function linkContent(position, address) {
 	const $wrap = $('<div />', {
-		class: 'marker'
+		class: 'marker font-sans'
 	});
 
 	$wrap.append($('<div />', {
@@ -455,7 +480,7 @@ function linkContent(position, address) {
 	}).appendTo($detail);
 
 	const $foot = $('<div />', {
-		class: 'links btns flex justify-between text-3xl'
+		class: 'links btns flex justify-between items-center text-3xl gap-3'
 	}).appendTo($detail);
 
 	/**
@@ -469,6 +494,10 @@ function linkContent(position, address) {
 			html: `<i class="link fa-brands fa-${at} cursor-pointer"></i>`
 		}).appendTo($foot);
 	});
+
+	$('<i />', {
+		class: 'save fa-regular fa-floppy-disk cursor-pointer text-orange-400 text-lg self-end',
+	}).appendTo($foot);
 
 	return $wrap[0];
 }
@@ -495,7 +524,8 @@ function splitAddress(address) {
  */
 function buildContent(data = null) {
 	const $wrap = $('<div />', {
-		class: 'marker'
+		class: 'marker font-sans',
+		data: data
 	});
 
 	let icon = $('<i />');
