@@ -13,14 +13,14 @@
 
     {{-- modal header --}}
     <div class="flex items-center justify-between">
-      <div x-ref="title"
-        class="font-extralight uppercase tracking-wider">
+      <div class="font-extralight uppercase tracking-wider"
+        ref="title">
 
       </div>
     </div>
 
-    <p x-ref="question"
-      class="text-sm"></p>
+    <p class="text-sm"
+      ref="question"></p>
 
     {{-- submit --}}
     <div class="{{ $gap }} flex justify-end">
@@ -28,8 +28,8 @@
         {{ __('close') }}
       </x-button.light>
 
-      <form x-ref="form"
-        id="exportForm"
+      <form id="exportForm"
+        ref="form"
         method="POST"
         action=""
         filename="">

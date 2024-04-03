@@ -10,8 +10,8 @@
 
   {{-- modal header --}}
   <div class="flex items-center justify-between">
-    <div x-ref="title"
-      class="font-extralight uppercase tracking-wider">
+    <div class="font-extralight uppercase tracking-wider"
+      ref="title">
       {{ __('Select your Delivery Service Provider') }}
     </div>
 
@@ -22,22 +22,22 @@
   </div>
 
   {{-- modal content --}}
-  <form x-ref="form"
-    class="{{ $gap }} flex flex-col"
+  <form class="{{ $gap }} flex flex-col"
+    ref="form"
     method="POST"
     action="{{ route('dsp.attach') }}">
     @csrf
 
     {{-- dsp_id --}}
     @define($key = 'dsp_id')
-    <x-form.wrap x-ref="dsp_wrap"
+    <x-form.wrap ref="dsp_wrap"
       :key="$key"
       :value="__('DSP')"
       :help="__('Search here for the name of the Delivery Service Provider you work for. It\'s important you select the correct one, as they differ in their pay rates. The one you select, if already added, will most likely already have rates set to date.')">
 
-      <x-form.select x-ref="{{ $key }}"
-        id="{{ $key }}"
+      <x-form.select id="{{ $key }}"
         name="{{ $key }}"
+        ref="{{ $key }}"
         :placeholder="__('Select your Delivery Service Provider')">
 
         <x-slot:elements>
@@ -61,18 +61,18 @@
       :value="__('start date')"
       :help="__('The date that you started working for this DSP. As you can add many, you will only be able to change anything on the latest one you have selected.')">
 
-      <x-form.date x-ref="{{ $key }}"
-        class="block w-full"
+      <x-form.date class="block w-full"
         id="{{ $key }}"
-        name="{{ $key }}" />
+        name="{{ $key }}"
+        ref="{{ $key }}" />
 
     </x-form.wrap>
 
     <div class="{{ $gap }} flex justify-between">
-      <x-button.danger x-ref="destroy"
-        x-data=""
+      <x-button.danger x-data=""
         x-on:click.prevent="$dispatch('open-modal', 'destroy-dsp')"
-        class="no-loader">
+        class="no-loader"
+        ref="destroy">
         {{ __('delete') }}
       </x-button.danger>
 
@@ -80,13 +80,13 @@
 
       {{-- submit --}}
       <div class="{{ $gap }} flex justify-end">
-        <x-button.light x-ref="close"
-          x-on:click="$dispatch('close')"
-          class="hidden">
+        <x-button.light x-on:click="$dispatch('close')"
+          class="hidden"
+          ref="close">
           {{ __('cancel') }}
         </x-button.light>
 
-        <x-button.dark x-ref="submit">
+        <x-button.dark ref="submit">
           {{ __('select') }}
         </x-button.dark>
       </div>
@@ -94,8 +94,8 @@
 
   </form>
 
-  <div x-ref="add-section"
-    class="{{ $gap }} flex flex-col">
+  <div class="{{ $gap }} flex flex-col"
+    ref="add-section">
     {{-- split header --}}
     <div class="flex items-center justify-between">
       <div class="font-extralight uppercase tracking-wider">
@@ -115,10 +115,10 @@
           :value="__('DSPs Name')"
           :help="__('The name of your Delivery Service Provider. Please be accurate with this as anyone else searching for your DSP will want to find it easily. Also if there is any profanity found the DSP will be removed and you will loose any data added.')">
 
-          <x-form.text x-ref="{{ $key }}"
-            class="block w-full"
+          <x-form.text class="block w-full"
             id="{{ $key }}"
-            name="{{ $key }}" />
+            name="{{ $key }}"
+            ref="{{ $key }}" />
 
         </x-form.wrap>
 
@@ -128,10 +128,10 @@
           :value="__('Amazon identifier')"
           :help="__('Amazons identifier for your Delivery Service Provider, you can ask your OSM for this if you don\'t know it. It\'s another way for other drivers to find the correct DSP.')">
 
-          <x-form.text x-ref="{{ $key }}"
-            class="block w-full"
+          <x-form.text class="block w-full"
             id="{{ $key }}"
             name="{{ $key }}"
+            ref="{{ $key }}"
             placeholder="{{ __('e.g. CLBT, LWTS, ROKL, GAMD') }}" />
 
         </x-form.wrap>

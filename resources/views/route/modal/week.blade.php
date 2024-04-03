@@ -9,8 +9,8 @@
   help-root>
 
   {{-- modal content --}}
-  <form x-ref="form"
-    class="{{ $gap }} flex flex-col"
+  <form class="{{ $gap }} flex flex-col"
+    ref="form"
     method="POST"
     action="{{ route('route.week') }}">
     @csrf
@@ -19,7 +19,7 @@
     <div class="flex items-center justify-between px-4 md:px-6">
       <div class="flex gap-2 font-extralight uppercase tracking-wider">
         <span>{{ __('update week') }}</span>
-        <span x-ref="title"></span>
+        <span ref="title"></span>
       </div>
 
     </div>
@@ -35,15 +35,15 @@
 
       </x-table.thead>
 
-      <tbody x-ref="body">
+      <tbody ref="body">
 
-        <x-table.tr x-ref="row">
+        <x-table.tr ref="row">
 
           <x-table.td>
-            <input x-ref="id"
-              name="id[]"
-              type="hidden">
-            <div x-ref="date"></div>
+            <input name="id[]"
+              type="hidden"
+              ref="id">
+            <div ref="date"></div>
           </x-table.td>
 
           <x-table.td>
@@ -51,10 +51,10 @@
             @define($key = 'invoice_mileage')
             <x-form.wrap :key="$key">
 
-              <x-form.text x-ref="{{ $key }}"
-                class="block w-full"
+              <x-form.text class="block w-full"
                 name="{{ $key }}[]"
                 type="number"
+                ref="{{ $key }}"
                 :value="old($key)" />
 
             </x-form.wrap>
@@ -64,10 +64,10 @@
             {{-- bonus --}}
             <x-form.wrap :key="$key">
 
-              <x-form.text-prefix x-ref="{{ $key }}"
-                class="block w-full"
+              <x-form.text-prefix class="block w-full"
                 name="{{ $key }}[]"
                 type="number"
+                ref="{{ $key }}"
                 :value="old($key)"
                 step="0.01">
 
@@ -83,9 +83,9 @@
             {{-- vat --}}
             <x-form.wrap :key="$key">
 
-              <x-form.toggle x-ref="{{ $key }}"
-                class="block w-20 sm:w-28"
+              <x-form.toggle class="block w-20 sm:w-28"
                 name="{{ $key }}[]"
+                ref="{{ $key }}"
                 :value="old($key)" />
 
             </x-form.wrap>
@@ -102,7 +102,7 @@
         {{ __('cancel') }}
       </x-button.light>
 
-      <x-button.dark x-ref="submit">
+      <x-button.dark ref="submit">
         {{ __('save') }}
       </x-button.dark>
     </div>
@@ -113,7 +113,7 @@
 @pushOnce('scripts')
   <script type="module">
     $(() => {
-      const $mile = $('[x-ref=start_mileage]');
+      const $mile = $('[ref=start_mileage]');
       $('#type_route').on('change', function() {
         $mile.closest('div[key]')[$(this).val() === 'poc' ? 'removeClass' : 'addClass']('required');
       }).trigger('change');

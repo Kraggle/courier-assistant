@@ -8,16 +8,16 @@
   name="add-route"
   help-root>
   {{-- modal content --}}
-  <form x-ref="form"
-    class="{{ $gap }} flex flex-col"
+  <form class="{{ $gap }} flex flex-col"
+    ref="form"
     method="POST"
     action="{{ route('route.add') }}">
     @csrf
 
     {{-- modal header --}}
     <div class="flex items-center justify-between">
-      <div x-ref="title"
-        class="font-extralight uppercase tracking-wider">
+      <div class="font-extralight uppercase tracking-wider"
+        ref="title">
         {{ Msg::add(__('route')) }}
       </div>
 
@@ -34,9 +34,9 @@
         :value="__('route type')"
         :help="__('This is used to determine the day rate for the route.')">
 
-        <x-form.select x-ref="{{ $key }}"
-          id="{{ $key }}_route"
+        <x-form.select id="{{ $key }}_route"
           name="{{ $key }}"
+          ref="{{ $key }}"
           placeholder="{{ __('Select your type...') }}"
           :value="old($key)"
           minresultsforsearch=999>
@@ -61,9 +61,9 @@
         :value="__('depot')"
         :help="__('The depot you\'re working out of for this route. Also used to determine the day rate for the route. If the depot you\'re working out of is not present, click the `Not Found` button to add it yourself.')">
 
-        <x-form.select x-ref="{{ $key }}"
-          id="{{ $key }}_route"
+        <x-form.select id="{{ $key }}_route"
           name="{{ $key }}"
+          ref="{{ $key }}"
           placeholder="{{ __('Select your depot...') }}"
           :value="old($key)">
 
@@ -96,10 +96,10 @@
       :value="__('date')"
       :help="__('The date you worked the route.')">
 
-      <x-form.date x-ref="{{ $key }}"
-        class="block w-full"
+      <x-form.date class="block w-full"
         id="{{ $key }}"
         name="{{ $key }}"
+        ref="{{ $key }}"
         :value="old($key)" />
 
     </x-form.wrap>
@@ -112,10 +112,10 @@
         :value="__('start time')"
         :help="__('The time you were there to load your vehicle.')">
 
-        <x-form.time x-ref="{{ $key }}"
-          class="block w-full"
+        <x-form.time class="block w-full"
           id="{{ $key }}"
           name="{{ $key }}"
+          ref="{{ $key }}"
           :placeholder="__('Select your start time...')"
           :value="old($key)" />
 
@@ -127,10 +127,10 @@
         :value="__('end time')"
         :help="__('Set this as the time you do or should arrive back at the depot. This makes it more accurate for hourly rates.')">
 
-        <x-form.time x-ref="{{ $key }}"
-          class="block w-full"
+        <x-form.time class="block w-full"
           id="{{ $key }}"
           name="{{ $key }}"
+          ref="{{ $key }}"
           :value="old($key)"
           placeholder="{{ __('Leave until route ended!') }}" />
 
@@ -147,22 +147,22 @@
         :help="__('The odometer reading when you arrive at the depot. The `+` section will add that figure to the mileage. Useful if you fill in before getting to the destination.')">
 
         <div class="flex items-center gap-2">
-          <x-form.text x-ref="{{ $key }}"
-            class="flex-grow"
+          <x-form.text class="flex-grow"
             id="{{ $key }}"
             name="{{ $key }}"
             type="number"
+            ref="{{ $key }}"
             :placeholder="__('Odometer reading at depot...')"
             :value="old($key)" />
 
           <x-icon class="fas fa-plus" />
 
-          <x-form.text x-ref="{{ $key }} . '_plus'"
-            class="w-[40px] text-center"
+          <x-form.text class="w-[40px] text-center"
             id="{{ $key }}_plus"
             name="{{ $key }}_plus"
             type="number"
-            title="{{ Str::title(__('Amount to add to entered mileage.')) }}" />
+            title="{{ Str::title(__('Amount to add to entered mileage.')) }}"
+            ref="{{ $key }} . '_plus'" />
         </div>
 
       </x-form.wrap>
@@ -174,21 +174,21 @@
         :help="__('The odometer reading for the end of your route, when you have returned to the depot. If you don\'t go back, set it to what it would have been back at the depot. This helps for accurate fuel costs and earnings.')">
 
         <div class="flex items-center gap-2">
-          <x-form.text x-ref="{{ $key }}"
-            class="flex-grow"
+          <x-form.text class="flex-grow"
             id="{{ $key }}"
             name="{{ $key }}"
             type="number"
+            ref="{{ $key }}"
             :value="old($key)" />
 
           <x-icon class="fas fa-plus" />
 
-          <x-form.text x-ref="{{ $key }} . '_plus'"
-            class="w-[40px] text-center"
+          <x-form.text class="w-[40px] text-center"
             id="{{ $key }}_plus"
             name="{{ $key }}_plus"
             type="number"
-            title="{{ Str::title(__('Amount to add to entered mileage.')) }}" />
+            title="{{ Str::title(__('Amount to add to entered mileage.')) }}"
+            ref="{{ $key }} . '_plus'" />
         </div>
 
       </x-form.wrap>
@@ -201,11 +201,11 @@
         :value="__('invoiced miles')"
         :help="__('Once you receive your invoice enter the mileage amazon have paid you for the route. This shows an accurate total for earnings when coupled with the fuel rate for the week.')">
 
-        <x-form.text x-ref="{{ $key }}"
-          class="block w-full"
+        <x-form.text class="block w-full"
           id="{{ $key }}"
           name="{{ $key }}"
           type="number"
+          ref="{{ $key }}"
           :value="old($key)"
           placeholder="{{ __('Get this from your invoice!') }}" />
 
@@ -217,11 +217,11 @@
         :value="__('bonus')"
         :help="__('Add any bonuses or subtractions to this input, it will calculate correctly for the total for the route.')">
 
-        <x-form.text-prefix x-ref="{{ $key }}"
-          class="block w-full"
+        <x-form.text-prefix class="block w-full"
           id="{{ $key }}"
           name="{{ $key }}"
           type="number"
+          ref="{{ $key }}"
           :value="old($key)"
           step="0.01">
 
@@ -237,10 +237,10 @@
         :value="__('Claiming VAT?')"
         :help="__('You you claim VAT from amazon mark this as Yes! It will calculate the extra pay for you.')">
 
-        <x-form.toggle x-ref="{{ $key }}"
-          class="block w-full"
+        <x-form.toggle class="block w-full"
           id="{{ $key }}"
           name="{{ $key }}"
+          ref="{{ $key }}"
           :value="old($key)" />
 
       </x-form.wrap>
@@ -253,11 +253,11 @@
         :value="__('Minutes to First Stop')"
         :help="__('Will give you a better result for your stops per hour. This is subtracted from the total time of your route before dividing by stops.')">
 
-        <x-form.text x-ref="{{ $key }}"
-          class="block w-full"
+        <x-form.text class="block w-full"
           id="{{ $key }}"
           name="{{ $key }}"
           type="number"
+          ref="{{ $key }}"
           :value="old($key)" />
 
       </x-form.wrap>
@@ -268,11 +268,11 @@
         :value="__('Total Stops or Locations')"
         :help="__('This is totally optional, but it will show you your stops/locations per hour and give you an overall average.')">
 
-        <x-form.text x-ref="{{ $key }}"
-          class="block w-full"
+        <x-form.text class="block w-full"
           id="{{ $key }}"
           name="{{ $key }}"
           type="number"
+          ref="{{ $key }}"
           :value="old($key)"
           placeholder="{{ __('Used to determine stops per hour!') }}" />
 
@@ -285,20 +285,20 @@
       :value="__('note')"
       :help="__('You may want to remind yourself of something about this route. You can write that here.')">
 
-      <x-form.text x-ref="{{ $key }}"
-        class="block w-full"
+      <x-form.text class="block w-full"
         id="{{ $key }}"
         name="{{ $key }}"
+        ref="{{ $key }}"
         :value="old($key)" />
 
     </x-form.wrap>
 
     {{-- submit --}}
     <div class="{{ $gap }} flex justify-between">
-      <x-button.danger x-ref="destroy"
-        x-data=""
+      <x-button.danger x-data=""
         x-on:click.prevent="$dispatch('open-modal', 'destroy-route')"
-        class="no-loader">
+        class="no-loader"
+        ref="destroy">
         {{ __('delete') }}
       </x-button.danger>
 
@@ -309,7 +309,7 @@
           {{ __('cancel') }}
         </x-button.light>
 
-        <x-button.dark x-ref="submit">
+        <x-button.dark ref="submit">
           {{ __('add') }}
         </x-button.dark>
       </div>
@@ -321,7 +321,7 @@
 @pushOnce('scripts')
   <script type="module">
     $(() => {
-      const $mile = $('[x-ref=start_mileage]');
+      const $mile = $('[ref=start_mileage]');
       $('#type_route').on('change', function() {
         $mile.closest('div[key]')[$(this).val() === 'poc' ? 'removeClass' : 'addClass']('required');
       }).trigger('change');

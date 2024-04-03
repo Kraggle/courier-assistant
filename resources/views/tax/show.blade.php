@@ -29,10 +29,10 @@
             :key="$key"
             :value="__('Claim Mileage?')">
 
-            <x-form.toggle x-ref="{{ $key }}"
-              class="block w-full"
+            <x-form.toggle class="block w-full"
               id="{{ $key }}"
               name="{{ $key }}"
+              ref="{{ $key }}"
               :checked="$tax->claim_miles" />
 
           </x-form.wrap>

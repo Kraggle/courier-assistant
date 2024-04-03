@@ -4,17 +4,6 @@
 
 <x-layout.app :title="__('map test')">
 
-  <style>
-    .hover-first :first-child {
-      transform: scale(0);
-      transform-origin: right;
-    }
-
-    .hover-first:hover :first-child {
-      transform: scale(1);
-    }
-  </style>
-
   <div class="absolute -top-96 w-[84%] max-w-[500px] rounded-br-md bg-white p-3 font-sans shadow-md"
     id="search-card">
     <div class="flex flex-col gap-2">
@@ -125,6 +114,15 @@
       --google-color: #fbbc05;
       --waze-color: #30c6f6;
       --apple-color: #a8a8a8;
+    }
+
+    .hover-first :first-child {
+      transform: scale(0);
+      transform-origin: right;
+    }
+
+    .hover-first:hover :first-child {
+      transform: scale(1);
     }
 
     /*

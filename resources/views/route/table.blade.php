@@ -213,6 +213,33 @@
     {{-- action --}}
     <x-table.td class="text-base sm:text-xl">
       <div class="flex items-center justify-end gap-4">
+        @if ($r->hasExtra())
+          @php
+            $data = [];
+
+            if ($r->bonus) {
+                $data['bonus.text'] = $r->bonus;
+                $data['bonus-wrap.removeclass'] = 'hidden';
+            } else {
+                $data['bonus-wrap.addclass'] = 'hidden';
+            }
+
+            if ($r->note) {
+                $data['note.text'] = $r->note;
+                $data['note-wrap.removeclass'] = 'hidden';
+            } else {
+                $data['note-wrap.addclass'] = 'hidden';
+            }
+          @endphp
+
+          <x-icon x-data=""
+            x-on:click.prevent.stop="$dispatch('open-modal', 'extra-route')"
+            class="far fa-square-ellipsis-vertical mt-[2px] cursor-pointer text-blue-400"
+            data-modal="{{ json_encode($data) }}"
+            data-tooltip-position="left"
+            :title="__('Extra information!')" />
+        @endif
+
         <x-icon class="far fa-edit cursor-pointer text-orange-400"
           data-tooltip-position="left"
           title="{{ Str::title(__('edit')) }}" />

@@ -6,16 +6,16 @@
 {{-- the destroy modal --}}
 <x-modal class="p-4 md:p-6"
   name="destroy-rate">
-  <form x-ref="form"
-    class="{{ $gap }} flex flex-col"
+  <form class="{{ $gap }} flex flex-col"
+    ref="form"
     method="POST"
     action="">
     @csrf
 
     {{-- modal header --}}
     <div class="flex items-center justify-between">
-      <div x-ref="title"
-        class="font-extralight uppercase tracking-wider">
+      <div class="font-extralight uppercase tracking-wider"
+        ref="title">
         {{ Msg::delete(__('rate')) }}
       </div>
     </div>
@@ -31,8 +31,8 @@
         {{ __('no') }}
       </x-button.light>
 
-      <x-button.dark x-ref="submit"
-        class="">
+      <x-button.dark class=""
+        ref="submit">
         {{ __('yes') }}
       </x-button.dark>
     </div>

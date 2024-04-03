@@ -9,16 +9,16 @@
   help-root>
 
   {{-- modal content --}}
-  <form x-ref="form"
-    class="{{ $gap }} flex flex-col"
+  <form class="{{ $gap }} flex flex-col"
+    ref="form"
     method="POST"
     action="{{ route('rate.add') }}">
     @csrf
 
     {{-- modal header --}}
     <div class="flex items-center justify-between">
-      <div x-ref="title"
-        class="font-extralight uppercase tracking-wider">
+      <div class="font-extralight uppercase tracking-wider"
+        ref="title">
         {{ Msg::add(__('route')) }}
       </div>
 
@@ -47,9 +47,9 @@
         :value="__('rate type')"
         :help="__('The type of rate you want to add. They are all explained on the selection.')">
 
-        <x-form.select x-ref="{{ $key }}"
-          id="{{ $key }}_rate"
+        <x-form.select id="{{ $key }}_rate"
           name="{{ $key }}"
+          ref="{{ $key }}"
           minresultsforsearch=999
           placeholder="{{ __('Please select...') }}">
 
@@ -73,9 +73,9 @@
         :value="__('depot')"
         :help="__('The depot the rate is being added for.')">
 
-        <x-form.select x-ref="{{ $key }}"
-          id="{{ $key }}_rate"
-          name="{{ $key }}">
+        <x-form.select id="{{ $key }}_rate"
+          name="{{ $key }}"
+          ref="{{ $key }}">
 
           <x-slot:elements>
 
@@ -107,10 +107,10 @@
         :value="__('from date')"
         :help="__('The date the new rate is starting from.')">
 
-        <x-form.date x-ref="{{ $key }}"
-          class="block w-full"
+        <x-form.date class="block w-full"
           id="{{ $key }}"
-          name="{{ $key }}" />
+          name="{{ $key }}"
+          ref="{{ $key }}" />
 
       </x-form.wrap>
 
@@ -121,11 +121,11 @@
         :value="__('rate')"
         :help="__('The rate of the type you are adding.')">
 
-        <x-form.text-prefix x-ref="{{ $key }}"
-          class="block w-full"
+        <x-form.text-prefix class="block w-full"
           id="{{ $key }}"
           name="{{ $key }}"
           type="number"
+          ref="{{ $key }}"
           :placeholder="__('Please enter value...')"
           step="0.0001">
 
@@ -137,10 +137,10 @@
     </div>
 
     <div class="{{ $gap }} flex justify-between">
-      <x-button.danger x-ref="destroy"
-        x-data=""
+      <x-button.danger x-data=""
         x-on:click.prevent="$dispatch('open-modal', 'destroy-rate')"
-        class="no-loader">
+        class="no-loader"
+        ref="destroy">
         {{ __('delete') }}
       </x-button.danger>
 
@@ -152,7 +152,7 @@
           {{ __('cancel') }}
         </x-button.light>
 
-        <x-button.dark x-ref="submit">
+        <x-button.dark ref="submit">
           {{ __('add') }}
         </x-button.dark>
       </div>

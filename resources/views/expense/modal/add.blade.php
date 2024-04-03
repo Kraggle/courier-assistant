@@ -8,8 +8,8 @@
   name="add-expense"
   help-root>
   {{-- modal content --}}
-  <form x-ref="form"
-    class="{{ $gap }} flex flex-col"
+  <form class="{{ $gap }} flex flex-col"
+    ref="form"
     method="POST"
     enctype="multipart/form-data"
     action="{{ route('expense.add') }}">
@@ -17,8 +17,8 @@
 
     {{-- modal header --}}
     <div class="flex items-center justify-between">
-      <div x-ref="title"
-        class="font-extralight uppercase tracking-wider">
+      <div class="font-extralight uppercase tracking-wider"
+        ref="title">
         {{ Msg::add(__('expense')) }}
       </div>
 
@@ -35,10 +35,10 @@
           :value="__('date')"
           :help="__('The date of the expense.')">
 
-          <x-form.date x-ref="{{ $key }}"
-            class="block w-full"
+          <x-form.date class="block w-full"
             id="{{ $key }}"
-            name="{{ $key }}" />
+            name="{{ $key }}"
+            ref="{{ $key }}" />
 
         </x-form.wrap>
 
@@ -49,9 +49,9 @@
           :value="__('expense type')"
           :help="__('This is used to categorize the expense for tax purposes.')">
 
-          <x-form.select x-ref="{{ $key }}"
-            id="{{ $key }}_expense"
+          <x-form.select id="{{ $key }}_expense"
             name="{{ $key }}"
+            ref="{{ $key }}"
             :placeholder="__('Select the type...')"
             minresultsforsearch=999>
 
@@ -76,10 +76,10 @@
           :value="__('description')"
           :help="__('What the expense was, only helpful for your records.')">
 
-          <x-form.text x-ref="{{ $key }}"
-            class="block w-full"
+          <x-form.text class="block w-full"
             id="{{ $key }}"
             name="{{ $key }}"
+            ref="{{ $key }}"
             :placeholder="__('What was this for?')" />
 
         </x-form.wrap>
@@ -91,11 +91,11 @@
           :value="__('cost')"
           :help="__('The cost of the expense. Will help with expense calculation for taxes.')">
 
-          <x-form.text-prefix x-ref="{{ $key }}"
-            class="block w-full"
+          <x-form.text-prefix class="block w-full"
             id="{{ $key }}"
             name="{{ $key }}"
             type="number"
+            ref="{{ $key }}"
             :placeholder="__('Please enter value...')"
             step="0.01">
 
@@ -109,7 +109,7 @@
 
       {{-- image --}}
       @define($key = 'image')
-      <x-form.wrap x-ref="image-wrap"
+      <x-form.wrap ref="image-wrap"
         :key="$key"
         :value="__('receipt')"
         :help="__('Add a photo of your receipt. This will be kept available to you for tax purposes.')">
@@ -122,10 +122,10 @@
     </div>
 
     <div class="{{ $gap }} flex justify-between">
-      <x-button.danger x-ref="destroy"
-        x-data=""
+      <x-button.danger x-data=""
         x-on:click.prevent="$dispatch('open-modal', 'destroy-expense')"
-        class="no-loader">
+        class="no-loader"
+        ref="destroy">
         {{ __('delete') }}
       </x-button.danger>
 
@@ -137,7 +137,7 @@
           {{ __('cancel') }}
         </x-button.light>
 
-        <x-button.dark x-ref="submit">
+        <x-button.dark ref="submit">
           {{ __('add') }}
         </x-button.dark>
       </div>

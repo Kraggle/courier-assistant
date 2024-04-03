@@ -29,11 +29,11 @@
       <x-form.wrap :key="$key"
         :value="__('email')">
 
-        <x-form.text x-ref="{{ $key }}"
-          class="block w-full"
+        <x-form.text class="block w-full"
           id="{{ $key }}"
           name="{{ $key }}"
           type="email"
+          ref="{{ $key }}"
           :value="old($key)"
           autocomplete="username" />
 

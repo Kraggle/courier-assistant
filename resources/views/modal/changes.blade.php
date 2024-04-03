@@ -10,8 +10,8 @@
   <div class="{{ $gap }} flex flex-col">
     {{-- modal header --}}
     <div class="flex items-center justify-between">
-      <div x-ref="title"
-        class="font-extralight uppercase tracking-wider">
+      <div class="font-extralight uppercase tracking-wider"
+        ref="title">
       </div>
     </div>
 
@@ -28,7 +28,7 @@
 
         </x-table.thead>
 
-        <tbody x-ref="tbody">
+        <tbody ref="tbody">
 
         </tbody>
 

@@ -13,10 +13,10 @@
       <x-form.wrap :key="$key"
         :value="__('Vehicle Regestration')">
 
-        <x-form.text x-ref="{{ $key }}"
-          class="block w-full text-center text-5xl font-extrabold uppercase"
+        <x-form.text class="block w-full text-center text-5xl font-extrabold uppercase"
           id="{{ $key }}"
-          name="{{ $key }}" />
+          name="{{ $key }}"
+          ref="{{ $key }}" />
 
       </x-form.wrap>
 

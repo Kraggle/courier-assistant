@@ -7,8 +7,8 @@
 <x-modal class="p-4 md:p-6"
   name="bulk-refuel">
   {{-- modal content --}}
-  <form x-ref="form"
-    class="{{ $gap }} flex flex-col"
+  <form class="{{ $gap }} flex flex-col"
+    ref="form"
     method="POST"
     enctype="multipart/form-data"
     action="{{ route('refuel.bulk', $vehicle->id) }}">
@@ -16,8 +16,8 @@
 
     {{-- modal header --}}
     <div class="flex items-center justify-between">
-      <div x-ref="title"
-        class="font-extralight uppercase tracking-wider">
+      <div class="font-extralight uppercase tracking-wider"
+        ref="title">
         {{ Msg::bulkTitle(__('refuels')) }}
       </div>
     </div>
@@ -37,10 +37,10 @@
       :value="__('CSV')"
       left="left-[5.75rem]">
 
-      <x-form.file x-ref="file"
-        class="block w-full"
+      <x-form.file class="block w-full"
         id="{{ $key }}"
         name="{{ $key }}"
+        ref="file"
         accept="text/csv" />
 
     </x-form.wrap>
@@ -51,7 +51,7 @@
         {{ __('cancel') }}
       </x-button.light>
 
-      <x-button.dark x-ref="submit">
+      <x-button.dark ref="submit">
         {{ __('upload') }}
       </x-button.dark>
     </div>

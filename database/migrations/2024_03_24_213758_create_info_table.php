@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->json('position');
             $table->string('name')->nullable();
             $table->integer('year')->nullable();
-            $table->json('address')->nullable();
+            $table->text('address')->nullable();
             $table->text('note')->nullable();
             $table->timestamps();
         });

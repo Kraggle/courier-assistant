@@ -10,21 +10,21 @@
   help-root>
 
   {{-- modal content --}}
-  <form x-ref="form"
-    class="{{ $gap }} flex flex-col"
+  <form class="{{ $gap }} flex flex-col"
+    ref="form"
     method="POST"
     action="{{ route('info.add') }}">
     @csrf
 
-    <input x-ref="method"
-      name="_method"
+    <input name="_method"
       type="hidden"
-      value="POST">
+      value="POST"
+      ref="method">
 
     {{-- modal header --}}
     <div class="flex items-center justify-between">
-      <div x-ref="title"
-        class="font-extralight uppercase tracking-wider">
+      <div class="font-extralight uppercase tracking-wider"
+        ref="title">
       </div>
 
       <x-icon class="far fa-circle-question cursor-pointer"
@@ -34,22 +34,22 @@
     </div>
 
     @define($key = 'id')
-    <input x-ref="{{ $key }}"
-      id="{{ $key }}"
+    <input id="{{ $key }}"
       name="{{ $key }}"
-      type="hidden">
+      type="hidden"
+      ref="{{ $key }}">
 
     @define($key = 'lat')
-    <input x-ref="{{ $key }}"
-      id="{{ $key }}"
+    <input id="{{ $key }}"
       name="{{ $key }}"
-      type="hidden">
+      type="hidden"
+      ref="{{ $key }}">
 
     @define($key = 'lng')
-    <input x-ref="{{ $key }}"
-      id="{{ $key }}"
+    <input id="{{ $key }}"
       name="{{ $key }}"
-      type="hidden">
+      type="hidden"
+      ref="{{ $key }}">
     <x-form.error class="mt-2"
       :messages="$errors->get($key)" />
 
@@ -61,10 +61,10 @@
         :value="__('first name')"
         :help="__('The first name of the customer at this location.')">
 
-        <x-form.text x-ref="{{ $key }}"
-          class="block w-full"
+        <x-form.text class="block w-full"
           id="{{ $key }}"
           name="{{ $key }}"
+          ref="{{ $key }}"
           placeholder="Jeff" />
 
       </x-form.wrap>
@@ -75,11 +75,11 @@
         :value="__('year of birth')"
         :help="__('The year the customer was born.')">
 
-        <x-form.text x-ref="{{ $key }}"
-          class="block w-full"
+        <x-form.text class="block w-full"
           id="{{ $key }}"
           name="{{ $key }}"
           type="number"
+          ref="{{ $key }}"
           placeholder="1987" />
 
       </x-form.wrap>
@@ -91,10 +91,10 @@
       :value="__('address')"
       :help="__('The address of the location.')">
 
-      <x-form.textarea x-ref="{{ $key }}"
-        class="block w-full"
+      <x-form.textarea class="block w-full"
         id="{{ $key }}"
         name="{{ $key }}"
+        ref="{{ $key }}"
         placeholder="20 High St, Supertown, AB12 3DE" />
 
     </x-form.wrap>
@@ -105,19 +105,19 @@
       :value="__('note')"
       :help="__('The note you want to display at this location.')">
 
-      <x-form.textarea x-ref="{{ $key }}"
-        class="block w-full"
+      <x-form.textarea class="block w-full"
         id="{{ $key }}"
         name="{{ $key }}"
+        ref="{{ $key }}"
         :placeholder="__('Optional')" />
 
     </x-form.wrap>
 
     <div class="{{ $gap }} flex justify-between">
-      <x-button.danger x-ref="destroy"
-        x-data=""
+      <x-button.danger x-data=""
         x-on:click.prevent="$dispatch('open-modal', 'destroy-info')"
-        class="no-loader">
+        class="no-loader"
+        ref="destroy">
         {{ __('delete') }}
       </x-button.danger>
 
@@ -129,7 +129,7 @@
           {{ __('cancel') }}
         </x-button.light>
 
-        <x-button.dark x-ref="submit">
+        <x-button.dark ref="submit">
           {{ __('add') }}
         </x-button.dark>
       </div>

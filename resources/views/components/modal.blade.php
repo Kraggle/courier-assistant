@@ -44,17 +44,9 @@
 
 </div>
 
-{{-- script used to refresh a page if a set time has elapsed and to open the modal in the same way as it was opened before the reload to keep the input values, this prevents the user filling in a form then it failing because their session has ended --}}
 @pushOnce('scripts')
   <script type="module">
     let doneOld = false;
-    $(() => {
-      const modal = K.urlParam('modal'),
-        success = {{ session()->has('success') ? 0 : 1 }};
-      if (success && modal)
-        $(`#${modal}`).trigger('click');
-      else K.removeURLParam('modal');
-    });
 
     document.addEventListener('alpine:init', () => {
       Alpine.data('modal', () => ({
@@ -76,7 +68,7 @@
             const $root = $(this.$root),
               element = key.split('.')[0],
               field = key.split('.')[1],
-              $el = $root.find('[x-ref=' + element + ']');
+              $el = $root.find('[ref=' + element + ']');
 
             if (!$el) return;
 
@@ -118,18 +110,18 @@
               });
             } else if (element == 'week') { // specific to the week modal
 
-              const $body = $root.find('[x-ref=body]');
-              let $row = $root.find('[x-ref=row]').first().detach();
-              $root.find('[x-ref=row]').remove();
+              const $body = $root.find('[ref=body]');
+              let $row = $root.find('[ref=row]').first().detach();
+              $root.find('[ref=row]').remove();
 
               K.each(value.routes, (i, r) => {
                 $row = $row.clone();
                 $body.append($row);
-                $('[x-ref=id]', $row).val(r.id);
-                $('[x-ref=invoice_mileage]', $row).val(r.invoice_mileage);
-                $('[x-ref=bonus]', $row).val(r.bonus);
-                $('[x-ref=vat]', $row).prop('checked', r.vat);
-                $('[x-ref=date]', $row).text(dayjs(r.date).format('ddd, MMM D'));
+                $('[ref=id]', $row).val(r.id);
+                $('[ref=invoice_mileage]', $row).val(r.invoice_mileage);
+                $('[ref=bonus]', $row).val(r.bonus);
+                $('[ref=vat]', $row).prop('checked', r.vat);
+                $('[ref=date]', $row).text(dayjs(r.date).format('ddd, MMM D'));
               });
 
             } else if (field == 'data') {
@@ -172,7 +164,6 @@
               $el.attr(field, value);
             }
 
-            {{-- console.log($el, field, value); --}}
           });
 
           doneOld && $('.text-red-600', this.$root).remove();
@@ -185,6 +176,14 @@
           K.removeURLParam('modal');
         }
       }));
+    });
+
+    document.addEventListener('alpine:initialized', () => {
+      const modal = K.urlParam('modal'),
+        success = {{ session()->has('success') ? 0 : 1 }};
+      if (success && modal)
+        $(`#${modal}`).trigger('click');
+      else K.removeURLParam('modal');
     });
   </script>
 @endPushOnce

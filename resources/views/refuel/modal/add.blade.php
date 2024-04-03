@@ -8,8 +8,8 @@
   name="add-refuel"
   help-root>
   {{-- modal content --}}
-  <form x-ref="form"
-    class="{{ $gap }} flex flex-col"
+  <form class="{{ $gap }} flex flex-col"
+    ref="form"
     method="POST"
     enctype="multipart/form-data"
     action="{{ route('refuel.add', $vehicle->id) ?? '' }}">
@@ -17,8 +17,8 @@
 
     {{-- modal header --}}
     <div class="flex items-center justify-between">
-      <div x-ref="title"
-        class="font-extralight uppercase tracking-wider">
+      <div class="font-extralight uppercase tracking-wider"
+        ref="title">
         {{ Msg::add(__('refuel')) }}
       </div>
 
@@ -53,10 +53,10 @@
           :value="__('date')"
           :help="__('The date of the refuel. This will be used to both sort the refuels and to find the most accurate cost per mile on your routes.')">
 
-          <x-form.date x-ref="{{ $key }}"
-            class="block w-full"
+          <x-form.date class="block w-full"
             id="{{ $key }}"
-            name="{{ $key }}" />
+            name="{{ $key }}"
+            ref="{{ $key }}" />
 
         </x-form.wrap>
 
@@ -67,11 +67,11 @@
           :value="__('odometer reading')"
           :help="__('The reading from your odometer when you fill the tank. You have to completely fill the tank to get an accurate reading of how many miles since the last refill it cost to fill up.')">
 
-          <x-form.text x-ref="{{ $key }}"
-            class="block w-full"
+          <x-form.text class="block w-full"
             id="{{ $key }}"
             name="{{ $key }}"
             type="number"
+            ref="{{ $key }}"
             :placeholder="__('Please enter reading...')" />
 
         </x-form.wrap>
@@ -83,11 +83,11 @@
           :value="__('cost to refuel')"
           :help="__('The amount the refuel cost. This has help to show the exact cost per mile since the last refuel.')">
 
-          <x-form.text-prefix x-ref="{{ $key }}"
-            class="block w-full"
+          <x-form.text-prefix class="block w-full"
             id="{{ $key }}"
             name="{{ $key }}"
             type="number"
+            ref="{{ $key }}"
             :placeholder="__('Please enter value...')"
             step="0.01">
 
@@ -99,9 +99,9 @@
 
         {{-- first input --}}
         <div>
-          <x-form.check x-ref="first"
-            id="first"
+          <x-form.check id="first"
             name="first"
+            ref="first"
             label="{{ __('Have you skipped any refuels to this one OR is this the first?') }}" />
 
           <x-form.error class="mt-2"
@@ -111,7 +111,7 @@
 
       {{-- image --}}
       @define($key = 'image')
-      <x-form.wrap x-ref="image-wrap"
+      <x-form.wrap ref="image-wrap"
         :key="$key"
         :value="__('receipt')"
         :help="__('Add a photo of your receipt. This will be kept available to you for tax purposes.')">
@@ -124,10 +124,10 @@
     </div>
 
     <div class="{{ $gap }} flex justify-between">
-      <x-button.danger x-ref="destroy"
-        x-data=""
+      <x-button.danger x-data=""
         x-on:click.prevent="$dispatch('open-modal', 'destroy-refuel')"
-        class="no-loader">
+        class="no-loader"
+        ref="destroy">
         {{ __('delete') }}
       </x-button.danger>
 
@@ -139,7 +139,7 @@
           {{ __('cancel') }}
         </x-button.light>
 
-        <x-button.dark x-ref="submit">
+        <x-button.dark ref="submit">
           {{ __('add') }}
         </x-button.dark>
       </div>

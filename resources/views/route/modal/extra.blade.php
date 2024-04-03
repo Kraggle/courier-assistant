@@ -17,15 +17,15 @@
       </div>
     </div>
 
-    <x-form.section x-ref="note-wrap"
+    <x-form.section ref="note-wrap"
       :label="__('note')">
-      <p x-ref="note"
-        class="-m-2"></p>
+      <p class="-m-2"
+        ref="note"></p>
     </x-form.section>
 
-    <x-form.section x-ref="bonus-wrap"
+    <x-form.section ref="bonus-wrap"
       :label="__('bonus')">
-      <p class="-m-2">£<span x-ref="bonus"></span></p>
+      <p class="-m-2">£<span ref="bonus"></span></p>
     </x-form.section>
 
     <div class="{{ $gap }} flex justify-end">

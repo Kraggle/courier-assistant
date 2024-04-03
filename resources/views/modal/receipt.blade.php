@@ -18,19 +18,19 @@
       </div>
     </div>
 
-    <img x-ref="image"
-      src="{{ Vite::asset('resources/images/no-image.svg') }}">
+    <img src="{{ Vite::asset('resources/images/no-image.svg') }}"
+      ref="image">
 
     {{-- submit --}}
     <div class="{{ $gap }} flex justify-end">
-      <form x-ref="form"
+      <form ref="form"
         method="POST"
         action="">
         @csrf
 
-        <input x-ref="path"
-          name="path"
-          type="hidden" />
+        <input name="path"
+          type="hidden"
+          ref="path" />
 
         <x-button.dark color="no-loader bg-green-700 hover:bg-green-600 focus:bg-green-600 active:bg-green-800">
           {{ __('download') }}
