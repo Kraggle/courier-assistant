@@ -116,6 +116,7 @@
     @include('route.modal.add')
     @include('route.modal.week')
     @include('route.modal.bulk')
+    @include('route.modal.extra')
     @include('route.modal.destroy')
     @include('rate.modal.add')
     @include('modal.export')
