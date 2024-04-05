@@ -2,7 +2,7 @@
 
 @endphp
 
-<x-layout.app :title="__('map test')">
+<x-layout.app :title="__('map')">
 
   <div class="absolute -top-96 w-[84%] max-w-[500px] rounded-br-md bg-white p-3 font-sans shadow-md"
     id="search-card">

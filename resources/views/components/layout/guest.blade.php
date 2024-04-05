@@ -14,7 +14,7 @@
       '7xl' => 'sm:max-w-7xl',
   ][$maxWidth];
 
-  $title = ($title ? __(':Title ☼ ', ['title' => $title]) : '') . config('app.name', 'Laravel');
+  $title = ($title ? __(':Title - ', ['title' => $title]) : '') . config('app.name', 'Laravel');
 @endphp
 
 <!DOCTYPE html>
