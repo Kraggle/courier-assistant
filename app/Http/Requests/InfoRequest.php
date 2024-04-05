@@ -22,10 +22,8 @@ class InfoRequest extends FormRequest {
             'id' => ['nullable', 'integer', 'exists:info,id'],
             'lat' => ['required', 'numeric'],
             'lng' => ['required', 'numeric'],
-            'name' => ['nullable', 'string', 'max:55', 'required_without:note'],
-            'year' => ['nullable', 'integer', 'min:1900', 'max:2222', 'required_with:name'],
-            'address' => ['nullable', 'string', 'required_with:name'],
-            'note' => ['nullable', 'string', 'required_without:name'],
+            'address' => ['required', 'string'],
+            'note' => ['required', 'string'],
         ];
     }
 
@@ -38,7 +36,7 @@ class InfoRequest extends FormRequest {
 
     public function messages(): array {
         return [
-            'lng.required' => __('Something went wrong. Please close the dialog and try again.'),
+            'lng.required' => __('Something went wrong. Please refresh the page.'),
         ];
     }
 }

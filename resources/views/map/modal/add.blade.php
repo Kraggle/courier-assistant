@@ -53,38 +53,6 @@
     <x-form.error class="mt-2"
       :messages="$errors->get($key)" />
 
-    <div class="{{ $gap }} grid grid-cols-3">
-      {{-- name --}}
-      @define($key = 'name')
-      <x-form.wrap class="col-span-2"
-        :key="$key"
-        :value="__('first name')"
-        :help="__('The first name of the customer at this location.')">
-
-        <x-form.text class="block w-full"
-          id="{{ $key }}"
-          name="{{ $key }}"
-          ref="{{ $key }}"
-          placeholder="Jeff" />
-
-      </x-form.wrap>
-
-      {{-- year --}}
-      @define($key = 'year')
-      <x-form.wrap :key="$key"
-        :value="__('year of birth')"
-        :help="__('The year the customer was born.')">
-
-        <x-form.text class="block w-full"
-          id="{{ $key }}"
-          name="{{ $key }}"
-          type="number"
-          ref="{{ $key }}"
-          placeholder="1987" />
-
-      </x-form.wrap>
-    </div>
-
     {{-- address --}}
     @define($key = 'address')
     <x-form.wrap :key="$key"
@@ -109,7 +77,7 @@
         id="{{ $key }}"
         name="{{ $key }}"
         ref="{{ $key }}"
-        :placeholder="__('Optional')" />
+        :placeholder="__('The note you want to either save for future reference or share with other users')" />
 
     </x-form.wrap>
 

@@ -339,8 +339,6 @@ function markerHandlers(marker) {
 				'lat.value': data.position.lat,
 				'lng.value': data.position.lng,
 				'address.value': data.address,
-				'name.value': data.name,
-				'year.value': data.year,
 				'note.value': data.note,
 				'destroy.removeclass': 'hidden',
 				'destroy.data': {
@@ -365,11 +363,6 @@ function markerHandlers(marker) {
 			return;
 		}
 
-		if ($src.hasClass('name')) {
-			toClipboard($src.data('name'));
-			return;
-		}
-
 		if ($src.hasClass('move')) {
 			if (marker.gmpDraggable) {
 				marker.content.classList.remove("moving");
@@ -389,8 +382,6 @@ function markerHandlers(marker) {
 				'lat.value': marker.position.lat,
 				'lng.value': marker.position.lng,
 				'address.value': marker.address,
-				'name.value': '',
-				'year.value': '',
 				'note.value': '',
 				'destroy.addclass': 'hidden',
 				'submit.text': _K.str.add
@@ -553,25 +544,6 @@ function buildContent(data = null) {
 				html: splitAddress(data.address)
 			}).appendTo($detail);
 		}
-
-		// if (data.name && data.year) {
-		// 	const $name = $('<div />', {
-		// 		class: 'name-wrap'
-		// 	}).appendTo($detail);
-
-		// 	$('<div />', {
-		// 		class: 'name',
-		// 		data: {
-		// 			name: data.name
-		// 		},
-		// 		html: '<span class="pointer-events-none">' + data.name + '</span><i class="pointer-events-none fa-regular fa-copy">'
-		// 	}).appendTo($name);
-
-		// 	$('<div />', {
-		// 		class: 'year',
-		// 		text: data.year
-		// 	}).appendTo($name);
-		// }
 
 		if (data.note) {
 			$('<div />', {

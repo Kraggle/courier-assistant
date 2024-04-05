@@ -11,13 +11,6 @@ use Illuminate\Support\Facades\Gate;
 
 class InfoController extends Controller {
     function show() {
-        Info::where('name', '<>', '')->get()->each(function ($item) {
-            $item->note = "$item->name - $item->year" . ($item->note ? "\n$item->note" : '');
-            $item->name = null;
-            $item->year = null;
-            $item->save();
-        });
-
         return view('map.show');
     }
 

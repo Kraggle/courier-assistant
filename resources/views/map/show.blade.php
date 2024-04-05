@@ -34,8 +34,6 @@
         'lat.value' => old('lat', ''),
         'lng.value' => old('lng', ''),
         'address.value' => old('address', ''),
-        'name.value' => old('name', ''),
-        'year.value' => old('year', ''),
         'note.value' => old('note', ''),
         'destroy.addclass' => 'hidden',
         'submit.text' => __('add'),
@@ -53,8 +51,6 @@
         'lat.value' => old('lat', ''),
         'lng.value' => old('lng', ''),
         'address.value' => old('address', ''),
-        'name.value' => old('name', ''),
-        'year.value' => old('year', ''),
         'note.value' => old('note', ''),
         'destroy.' . (old('id') ? 'removeclass' : 'addclass') => 'hidden',
         'destroy.data' => [
@@ -193,15 +189,8 @@
     }
 
     .marker .note {
-      color: #858585;
-      font-size: 12px;
+      font-size: 13px;
       max-width: 200px;
-    }
-
-    .marker .name-wrap {
-      display: flex;
-      gap: 10px;
-      justify-content: space-between;
     }
 
     .marker .fa-copy {
