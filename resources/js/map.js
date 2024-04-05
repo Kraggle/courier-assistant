@@ -529,7 +529,7 @@ function buildContent(data = null) {
 	});
 
 	let icon = $('<i />');
-	if (data && data.name && data.year)
+	if (data && data.note && data.note.bMatch(/\b\d{4}\b/))
 		icon.addClass('fa-solid fa-user');
 	else
 		icon.addClass('fa-solid fa-note');
@@ -554,28 +554,28 @@ function buildContent(data = null) {
 			}).appendTo($detail);
 		}
 
-		if (data.name && data.year) {
-			const $name = $('<div />', {
-				class: 'name-wrap'
-			}).appendTo($detail);
+		// if (data.name && data.year) {
+		// 	const $name = $('<div />', {
+		// 		class: 'name-wrap'
+		// 	}).appendTo($detail);
 
-			$('<div />', {
-				class: 'name',
-				data: {
-					name: data.name
-				},
-				html: '<span class="pointer-events-none">' + data.name + '</span><i class="pointer-events-none fa-regular fa-copy">'
-			}).appendTo($name);
+		// 	$('<div />', {
+		// 		class: 'name',
+		// 		data: {
+		// 			name: data.name
+		// 		},
+		// 		html: '<span class="pointer-events-none">' + data.name + '</span><i class="pointer-events-none fa-regular fa-copy">'
+		// 	}).appendTo($name);
 
-			$('<div />', {
-				class: 'year',
-				text: data.year
-			}).appendTo($name);
-		}
+		// 	$('<div />', {
+		// 		class: 'year',
+		// 		text: data.year
+		// 	}).appendTo($name);
+		// }
 
 		if (data.note) {
 			$('<div />', {
-				class: 'note',
+				class: 'note whitespace-pre-wrap',
 				text: data.note
 			}).appendTo($detail);
 		}
