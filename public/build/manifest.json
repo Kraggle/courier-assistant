@@ -3,9 +3,13 @@
     "file": "assets/K-htdgs9CQ.js"
   },
   "resources/css/app.css": {
-    "file": "assets/app-Io1WSlkn.css",
+    "file": "assets/app-5c_ivlvu.css",
     "isEntry": true,
     "src": "resources/css/app.css"
+  },
+  "resources/images/bg.png": {
+    "file": "assets/bg-6yxviMgq.png",
+    "src": "resources/images/bg.png"
   },
   "resources/images/flags/bg.svg": {
     "file": "assets/bg-N-ikBhgk.svg",
@@ -71,7 +75,7 @@
     "css": [
       "assets/app-C64i7G0l.css"
     ],
-    "file": "assets/app-EDZUe-ZN.js",
+    "file": "assets/app-ECawtgEV.js",
     "imports": [
       "_K-htdgs9CQ.js"
     ],

@@ -23,3 +23,9 @@ input[type="number"] {
 .required input:placeholder-shown {
     border-color: rgb(167, 139, 250);
 }
+
+.bg-pattern {
+    background-image: url("../images/bg.png");
+    background-repeat: repeat;
+    background-size: 250px 250px;
+}

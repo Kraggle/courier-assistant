@@ -66,7 +66,7 @@
 </head>
 
 <body class="bg-gray-100 font-sans text-lg antialiased">
-  <div class="flex min-h-screen flex-col gap-6 bg-gray-100 md:gap-8">
+  <div class="bg-pattern flex min-h-screen flex-col gap-6 md:gap-8">
     <x-layout.navigation />
 
     {{-- Page Content --}}
