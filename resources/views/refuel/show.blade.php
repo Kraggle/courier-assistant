@@ -1,7 +1,7 @@
 @define($refuels = $vehicle->refuels)
 
 <x-layout.app :title="__('refuels')">
-  <x-section.wrap px="">
+  <x-section.one px="">
     <x-tab.link-wrap class="mb-4 px-4 text-2xl font-medium text-gray-900 md:mb-5 md:px-6">
       <x-slot name="tabs">
         @foreach ($user->vehiclesByDate() as $v)
@@ -157,7 +157,7 @@
 
     </div>
 
-  </x-section.wrap>
+  </x-section.one>
 
   @include('refuel.modal.add')
   @include('refuel.modal.bulk')

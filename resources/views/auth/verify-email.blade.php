@@ -1,7 +1,7 @@
 @define($gap = 'gap-4')
 
 <x-layout.app :center="true">
-  <x-section.wrap class="self-center"
+  <x-section.one class="self-center"
     maxWidth="md">
 
     <div class="{{ $gap }} flex flex-col">
@@ -40,5 +40,5 @@
       </div>
     </div>
 
-  </x-section.wrap>
+  </x-section.one>
 </x-layout.app>

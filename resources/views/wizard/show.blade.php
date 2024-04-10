@@ -7,7 +7,7 @@
 
   @if (!$user->hasDSP())
 
-    <x-section.wrap maxWidth="md">
+    <x-section.one maxWidth="md">
       <form class="{{ $gap }} flex flex-col"
         method="POST"
         action="{{ route('dsp.attach') }}">
@@ -76,9 +76,9 @@
         </div>
 
       </form>
-    </x-section.wrap>
+    </x-section.one>
 
-    <x-section.wrap maxWidth="md">
+    <x-section.one maxWidth="md">
       <form class="{{ $gap }} flex flex-col"
         method="POST"
         action="{{ route('dsp.create') }}">
@@ -124,9 +124,9 @@
         </div>
 
       </form>
-    </x-section.wrap>
+    </x-section.one>
   @elseif (!$user->hasVehicle())
-    <x-section.wrap maxWidth="md">
+    <x-section.one maxWidth="md">
       <form class="{{ $gap }} flex flex-col"
         method="POST"
         help-root
@@ -165,11 +165,11 @@
         </div>
 
       </form>
-    </x-section.wrap>
+    </x-section.one>
   @elseif(!$user->hasDepot())
     <div class="flex flex-col gap-[inherit]"
       help-root>
-      <x-section.wrap maxWidth="md">
+      <x-section.one maxWidth="md">
         <form class="{{ $gap }} flex flex-col"
           method="POST"
           action="{{ route('user.options') }}">
@@ -224,9 +224,9 @@
           </div>
 
         </form>
-      </x-section.wrap>
+      </x-section.one>
 
-      <x-section.wrap maxWidth="md">
+      <x-section.one maxWidth="md">
         <form class="{{ $gap }} flex flex-col"
           method="POST"
           action="{{ route('depot.store') }}">
@@ -274,10 +274,10 @@
           </div>
 
         </form>
-      </x-section.wrap>
+      </x-section.one>
     </div>
   @elseif(!$user->hasRate())
-    <x-section.wrap maxWidth="md">
+    <x-section.one maxWidth="md">
       <form class="{{ $gap }} flex flex-col"
         help-root
         method="POST"
@@ -377,10 +377,10 @@
         </div>
 
       </form>
-    </x-section.wrap>
+    </x-section.one>
   @else
-    <x-section.wrap maxWidth="md">
+    <x-section.one maxWidth="md">
       <p class="text-center">You appear to have arrived somewhere you shouldn't have. You clever thing you!</p>
-    </x-section.wrap>
+    </x-section.one>
   @endif
 </x-layout.app>

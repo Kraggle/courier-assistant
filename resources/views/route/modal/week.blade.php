@@ -17,13 +17,10 @@
     @method('PATCH')
 
     {{-- modal header --}}
-    <div class="flex items-center justify-between px-4 md:px-6">
-      <div class="flex gap-2 font-extralight uppercase tracking-wider">
-        <span>{{ __('update week') }}</span>
-        <span ref="title"></span>
-      </div>
-
-    </div>
+    <x-modal.header>
+      <span>{{ __('update week') }}</span>
+      <span ref="title"></span>
+    </x-modal.header>
 
     <table class="w-full table-auto whitespace-nowrap text-sm sm:text-base">
       <x-table.thead>

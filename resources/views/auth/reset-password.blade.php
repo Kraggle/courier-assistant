@@ -1,7 +1,7 @@
 @define($gap = 'gap-4')
 
 <x-layout.app :center="true">
-  <x-section.wrap class="self-center"
+  <x-section.one class="self-center"
     maxWidth="lg">
 
     <form class="{{ $gap }} flex flex-col"
@@ -9,7 +9,7 @@
       action="{{ route('password.store') }}">
       @csrf
 
-      <h1 class="text-center font-serif text-xl font-light uppercase tracking-widest text-gray-400">{{ __('Reset your password') }}</h1>
+      <x-modal.header :title="__('Reset your password')" />
 
       {{-- Password Reset Token --}}
       <input name="token"
@@ -64,5 +64,5 @@
       </div>
     </form>
 
-  </x-section.wrap>
+  </x-section.one>
 </x-layout.app>

@@ -22,16 +22,8 @@
       ref="method">
 
     {{-- modal header --}}
-    <div class="flex items-center justify-between">
-      <div class="font-extralight uppercase tracking-wider"
-        ref="title">
-      </div>
-
-      <x-icon class="far fa-circle-question cursor-pointer"
-        data-help-trigger="false"
-        :title="__('Toggle help text!')" />
-
-    </div>
+    <x-modal.header title="none"
+      :help="true" />
 
     @define($key = 'id')
     <input id="{{ $key }}"

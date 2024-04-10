@@ -16,12 +16,7 @@
     @method('PATCH')
 
     {{-- modal header --}}
-    <div class="flex items-center justify-between">
-      <div class="font-extralight uppercase tracking-wider"
-        ref="title">
-        {{ Msg::bulkTitle(__('rates')) }}
-      </div>
-    </div>
+    <x-modal.header :title="Msg::bulkTitle(__('rates'))" />
 
     <div>
       <p class="text-sm">

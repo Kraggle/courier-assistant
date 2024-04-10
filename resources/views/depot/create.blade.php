@@ -1,6 +1,6 @@
 <x-layout.app :title="__('depot')">
 
-  <x-section.wrap class="sm:mx-auto sm:max-w-2xl">
+  <x-section.one class="sm:mx-auto sm:max-w-2xl">
     <h1 class="text-2xl">{{ Msg::add(__('depot')) }}</h1>
 
     <form ref="form"
@@ -44,6 +44,6 @@
       </div>
 
     </form>
-  </x-section.wrap>
+  </x-section.one>
 
 </x-layout.app>

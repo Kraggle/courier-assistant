@@ -25,13 +25,7 @@
       ref="{{ $key }}">
 
     {{-- modal header --}}
-    <div class="flex items-center justify-between">
-      <div class="font-extralight uppercase tracking-wider"
-        ref="title">
-        {{ Msg::delete(__('Location Information')) }}
-      </div>
-    </div>
-
+    <x-modal.header :title="Msg::delete(__('Location Information'))" />
     {{-- modal content --}}
     <p class="text-sm">
       {{ Msg::sureDelete(__('Location Information')) }}

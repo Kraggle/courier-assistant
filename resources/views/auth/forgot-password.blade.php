@@ -1,7 +1,7 @@
 @define($gap = 'gap-4')
 
 <x-layout.app :center="true">
-  <x-section.wrap class="self-center"
+  <x-section.one class="self-center"
     maxWidth="lg">
 
     <form class="{{ $gap }} flex flex-col"
@@ -9,7 +9,7 @@
       action="{{ route('password.email') }}">
       @csrf
 
-      <h1 class="text-center font-serif text-xl font-light uppercase tracking-widest text-gray-400">{{ __('Forgot your password?') }}</h1>
+      <x-modal.header :title="__('Forgot your password?')" />
 
       <div class="text-sm text-gray-600">
         {{ __('No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
@@ -46,5 +46,5 @@
       </div>
     </form>
 
-  </x-section.wrap>
+  </x-section.one>
 </x-layout.app>

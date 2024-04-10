@@ -19,12 +19,7 @@
         <div class="{{ $gap }} flex flex-grow flex-col">
 
           {{-- modal header --}}
-          <div class="flex items-center justify-between">
-            <div class="font-extralight uppercase tracking-wider"
-              ref="title">
-              {{ __('Session ending') }}
-            </div>
-          </div>
+          <x-modal.header :title="__('Session ending')" />
 
           {{-- modal content --}}
           <p class="text-sm">

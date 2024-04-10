@@ -5,7 +5,7 @@
 
 <x-layout.app :title="__('DSPs')">
 
-  <x-section.wrap px="0">
+  <x-section.one px="0">
     <x-section.title class="px-4 md:px-6">
       <x-slot:title>
         {{ __('Delivery Service Providers') }}
@@ -109,7 +109,7 @@
       @endif
     </div>
 
-  </x-section.wrap>
+  </x-section.one>
 
   @include('dsp.modal.add')
   @include('dsp.modal.destroy')

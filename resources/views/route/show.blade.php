@@ -5,7 +5,7 @@
 @endphp
 
 <x-layout.app :title="__('routes')">
-  <x-section.wrap px="">
+  <x-section.one px="">
     <x-section.title class="px-4 md:px-6">
       <x-slot:title>
         {{ __('routes') }}
@@ -110,7 +110,7 @@
           color="gray-500" />
       @endif
     </div>
-  </x-section.wrap>
+  </x-section.one>
 
   @push('modals')
     @include('route.modal.add')

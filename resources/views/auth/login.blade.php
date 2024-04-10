@@ -1,7 +1,7 @@
 @define($gap = 'gap-4')
 
 <x-layout.app :center="true">
-  <x-section.wrap class="self-center"
+  <x-section.one class="self-center"
     maxWidth="md">
 
     <form class="{{ $gap }} flex flex-col"
@@ -9,7 +9,7 @@
       action="{{ route('login') }}">
       @csrf
 
-      <h1 class="text-center font-serif text-xl font-light uppercase tracking-widest text-gray-400">{{ __('Sign in') }}</h1>
+      <x-modal.header :title="__('Sign in')" />
 
       {{-- Session Status --}}
       <x-notify.status :status="session('status')" />
@@ -58,5 +58,5 @@
       </div>
     </form>
 
-  </x-section.wrap>
+  </x-section.one>
 </x-layout.app>

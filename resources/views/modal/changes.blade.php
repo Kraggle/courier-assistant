@@ -9,11 +9,8 @@
 
   <div class="{{ $gap }} flex flex-col">
     {{-- modal header --}}
-    <div class="flex items-center justify-between">
-      <div class="font-extralight uppercase tracking-wider"
-        ref="title">
-      </div>
-    </div>
+    <x-modal.header title="none"
+      :help="true" />
 
     <div class="-mx-4 overflow-x-auto md:-mx-6">
       <table class="w-full table-auto whitespace-nowrap text-xs sm:text-sm">

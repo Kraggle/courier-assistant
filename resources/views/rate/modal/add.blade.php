@@ -17,17 +17,8 @@
     @method('PUT')
 
     {{-- modal header --}}
-    <div class="flex items-center justify-between">
-      <div class="font-extralight uppercase tracking-wider"
-        ref="title">
-        {{ Msg::add(__('route')) }}
-      </div>
-
-      <x-icon class="far fa-circle-question cursor-pointer"
-        data-help-trigger="false"
-        :title="__('Toggle help text!')" />
-
-    </div>
+    <x-modal.header :title="Msg::add(__('rate'))"
+      :help="true" />
 
     <div class="hidden"
       help-message>

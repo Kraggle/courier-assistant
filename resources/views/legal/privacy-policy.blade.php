@@ -3,7 +3,7 @@
 @endphp
 
 <x-layout.app :title="$title">
-  <x-section.wrap maxWidth="5xl">
+  <x-section.one maxWidth="5xl">
 
     <div class="flex flex-col gap-2 text-sm sm:text-base">
       <h1 class="font-serif text-lg font-bold sm:text-xl">{{ $title }}</h1>
@@ -158,5 +158,5 @@
       </ul>
     </div>
 
-  </x-section.wrap>
+  </x-section.one>
 </x-layout.app>

@@ -1,5 +1,5 @@
 <x-layout.app :title="__('expenses')">
-  <x-section.wrap px="">
+  <x-section.one px="">
     <x-section.title class="px-4 md:px-6">
       <x-slot:title>
         {{ __('expenses') }}
@@ -155,7 +155,7 @@
           color="gray-500" />
       @endif
     </div>
-  </x-section.wrap>
+  </x-section.one>
 
   @include('expense.modal.add')
   @include('expense.modal.bulk')

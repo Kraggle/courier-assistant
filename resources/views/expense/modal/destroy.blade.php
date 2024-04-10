@@ -14,12 +14,8 @@
     @method('delete')
 
     {{-- modal header --}}
-    <div class="flex items-center justify-between">
-      <div class="font-extralight uppercase tracking-wider"
-        ref="title">
-        {{ Msg::delete(__('expense')) }}
-      </div>
-    </div>
+    <x-modal.header :title="Msg::delete(__('expense'))"
+      :help="true" />
 
     {{-- modal content --}}
     <p class="text-sm">

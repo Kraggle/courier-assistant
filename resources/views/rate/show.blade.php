@@ -6,7 +6,7 @@
 
 <x-layout.app :title="__('rates')">
 
-  <x-section.wrap px="0">
+  <x-section.one px="0">
     <x-section.title class="px-4 md:px-6">
       <x-slot:title>
         {{ "$dsp->name " . __('rates') }}
@@ -172,7 +172,7 @@
         <div class="px-6 pt-6 text-center">{{ Msg::noResults(__('rates')) }}</div>
       @endif
     </div>
-  </x-section.wrap>
+  </x-section.one>
 
   @include('rate.modal.add')
   @include('rate.modal.bulk')

@@ -314,6 +314,24 @@ class User extends Authenticatable {
     }
 
     /**
+     * Get the users last refuel.
+     * 
+     * @return Refuel|null
+     */
+    public function lastRefuel(): ?Refuel {
+        return $this->refuels->sortByDesc('date')->first();
+    }
+
+    /**
+     * See if the user has a refuel.
+     * 
+     * @return bool
+     */
+    public function hasRefuels(): bool {
+        return $this->refuels->count() > 0;
+    }
+
+    /**
      * See if the user has a route for the given date.
      * 
      * @param string|Carbon $date

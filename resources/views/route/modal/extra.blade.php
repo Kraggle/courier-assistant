@@ -11,11 +11,7 @@
   <div class="{{ $gap }} flex flex-col">
 
     {{-- modal header --}}
-    <div class="flex items-center justify-between">
-      <div class="font-extralight uppercase tracking-wider">
-        {{ __('Extra Information!') }}
-      </div>
-    </div>
+    <x-modal.header :title="__('Extra Information!')" />
 
     <x-form.section ref="note-wrap"
       :label="__('note')">

@@ -1,14 +1,14 @@
 @define($gap = 'gap-4')
 
 <x-layout.app :center="true">
-  <x-section.wrap class="self-center"
+  <x-section.one class="self-center"
     maxWidth="lg">
     <form class="{{ $gap }} flex flex-col"
       method="POST"
       action="{{ route('register') }}">
       @csrf
 
-      <h1 class="text-center font-serif text-xl font-light uppercase tracking-widest text-gray-400">{{ __('Create an account') }}</h1>
+      <x-modal.header :title="__('Create an account')" />
 
       {{-- name --}}
       @define($key = 'name')
@@ -76,5 +76,5 @@
         </x-button.dark>
       </div>
     </form>
-  </x-section.wrap>
+  </x-section.one>
 </x-layout.app>

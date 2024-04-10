@@ -12,104 +12,117 @@
 
 <x-layout.app :title="__('home')">
 
-  <x-section.wrap class="flex justify-center gap-3 sm:gap-6">
-    <x-button.icon x-data=""
-      x-on:click.prevent="$dispatch('open-modal', 'add-route')"
-      id="addRoute"
-      data-modal="{{ json_encode([
-          'title.text' => Msg::add(__('route')),
-          'form.action' => route('route.add'),
-          'type.value' => old('type', $last_route->type ?? '-1'),
-          'depot_id.value' => old('depot_id', $last_route->depot_id ?? $user->options->depot_id),
-          'date.value' => old('date', now()->format('Y-m-d')),
-          'start_time.value' => old('start_time', K::date($last_route->start_time ?? now())->format('g:i A')),
-          'end_time.value' => old('end_time', ''),
-          'start_mileage.value' => old('start_mileage', ''),
-          'start_mileage_plus.value' => old('start_mileage_plus', ''),
-          'end_mileage.value' => old('end_mileage', ''),
-          'end_mileage_plus.value' => old('end_mileage_plus', ''),
-          'invoice_mileage.value' => old('invoice_mileage', ''),
-          'stops.value' => old('stops', ''),
-          'bonus.value' => old('bonus', ''),
-          'vat.checked' => old('vat', $last_route->vat ?? 0),
-          'ttfs.value' => old('ttfs', $last_route->ttfs ?? 60),
-          'note.value' => old('note', ''),
-          'destroy.addclass' => 'hidden',
-          'submit.text' => 'add',
-      ]) }}"
-      color="bg-orange-600 hover:bg-orange-700 focus:bg-orange-700 active:bg-orange-700"
-      icon="fa-thin fa-compass">
-      <span class="block">{{ Msg::add(__('route')) }}</span>
-    </x-button.icon>
+  <x-section.two grid="grid-cols-1 lg:grid-cols-[auto_1fr]">
+    <x-slot:one
+      class="flex justify-center gap-3 sm:gap-6">
+      <x-button.icon x-data=""
+        x-on:click.prevent="$dispatch('open-modal', 'add-route')"
+        id="addRoute"
+        data-modal="{{ json_encode([
+            'title.text' => Msg::add(__('route')),
+            'form.action' => route('route.add'),
+            'type.value' => old('type', $last_route->type ?? '-1'),
+            'depot_id.value' => old('depot_id', $last_route->depot_id ?? $user->options->depot_id),
+            'date.value' => old('date', now()->format('Y-m-d')),
+            'start_time.value' => old('start_time', K::date($last_route->start_time ?? now())->format('g:i A')),
+            'end_time.value' => old('end_time', ''),
+            'start_mileage.value' => old('start_mileage', ''),
+            'start_mileage_plus.value' => old('start_mileage_plus', ''),
+            'end_mileage.value' => old('end_mileage', ''),
+            'end_mileage_plus.value' => old('end_mileage_plus', ''),
+            'invoice_mileage.value' => old('invoice_mileage', ''),
+            'stops.value' => old('stops', ''),
+            'bonus.value' => old('bonus', ''),
+            'vat.checked' => old('vat', $last_route->vat ?? 0),
+            'ttfs.value' => old('ttfs', $last_route->ttfs ?? 60),
+            'note.value' => old('note', ''),
+            'destroy.addclass' => 'hidden',
+            'submit.text' => 'add',
+        ]) }}"
+        color="bg-orange-600 hover:bg-orange-700 focus:bg-orange-700 active:bg-orange-700"
+        icon="fa-thin fa-compass">
+        <span class="block">{{ Msg::add(__('route')) }}</span>
+      </x-button.icon>
 
-    <x-button.icon x-data=""
-      x-on:click.prevent="$dispatch('open-modal', 'add-refuel')"
-      id="addRefuel"
-      data-modal="{{ json_encode([
-          'title.text' => Msg::add(__('refuel')),
-          'form.action' => route('refuel.add', $vehicle->id ?? 1),
-          'date.value' => old('date', now()->format('Y-m-d')),
-          'mileage.value' => old('mileage', ''),
-          'cost.value' => old('cost', ''),
-          'first.checked' => old('first', false),
-          'image-wrap.set-inputs' => old('image-wrap', ''),
-          'image-wrap.set-img' => Vite::asset('resources/images/no-image.svg'),
-          'destroy.addclass' => 'hidden',
-          'submit.text' => __('add'),
-      ]) }}"
-      color="bg-lime-600 hover:bg-lime-700 focus:bg-lime-700 active:bg-lime-700"
-      icon="fa-thin fa-gas-pump">
-      <span class="block">{{ Msg::add(__('refuel')) }}</span>
-    </x-button.icon>
+      <x-button.icon x-data=""
+        x-on:click.prevent="$dispatch('open-modal', 'add-refuel')"
+        id="addRefuel"
+        data-modal="{{ json_encode([
+            'title.text' => Msg::add(__('refuel')),
+            'form.action' => route('refuel.add', $vehicle->id ?? 1),
+            'date.value' => old('date', now()->format('Y-m-d')),
+            'mileage.value' => old('mileage', ''),
+            'cost.value' => old('cost', ''),
+            'first.checked' => old('first', false),
+            'image-wrap.set-inputs' => old('image-wrap', ''),
+            'image-wrap.set-img' => Vite::asset('resources/images/no-image.svg'),
+            'destroy.addclass' => 'hidden',
+            'submit.text' => __('add'),
+        ]) }}"
+        color="bg-lime-600 hover:bg-lime-700 focus:bg-lime-700 active:bg-lime-700"
+        icon="fa-thin fa-gas-pump">
+        <span class="block">{{ Msg::add(__('refuel')) }}</span>
+      </x-button.icon>
 
-    <x-button.icon x-data=""
-      x-on:click.prevent="$dispatch('open-modal', 'add-rate')"
-      id="addRate"
-      data-modal="{{ json_encode([
-          'title.text' => Msg::add(__('rate')),
-          'form.action' => route('rate.add'),
-          'type.value' => old('type', '-1'),
-          'date.value' => old('date', now()->format('Y-m-d')),
-          'depot_id.value' => old('depot_id', $user->options->depot_id),
-          'amount.value' => old('amount', ''),
-          'destroy.addclass' => 'hidden',
-          'submit.text' => __('add'),
-      ]) }}"
-      color="bg-teal-600 hover:bg-teal-700 focus:bg-teal-700 active:bg-teal-700"
-      icon="fa-thin fa-chart-simple">
-      <span class="block">{{ Msg::add(__('rate')) }}</span>
-    </x-button.icon>
+      <x-button.icon x-data=""
+        x-on:click.prevent="$dispatch('open-modal', 'add-rate')"
+        id="addRate"
+        data-modal="{{ json_encode([
+            'title.text' => Msg::add(__('rate')),
+            'form.action' => route('rate.add'),
+            'type.value' => old('type', '-1'),
+            'date.value' => old('date', now()->format('Y-m-d')),
+            'depot_id.value' => old('depot_id', $user->options->depot_id),
+            'amount.value' => old('amount', ''),
+            'destroy.addclass' => 'hidden',
+            'submit.text' => __('add'),
+        ]) }}"
+        color="bg-teal-600 hover:bg-teal-700 focus:bg-teal-700 active:bg-teal-700"
+        icon="fa-thin fa-chart-simple">
+        <span class="block">{{ Msg::add(__('rate')) }}</span>
+      </x-button.icon>
 
-    <x-button.icon x-data=""
-      x-on:click.prevent="$dispatch('open-modal', 'add-expense')"
-      id="addExpense"
-      data-modal="{{ json_encode([
-          'title.text' => Msg::add(__('expense')),
-          'form.action' => route('expense.add'),
-          'date.value' => old('date', now()->format('Y-m-d')),
-          'type.value' => old('type', '-1'),
-          'describe.value' => old('describe', ''),
-          'cost.value' => old('cost', null),
-          'image-wrap.set-inputs' => old('image', ''),
-          'image-wrap.set-img' => Vite::asset('resources/images/no-image.svg'),
-          'destroy.addclass' => 'hidden',
-          'submit.text' => __('add'),
-      ]) }}"
-      color="bg-blue-600 hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-700"
-      icon="fa-thin fa-file-invoice">
-      <span class="block">{{ Msg::add(__('expense')) }}</span>
-    </x-button.icon>
+      <x-button.icon x-data=""
+        x-on:click.prevent="$dispatch('open-modal', 'add-expense')"
+        id="addExpense"
+        data-modal="{{ json_encode([
+            'title.text' => Msg::add(__('expense')),
+            'form.action' => route('expense.add'),
+            'date.value' => old('date', now()->format('Y-m-d')),
+            'type.value' => old('type', '-1'),
+            'describe.value' => old('describe', ''),
+            'cost.value' => old('cost', null),
+            'image-wrap.set-inputs' => old('image', ''),
+            'image-wrap.set-img' => Vite::asset('resources/images/no-image.svg'),
+            'destroy.addclass' => 'hidden',
+            'submit.text' => __('add'),
+        ]) }}"
+        color="bg-blue-600 hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-700"
+        icon="fa-thin fa-file-invoice">
+        <span class="block">{{ Msg::add(__('expense')) }}</span>
+      </x-button.icon>
+    </x-slot:one>
 
-    {{-- <x-button.icon :href="route('map.show')"
-      color="bg-yellow-600 hover:bg-yellow-700 focus:bg-yellow-700 active:bg-yellow-700"
-      icon="fa-thin fa-map-location-dot">
-      <span class="block">{{ __('map') }}</span>
-    </x-button.icon> --}}
+    <x-slot:two
+      class="grid grid-cols-1 content-center justify-center gap-1 md:gap-3">
+      <div class="text-center font-serif text-lg font-light uppercase tracking-widest text-gray-400 md:text-xl">{{ __('Current fuel rate') }}</div>
+      <div class="mx-auto flex place-items-center gap-3">
+        <x-icon class="fat fa-gauge-low text-3xl text-gray-400 md:text-4xl" />
+        @if ($user->hasRefuels())
+          <span class="text-xl text-gray-700 md:text-2xl">{{ K::formatCurrency($user->lastRefuel()->fuel_rate) }}</span>
+        @else
+          <span class="text-gray-400">
+            {{ __('Not yet added a refuel!') }}
+          </span>
+        @endif
+      </div>
 
-  </x-section.wrap>
+    </x-slot:two>
+
+  </x-section.two>
 
   @define($tab = request()->get('tab') ?? 0)
-  <x-section.wrap x-data="{ activeTab: {{ $tab }} }"
+  <x-section.one x-data="{ activeTab: {{ $tab }} }"
     px="">
     <x-tab.link-wrap class="mb-4 px-4 text-2xl font-medium text-gray-900 md:mb-5 md:px-6">
       <x-slot:tabs>
@@ -405,7 +418,7 @@
 
     </x-tab.content-wrap>
 
-  </x-section.wrap>
+  </x-section.one>
 
   @push('modals')
     @include('route.modal.add')

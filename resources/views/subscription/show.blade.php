@@ -3,7 +3,7 @@
 @endphp
 
 <x-layout.app :center="true">
-  <x-section.wrap maxWidth="xl"
+  <x-section.one maxWidth="xl"
     px=""
     py="">
 
@@ -90,7 +90,7 @@
       </x-modal>
     @endPush
 
-  </x-section.wrap>
+  </x-section.one>
 </x-layout.app>
 
 @vite(['resources/js/stripe.js'])

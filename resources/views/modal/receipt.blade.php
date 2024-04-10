@@ -12,11 +12,7 @@
   <div class="{{ $gap }} flex flex-col">
 
     {{-- modal header --}}
-    <div class="flex items-center justify-between">
-      <div class="font-extralight uppercase tracking-wider">
-        {{ __('receipt') }}
-      </div>
-    </div>
+    <x-modal.header :title="__('receipt')" />
 
     <img src="{{ Vite::asset('resources/images/no-image.svg') }}"
       ref="image">

@@ -3,7 +3,7 @@
 <x-layout.app :title="__('profile')">
 
   {{-- profile --}}
-  <x-section.wrap class="{{ $gap }} flex flex-col"
+  <x-section.one class="{{ $gap }} flex flex-col"
     maxWidth="2xl">
     <h2 class="text-lg font-medium capitalize text-gray-900">
       {{ __('profile information') }}
@@ -71,10 +71,10 @@
         <x-button.dark>{{ __('save') }}</x-button.dark>
       </div>
     </form>
-  </x-section.wrap>
+  </x-section.one>
 
   {{-- update password --}}
-  <x-section.wrap class="{{ $gap }} flex flex-col"
+  <x-section.one class="{{ $gap }} flex flex-col"
     maxWidth="2xl">
     <h2 class="text-lg font-medium capitalize text-gray-900">
       {{ __('update password') }}
@@ -133,10 +133,10 @@
         <x-button.dark>{{ __('save') }}</x-button.dark>
       </div>
     </form>
-  </x-section.wrap>
+  </x-section.one>
 
   {{-- subscription --}}
-  <x-section.wrap class="{{ $gap }} flex flex-col"
+  <x-section.one class="{{ $gap }} flex flex-col"
     maxWidth="2xl">
     <h2 class="text-lg font-medium capitalize text-gray-900">
       {{ __('subscription') }}
@@ -188,10 +188,10 @@
         <x-button.dark :href="route('subscription')">{{ __('subscribe') }}</x-button.dark>
       </div>
     @endif
-  </x-section.wrap>
+  </x-section.one>
 
   {{-- delete --}}
-  <x-section.wrap class="{{ $gap }} flex flex-col"
+  <x-section.one class="{{ $gap }} flex flex-col"
     maxWidth="2xl">
     <h2 class="text-lg font-medium capitalize text-gray-900">
       {{ __('delete account') }}
@@ -205,7 +205,7 @@
       <x-button.danger x-data=""
         x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')">{{ __('delete account') }}</x-button.danger>
     </div>
-  </x-section.wrap>
+  </x-section.one>
 
   @include('user.modal.delete')
 

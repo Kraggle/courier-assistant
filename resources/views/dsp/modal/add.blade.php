@@ -9,17 +9,8 @@
   help-root>
 
   {{-- modal header --}}
-  <div class="flex items-center justify-between">
-    <div class="font-extralight uppercase tracking-wider"
-      ref="title">
-      {{ __('Select your Delivery Service Provider') }}
-    </div>
-
-    <x-icon class="far fa-circle-question cursor-pointer"
-      data-help-trigger="false"
-      :title="__('Toggle help text!')" />
-
-  </div>
+  <x-modal.header :title="__('Select your Delivery Service Provider')"
+    :help="true" />
 
   {{-- modal content --}}
   <form class="{{ $gap }} flex flex-col"
@@ -98,11 +89,7 @@
   <div class="{{ $gap }} flex flex-col"
     ref="add-section">
     {{-- split header --}}
-    <div class="flex items-center justify-between">
-      <div class="font-extralight uppercase tracking-wider">
-        {{ __('Or... add it here') }}
-      </div>
-    </div>
+    <x-modal.header :title="__('Or... add it here')" />
 
     <form class="{{ $gap }} flex flex-col"
       method="POST"

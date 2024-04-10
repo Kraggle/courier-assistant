@@ -1,6 +1,6 @@
 <x-layout.app :title="__('vehicle')">
 
-  <x-section.wrap maxWidth="2xl">
+  <x-section.one maxWidth="2xl">
     <form class="flex flex-col gap-6"
       method="POST"
       action="{{ route('vehicle.create') }}">
@@ -29,6 +29,6 @@
       </div>
 
     </form>
-  </x-section.wrap>
+  </x-section.one>
 
 </x-layout.app>
