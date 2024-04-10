@@ -98,7 +98,7 @@
     @stack('modals')
   </modal-wrap>
 
-  <script-wrap>
+  @pushOnce('scripts')
     <script type="module">
       $(() => {
         $('[data-help-trigger]').on('click', function() {
@@ -107,7 +107,10 @@
         });
       });
     </script>
-  @stack('scripts')
+  @endPushOnce
+
+  <script-wrap>
+    @stack('scripts')
   </script-wrap>
 
 </body>

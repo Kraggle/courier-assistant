@@ -164,7 +164,7 @@ class RouteController extends FilesController {
      * @param \Illuminate\Http\Request
      * @return void
      */
-    public function exportAll(Request $request) {
-        $this->export($request->user()->routes, ['depot_id', 'date', 'start_time', 'end_time', 'start_mileage', 'end_mileage', 'stops', 'invoice_mileage', 'bonus', 'type', 'vat', 'ttfs'], 'routes');
+    public function export(Request $request) {
+        $this->doExport($request->user()->routes, ['depot_id', 'date', 'start_time', 'end_time', 'start_mileage', 'end_mileage', 'stops', 'invoice_mileage', 'bonus', 'type', 'vat', 'ttfs'], 'routes');
     }
 }

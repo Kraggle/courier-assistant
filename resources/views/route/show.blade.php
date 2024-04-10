@@ -148,7 +148,7 @@
 
           $.ajax({
             url: "{{ route('route.get') }}",
-            method: "GET",
+            method: "POST",
             data: {
               _token: "{{ csrf_token() }}",
               date,

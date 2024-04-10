@@ -14,6 +14,7 @@
     enctype="multipart/form-data"
     action="{{ route('refuel.add', $vehicle->id) ?? '' }}">
     @csrf
+    @method('PUT')
 
     {{-- modal header --}}
     <div class="flex items-center justify-between">

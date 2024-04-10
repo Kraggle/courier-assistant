@@ -132,7 +132,7 @@ class ExpenseController extends FilesController {
      * @param \Illuminate\Http\Request
      * @return void
      */
-    public function exportAll(Request $request) {
-        $this->export($request->user()->expenses, ['date', 'describe', 'cost', 'type', 'image'], 'expenses');
+    public function export(Request $request) {
+        $this->doExport($request->user()->expenses, ['date', 'describe', 'cost', 'type', 'image'], 'expenses');
     }
 }

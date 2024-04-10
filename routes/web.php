@@ -41,10 +41,10 @@ Route::middleware(['auth'])->group(function () { # just signed in
 
     Route::controller(SubscriptionController::class)->group(function () {
         Route::get('/subscription', 'show')->name('subscription');
-        Route::post('/subscription/success', 'success')->name('subscription.success');
-        Route::get('/subscription/reject', 'reject')->name('subscription.reject');
-        Route::post('/subscription/cancel', 'cancel')->name('subscription.cancel');
-        Route::post('/subscription/resume', 'resume')->name('subscription.resume');
+        Route::get('/subscription/success', 'success')->name('subscription.success');
+        Route::post('/subscription', 'keys')->name('subscription.keys');
+        Route::patch('/subscription', 'resume')->name('subscription.resume');
+        Route::delete('/subscription', 'cancel')->name('subscription.cancel');
         Route::get('/coupon', 'coupon')->name('coupon');
     });
 
@@ -66,13 +66,13 @@ Route::middleware(['auth', Subscribed::class])->group(function () {
     });
 
     Route::controller(DSPController::class)->group(function () {
-        Route::post('/dsp/attach', 'attach')->name('dsp.attach');
-        Route::post('/dsp/create', 'create')->name('dsp.create');
+        Route::put('/dsp', 'create')->name('dsp.create');
+        Route::patch('/dsp', 'attach')->name('dsp.attach');
     });
 
-    Route::post('/vehicle/create', [VehicleController::class, 'create'])->name('vehicle.create');
-    Route::post('/depot/store', [DepotController::class, 'store'])->name('depot.store');
-    Route::post('/rate/add', [RateController::class, 'add'])->name('rate.add');
+    Route::put('/vehicle', [VehicleController::class, 'create'])->name('vehicle.create');
+    Route::put('/depot', [DepotController::class, 'store'])->name('depot.store');
+    Route::put('/rate', [RateController::class, 'add'])->name('rate.add');
 });
 
 Route::middleware(['auth', Subscribed::class, Ready::class])->group(function () {
@@ -83,57 +83,57 @@ Route::middleware(['auth', Subscribed::class, Ready::class])->group(function () 
     });
 
     Route::controller(DepotController::class)->group(function () {
-        Route::get('/depot/create', 'create')->name('depot.create');
+        Route::get('/depot', 'create')->name('depot.create');
     });
 
     Route::controller(DSPController::class)->group(function () {
         Route::get('/dsp', 'show')->name('dsp.show');
-        Route::post('/dsp/{dsp}/edit', 'edit')->name('dsp.edit');
-        Route::post('/dsp/{dsp}/detach', 'detach')->name('dsp.detach');
+        Route::put('/dsp/{dsp}', 'edit')->name('dsp.edit');
+        Route::delete('/dsp/{dsp}', 'detach')->name('dsp.detach');
     });
 
     Route::controller(RouteController::class)->group(function () {
+        Route::put('/route', 'add')->name('route.add');
         Route::get('/routes', 'show')->name('route.show');
-        Route::get('/routes/get', 'get')->name('route.get');
-        Route::post('/route/add', 'add')->name('route.add');
-        Route::post('/route/week', 'week')->name('route.week');
-        Route::post('/route/bulk', 'bulk')->name('route.bulk');
-        Route::post('/route/export', 'exportAll')->name('route.export');
-        Route::post('/route/{route}/edit', 'edit')->name('route.edit');
-        Route::post('/route/{route}/destroy', 'destroy')->name('route.destroy');
+        Route::post('/routes', 'get')->name('route.get');
+        Route::patch('/routes', 'week')->name('route.week');
+        Route::patch('/routes/bulk', 'bulk')->name('route.bulk');
+        Route::post('/routes/export', 'export')->name('route.export');
+        Route::put('/route/{route}', 'edit')->name('route.edit');
+        Route::delete('/route/{route}', 'destroy')->name('route.destroy');
     });
 
     Route::controller(RateController::class)->group(function () {
         Route::get('/rate', 'show')->name('rate.show');
-        Route::post('/rate/bulk', 'bulk')->name('rate.bulk');
-        Route::post('/rate/export', 'exportAll')->name('rate.export');
-        Route::post('/rate/{rate}/edit', 'edit')->name('rate.edit');
-        Route::post('/rate/{rate}/destroy', 'destroy')->name('rate.destroy');
+        Route::patch('/rate', 'bulk')->name('rate.bulk');
+        Route::post('/rate', 'export')->name('rate.export');
+        Route::put('/rate/{rate}', 'edit')->name('rate.edit');
+        Route::delete('/rate/{rate}', 'destroy')->name('rate.destroy');
     });
 
     Route::controller(RefuelController::class)->group(function () {
-        Route::get('/refuel/{vehicle}', 'show')->name('refuels');
-        Route::post('/refuel/{vehicle}/add', 'add')->name('refuel.add');
-        Route::post('/refuel/{vehicle}/bulk', 'bulk')->name('refuel.bulk');
-        Route::post('/refuel/download', 'download')->name('refuel.download');
-        Route::post('/refuel/{vehicle}/export', 'exportAll')->name('refuel.export');
-        Route::post('/refuel/{refuel}/edit', 'edit')->name('refuel.edit');
-        Route::post('/refuel/{refuel}/destroy', 'destroy')->name('refuel.destroy');
+        Route::get('/refuels/{vehicle}', 'show')->name('refuels');
+        Route::put('/refuels/{vehicle}', 'add')->name('refuel.add');
+        Route::patch('/refuels/{vehicle}', 'bulk')->name('refuel.bulk');
+        Route::post('/refuels/{vehicle}', 'export')->name('refuel.export');
+        Route::post('/refuel', 'download')->name('refuel.download');
+        Route::put('/refuel/{refuel}', 'edit')->name('refuel.edit');
+        Route::delete('/refuel/{refuel}', 'destroy')->name('refuel.destroy');
     });
 
     Route::controller(ExpenseController::class)->group(function () {
         Route::get('/expense', 'show')->name('expense.show');
-        Route::post('/expense/add', 'add')->name('expense.add');
-        Route::post('/expense/bulk', 'bulk')->name('expense.bulk');
-        Route::post('/expense/download', 'download')->name('expense.download');
-        Route::post('/expense/export', 'exportAll')->name('expense.export');
-        Route::post('/expense/{expense}/edit', 'edit')->name('expense.edit');
-        Route::post('/expense/{expense}/destroy', 'destroy')->name('expense.destroy');
+        Route::put('/expense', 'add')->name('expense.add');
+        Route::patch('/expense', 'bulk')->name('expense.bulk');
+        Route::post('/expense', 'download')->name('expense.download');
+        Route::post('/expenses', 'export')->name('expense.export');
+        Route::put('/expense/{expense}', 'edit')->name('expense.edit');
+        Route::delete('/expense/{expense}', 'destroy')->name('expense.destroy');
     });
 
     Route::controller(TaxController::class)->group(function () {
         Route::get('/taxes/{year}', 'show')->name('tax.show');
-        Route::post('/tax/{tax}/edit', 'edit')->name('tax.edit');
+        Route::put('/tax/{tax}', 'edit')->name('tax.edit');
     });
 
     Route::controller(InfoController::class)->group(function () {
@@ -141,7 +141,7 @@ Route::middleware(['auth', Subscribed::class, Ready::class])->group(function () 
         Route::put('/info', 'add')->name('info.add');
         Route::get('/info', 'info')->name('info.get');
         Route::patch('/info', 'update')->name('info.update');
-        Route::patch('/info/loc', 'location')->name('info.location');
+        Route::post('/info', 'location')->name('info.location');
         Route::delete('/info', 'destroy')->name('info.destroy');
         Route::get('/google', 'keys')->name('google');
     });

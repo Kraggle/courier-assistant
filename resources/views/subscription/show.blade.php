@@ -1,3 +1,7 @@
+@php
+  $list = [__('Rooftop accurate address finder with navigation links.'), __('Shared geolocational information displayed on map.'), __('Accurately track and view your daily and weekly earnings.'), __('All your data displayed in a readable format.'), __('Store all your refuels and calculate the costs.'), __('Perform accurate calculations for predicted income.'), __('Store and calculate all of your expenses.'), __('Get an overview of everything calculated for your taxes.')];
+@endphp
+
 <x-layout.app :center="true">
   <x-section.wrap maxWidth="xl"
     px=""
@@ -12,41 +16,15 @@
       <div class="flex flex-col gap-4 px-4 pb-3 md:px-6 md:pb-5">
         <p class="text-gray-700">{{ __('You pay nothing for the first 7 days. Then only...') }}</p>
 
-        <div class="flex flex-col"><span class="text-6xl font-extrabold text-orange-600">£4.20</span><span class="-mt-1 text-lg font-normal text-gray-400">{{ __('per month') }}</span></div>
+        <div class="flex flex-col"><span class="text-6xl font-extrabold text-orange-600">£4.99</span><span class="-mt-1 text-lg font-normal text-gray-400">{{ __('per month') }}</span></div>
 
         <ul class="flex flex-col gap-2 text-left text-base">
-          <li>
-            <x-icon class="far fa-check pr-2 text-base text-green-500"></x-icon>
-            {{ __('Accurately track and view your daily and weekly earnings.') }}
-          </li>
-          <li>
-            <x-icon class="far fa-check pr-2 text-base text-green-500"></x-icon>
-            {{ __('All your data displayed in a readable format.') }}
-          </li>
-          <li>
-            <x-icon class="far fa-check pr-2 text-base text-green-500"></x-icon>
-            {{ __('Store all your refuels and calculate the costs.') }}
-          </li>
-          <li>
-            <x-icon class="far fa-check pr-2 text-base text-green-500"></x-icon>
-            {{ __('Perform accurate calculations for predicted income.') }}
-          </li>
-          <li>
-            <x-icon class="far fa-check pr-2 text-base text-green-500"></x-icon>
-            {{ __('Store and calculate all of your expenses.') }}
-          </li>
-          <li>
-            <x-icon class="far fa-check pr-2 text-base text-green-500"></x-icon>
-            {{ __('Get an overview of everything calculated for your taxes.') }}
-          </li>
-          <li>
-            <x-icon class="far fa-check pr-2 text-base text-green-500"></x-icon>
-            {{ __('Peace of mind knowing how much you are receiving.') }}
-          </li>
-          <li>
-            <x-icon class="far fa-check pr-2 text-base text-green-500"></x-icon>
-            {{ __('Cancel any time and take your data with you.') }}
-          </li>
+          @foreach ($list as $item)
+            <li>
+              <x-icon class="far fa-check pr-2 text-base text-green-500"></x-icon>
+              {{ $item }}
+            </li>
+          @endforeach
         </ul>
 
         <div class="flex">
@@ -62,118 +40,51 @@
 
     </div>
 
-    {{-- <div x-data="" --}}
-    {{-- x-init="setTimeout(() => { $dispatch('open-modal', 'stripe-pay'), 1000 })"></div> --}}
+    {{-- <div x-data=""
+      x-init="setTimeout(() => { $dispatch('open-modal', 'stripe-pay'), 1000 })"></div> --}}
 
     @push('modals')
-      <x-modal class="p-4 md:p-6"
+      <x-modal class="relative"
         name="stripe-pay"
         maxWidth="sm"
         help-root
         overflow="">
 
-        <img class="absolute bottom-0 left-3 w-28 translate-y-1/2 rounded-md bg-white"
+        <img class="absolute bottom-0 left-3 z-50 w-28 translate-y-1/2 rounded-md bg-white"
           src="{{ Vite::asset('resources/images/stripe-powered.svg') }}"
           alt="stripe">
 
-        <form class="relative flex flex-col gap-4"
+        <form class="flex max-h-[calc(100vh_-_80px)] flex-col gap-4 overflow-y-auto overflow-x-hidden p-4 md:p-6"
           id="payment-form"
-          data-stripe="{{ $key }}"
-          data-secret="{{ $intent->client_secret }}"
-          method="POST"
-          action="{{ route('subscription.success') }}">
+          method="POST">
           @csrf
+          @method('put')
 
-          {{-- name --}}
-          @define($key = 'billing-name')
-          <x-form.wrap :key="$key"
-            :value="__('Name on Card')">
-
-            <x-form.text class="block w-full"
-              id="{{ $key }}"
-              name="{{ $key }}"
-              :value="old($key)"
-              autofocus
-              autocomplete="username" />
-
-          </x-form.wrap>
-
-          @define($class = 'border border-gray-300 focus-within:border-indigo-500 focus-within:ring-indigo-500 rounded-md shadow-sm px-3 py-2')
-
-          {{-- card number --}}
-          @define($key = '')
-          <x-form.wrap :key="$key"
-            :value="__('Card Number')">
-
-            <div class="{{ $class }}"
-              id="number-element"></div>
-
-          </x-form.wrap>
-
-          <div class="grid grid-cols-2 gap-4">
-            {{-- expiry --}}
-            @define($key = '')
-            <x-form.wrap :key="$key"
-              :value="__('Expiry')">
-
-              <div class="{{ $class }}"
-                id="expiry-element"></div>
-
-            </x-form.wrap>
-
-            {{-- cvc --}}
-            @define($key = '')
-            <x-form.wrap :key="$key"
-              :value="__('CVC')">
-
-              <div class="{{ $class }}"
-                id="cvc-element"></div>
-
-            </x-form.wrap>
-          </div>
-
-          {{-- post code --}}
-          @define($key = 'post_code')
-          <x-form.wrap :key="$key"
-            :value="__('Post Code')">
-
-            <x-form.text class="block w-full uppercase"
-              id="{{ $key }}"
-              name="{{ $key }}"
-              :value="old($key)" />
-
-          </x-form.wrap>
-
-          {{-- coupon --}}
-          @define($key = 'coupon')
-          <x-form.wrap class="hidden"
-            :key="$key"
-            :value="__('coupon')">
-
-            <x-form.text-prefix class="block w-full"
-              id="{{ $key }}"
-              name="{{ $key }}"
-              :value="old($key)">
-
-              <x-icon class="fas fa-check hidden text-green-400"
-                id="couponCorrect" />
-              <x-icon class="fas fa-times text-red-400"
-                id="couponIncorrect" />
-
-            </x-form.text-prefix>
-
-          </x-form.wrap>
-
-          <div class="text-sm text-gray-400">
-            <p>{{ __('You will not be charged until the trial period has ended!') }}</p>
-            <p>{{ __('You can cancel during the trial period to avoid payment.') }}</p>
-          </div>
+          <div id="payment-element"></div>
 
           <div class="align-center flex justify-end">
-            <x-button.dark color="bg-violet-800 text-2xl hover:bg-violet-700 focus:bg-violet-700 active:bg-violet-900">
-              {{ __('subscribe') }}
+            <x-button.dark id="payment-button"
+              color="bg-violet-800 text-2xl hover:bg-violet-700 focus:bg-violet-700 active:bg-violet-900 no-loader relative">
+              <span class="text opacity-100">{{ __('subscribe') }}</span>
+              <div class="loader absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0"
+                role="status">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5 animate-spin fill-white text-violet-600"
+                  aria-hidden="true"
+                  viewBox="0 0 100 101"
+                  fill="none">
+                  <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                    fill="currentColor" />
+                  <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                    fill="currentFill" />
+                </svg>
+                <span class="sr-only">Loading...</span>
+              </div>
             </x-button.dark>
           </div>
+
+          <div class="hidden text-sm text-red-600"
+            id="payment-message"></div>
 
         </form>
       </x-modal>
@@ -182,119 +93,4 @@
   </x-section.wrap>
 </x-layout.app>
 
-<script src="https://js.stripe.com/v3/"></script>
-
-<script type="module">
-  $('#coupon').on('change', function() {
-    $.getJSON("{{ route('coupon') }}", {
-      coupon: $(this).val()
-    }, data => {
-      const c = data.active;
-      $('#couponIncorrect')[c ? 'addClass' : 'removeClass']('hidden');
-      $('#couponCorrect')[c ? 'removeClass' : 'addClass']('hidden');
-    })
-  });
-
-  const stripe = Stripe($('#payment-form').data('stripe'))
-
-  const numberId = '#number-element',
-    expiryId = '#expiry-element',
-    cvcId = '#cvc-element',
-    formId = '#payment-form',
-    elements = stripe.elements({
-      fonts: [{
-        cssSrc: 'https://fonts.googleapis.com/css2?family=Advent+Pro'
-      }]
-    });
-
-  const elementStyles = {
-    base: {
-      fontFamily: 'Advent Pro, sans-serif',
-      fontSize: '16px',
-      color: 'rgb(17, 24, 39)',
-      lineHeight: '1.428571',
-
-      '::placeholder': {
-        color: 'rgba(0,0,0,0.4)'
-      }
-    }
-  }
-
-  const elementClasses = {
-    focus: 'focus',
-    empty: 'empty',
-    invalid: 'invalid'
-  }
-
-  const cardNumber = elements.create('cardNumber', {
-    style: elementStyles,
-    classes: elementClasses
-  });
-  cardNumber.mount(numberId);
-
-  const cardExpiry = elements.create('cardExpiry', {
-    style: elementStyles,
-    classes: elementClasses
-  });
-  cardExpiry.mount(expiryId);
-
-  const cardCvc = elements.create('cardCvc', {
-    style: elementStyles,
-    classes: elementClasses
-  });
-  cardCvc.mount(cvcId);
-
-  registerElements([cardNumber, cardExpiry, cardCvc], $(formId));
-
-  /**
-   * Register the stripe payment method and elements.
-   * 
-   * @param {object[]} elements The stripe elements.
-   * @param {jQueryElement} form The entire form.
-   */
-  function registerElements(elements, form) {
-
-    const secret = form.data('secret');
-
-    // Listen on the form's 'submit' handler...
-    form.on('submit', async function(e) {
-      if ($('input[name=token]', this).length) return;
-      e.preventDefault();
-
-      // Gather additional customer data we may have collected in our form.
-      const name = $('input[name=billing-name]').val();
-
-      const {
-        setupIntent,
-        error
-      } = await stripe.confirmCardSetup(
-        secret, {
-          payment_method: {
-            card: elements[0],
-            billing_details: {
-              name
-            }
-          }
-        }
-      );
-
-      if (error) {
-        if (error.type == 'validation_error') {
-          // TODO: handle card vaildation errors
-        }
-        console.log(error);
-        return;
-      }
-
-      $('<input>', {
-        type: 'hidden',
-        name: 'token',
-        value: setupIntent.payment_method
-      }).prependTo(form);
-
-      console.log(setupIntent);
-
-      form.trigger('submit');
-    });
-  }
-</script>
+@vite(['resources/js/stripe.js'])

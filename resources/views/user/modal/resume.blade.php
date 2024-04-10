@@ -11,6 +11,7 @@
     method="post"
     action="{{ route('subscription.resume') }}">
     @csrf
+    @method('PATCH')
 
     <h2 class="text-lg font-medium text-gray-900">
       {{ __('You are about to resume your subscription!') }}

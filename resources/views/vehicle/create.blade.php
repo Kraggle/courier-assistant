@@ -5,6 +5,7 @@
       method="POST"
       action="{{ route('vehicle.create') }}">
       @csrf
+      @method('PUT')
 
       <h1 class="text-2xl font-light uppercase tracking-wider">{{ __('Add your first vehicle!') }}</h1>
 

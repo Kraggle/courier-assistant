@@ -14,6 +14,7 @@
     enctype="multipart/form-data"
     action="{{ route('expense.add') }}">
     @csrf
+    @method('put')
 
     {{-- modal header --}}
     <div class="flex items-center justify-between">

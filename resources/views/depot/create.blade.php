@@ -7,6 +7,7 @@
       method="POST"
       action="{{ route('depot.store') }}">
       @csrf
+      @method('PUT')
 
       {{-- location --}}
       @define($key = 'location')

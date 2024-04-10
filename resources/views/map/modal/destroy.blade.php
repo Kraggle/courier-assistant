@@ -11,6 +11,7 @@
     method="POST"
     action="{{ route('info.destroy') }}">
     @csrf
+    @method('delete')
 
     <input name="_method"
       type="hidden"

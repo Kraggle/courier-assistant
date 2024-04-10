@@ -13,6 +13,7 @@
     enctype="multipart/form-data"
     action="{{ route('route.bulk') }}">
     @csrf
+    @method('PATCH')
 
     {{-- modal header --}}
     <div class="flex items-center justify-between">

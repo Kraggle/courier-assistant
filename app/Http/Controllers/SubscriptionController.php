@@ -17,10 +17,7 @@ class SubscriptionController extends Controller {
         if ($user->subscribed())
             return redirect()->route('dashboard');
 
-        return view('subscription.show', [
-            'intent' => $user->createSetupIntent(),
-            'key' => config('cashier.key')
-        ]);
+        return view('subscription.show');
     }
 
     /**
@@ -57,6 +54,26 @@ class SubscriptionController extends Controller {
     public function coupon(Request $request) {
         $coupon = K::user()->findActivePromotionCode($request->coupon);
         return json_encode(['active' => !!$coupon]);
+    }
+
+    /**
+     * Get the keys.
+     * 
+     * @return \Illuminate\Http\JSONResponse
+     */
+    public function keys() {
+        return response()->json([
+            'cs' => K::user()->createSetupIntent()->client_secret,
+            'pk' => config('cashier.key'),
+            'url' => route('subscription.success'),
+            'str' => [
+                'error' => __('An unexpected error has occurred.'),
+                'success' => __('Payment succeeded!'),
+                'process' => __('Your payment is processing.'),
+                'failed' => __('Your payment was not successful, please try again.'),
+                'wrong' => __('Something went wrong.'),
+            ]
+        ]);
     }
 
     /**

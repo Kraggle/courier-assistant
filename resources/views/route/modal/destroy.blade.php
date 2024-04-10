@@ -11,6 +11,7 @@
     method="POST"
     action="">
     @csrf
+    @method('delete')
 
     {{-- modal header --}}
     <div class="flex items-center justify-between">

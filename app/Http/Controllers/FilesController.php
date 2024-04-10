@@ -77,7 +77,7 @@ class FilesController extends Controller {
      * @param string $name
      * @return void
      */
-    public function export($data, array $only, String $name = null) {
+    public function doExport($data, array $only, String $name = null) {
         ignore_user_abort(true);
 
         $name = ($name ?? 'export') . ".csv";

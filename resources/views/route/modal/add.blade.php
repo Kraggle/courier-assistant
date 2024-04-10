@@ -13,6 +13,7 @@
     method="POST"
     action="{{ route('route.add') }}">
     @csrf
+    @method('PUT')
 
     {{-- modal header --}}
     <div class="flex items-center justify-between">

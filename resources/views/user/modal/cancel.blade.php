@@ -11,6 +11,7 @@
     method="post"
     action="{{ route('subscription.cancel') }}">
     @csrf
+    @method('DELETE')
 
     <h2 class="text-lg font-medium text-gray-900">
       {{ __('Are you sure you want to cancel your subscription?') }}

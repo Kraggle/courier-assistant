@@ -27,6 +27,7 @@
     method="POST"
     action="{{ route('dsp.attach') }}">
     @csrf
+    @method('PUT')
 
     {{-- dsp_id --}}
     @define($key = 'dsp_id')
@@ -107,6 +108,7 @@
       method="POST"
       action="{{ route('dsp.create') }}">
       @csrf
+      @method('PUT')
 
       <div class="{{ $gap }} grid grid-cols-1 md:grid-cols-2">
         {{-- name --}}

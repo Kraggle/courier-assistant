@@ -12,6 +12,7 @@
         method="POST"
         action="{{ route('dsp.attach') }}">
         @csrf
+        @method('PATCH')
 
         <div class="flex items-center justify-between">
           <div class="font-serif text-xl">
@@ -82,6 +83,7 @@
         method="POST"
         action="{{ route('dsp.create') }}">
         @csrf
+        @method('PUT')
 
         <div class="flex items-center justify-between">
           <div class="font-serif text-xl">
@@ -130,6 +132,7 @@
         help-root
         action="{{ route('vehicle.create') }}">
         @csrf
+        @method('PUT')
 
         <div class="flex items-center justify-between">
           <div class="font-serif text-xl">
@@ -228,6 +231,7 @@
           method="POST"
           action="{{ route('depot.store') }}">
           @csrf
+          @method('PUT')
 
           {{-- split header --}}
           <div class="flex items-center justify-between">
@@ -279,6 +283,7 @@
         method="POST"
         action="{{ route('rate.add') }}">
         @csrf
+        @method('PUT')
 
         {{-- depot --}}
         @define($key = 'depot_id')
@@ -320,7 +325,7 @@
             minresultsforsearch=999>
 
             <x-slot:options>
-              @foreach (Lists::rateTypes() as $key => $type)
+              @foreach (Lists::routeTypes() as $key => $type)
                 <option value="{{ $key }}"
                   {{ $key == 'md' ? 'selected' : '' }}>
                   {{ $type }}
@@ -379,12 +384,3 @@
     </x-section.wrap>
   @endif
 </x-layout.app>
-
-<script type="module">
-  $(() => {
-    $('[data-help-trigger]').on('click', function() {
-      const $els = $(this).closest('[help-root]').find('[help-message]');
-      $els[$els.eq(0).is(':visible') ? 'slideUp' : 'slideDown'](500);
-    });
-  });
-</script>

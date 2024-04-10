@@ -209,7 +209,7 @@ class RefuelController extends FilesController {
      * @param \App\Models\Vehicle $vehicle
      * @return void
      */
-    public function exportAll(Request $request, Vehicle $vehicle) {
-        $this->export($vehicle->refuels, ['date', 'mileage', 'cost', 'first', 'image'], "refuels-{$vehicle->reg}");
+    public function export(Request $request, Vehicle $vehicle) {
+        $this->doExport($vehicle->refuels, ['date', 'mileage', 'cost', 'first', 'image'], "refuels-{$vehicle->reg}");
     }
 }

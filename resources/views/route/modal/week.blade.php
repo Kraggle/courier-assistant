@@ -14,6 +14,7 @@
     method="POST"
     action="{{ route('route.week') }}">
     @csrf
+    @method('PATCH')
 
     {{-- modal header --}}
     <div class="flex items-center justify-between px-4 md:px-6">

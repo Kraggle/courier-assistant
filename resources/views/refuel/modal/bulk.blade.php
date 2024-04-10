@@ -13,6 +13,7 @@
     enctype="multipart/form-data"
     action="{{ route('refuel.bulk', $vehicle->id) }}">
     @csrf
+    @method('patch')
 
     {{-- modal header --}}
     <div class="flex items-center justify-between">

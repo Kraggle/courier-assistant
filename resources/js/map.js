@@ -414,7 +414,6 @@ function markerHandlers(marker) {
 						id: data.id,
 						lat: e.latLng.lat().toFixed(5),
 						lng: e.latLng.lng().toFixed(5),
-						_method: 'PATCH',
 						_token: $('[name="_token"]').first().val()
 					}
 				}).done(function(response) {

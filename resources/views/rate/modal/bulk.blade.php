@@ -13,6 +13,7 @@
     enctype="multipart/form-data"
     action="{{ route('rate.bulk') }}">
     @csrf
+    @method('PATCH')
 
     {{-- modal header --}}
     <div class="flex items-center justify-between">

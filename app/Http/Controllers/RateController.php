@@ -126,7 +126,7 @@ class RateController extends FilesController {
      * @param \Illuminate\Http\Request
      * @return void
      */
-    public function exportAll(Request $request) {
-        $this->export($request->user()->dsp()->rates, ['depot_id', 'date', 'type', 'amount'], 'rates');
+    public function export(Request $request) {
+        $this->doExport($request->user()->dsp()->rates, ['depot_id', 'date', 'type', 'amount'], 'rates');
     }
 }

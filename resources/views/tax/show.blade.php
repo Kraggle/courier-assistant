@@ -22,6 +22,7 @@
           action="{{ route('tax.edit', $tax->id) }}"
           method="POST">
           @csrf
+          @method('put')
 
           @define($key = 'claim_miles')
           {{-- vat --}}
