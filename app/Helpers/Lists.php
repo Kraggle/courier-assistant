@@ -56,4 +56,23 @@ class Lists {
 		if ($type) return $c[$type];
 		return $c;
 	}
+
+	/**
+	 * Get a collection of days of the week
+	 * 
+	 * @return \Illuminate\Support\Collection|string
+	 */
+	public static function weekDays(int $day = null) {
+		$c = collect([
+			0 => __('Sunday'),
+			1 => __('Monday'),
+			2 => __('Tuesday'),
+			3 => __('Wednesday'),
+			4 => __('Thursday'),
+			5 => __('Friday'),
+			6 => __('Saturday'),
+		]);
+		if ($day) return $c[$day];
+		return $c;
+	}
 }

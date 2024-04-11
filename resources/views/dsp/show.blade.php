@@ -17,13 +17,11 @@
           x-on:click.prevent="$dispatch('open-modal', 'add-dsp')"
           id="addDSP"
           data-modal="{{ json_encode([
-              'title.text' => __('Select your Delivery Service Provider'),
+              'title.text' => __('Select your DSP'),
               'form.action' => route('dsp.attach'),
               'date.value' => old('date', now()->format('Y-m-d')),
-              'dsp_id.value' => old('dsp_id', ''),
               'dsp_wrap.removeclass' => 'hidden',
-              'close.addclass' => 'hidden',
-              'add-section.removeclass' => 'hidden',
+              'dsp_id.value' => old('dsp_id', ''),
               'destroy.addclass' => 'hidden',
               'submit.text' => __('select'),
           ]) }}"
@@ -60,8 +58,6 @@
                   'date.value' => old('date', K::date($dsp->pivot->date)->format('Y-m-d')),
                   'dsp_id.value' => old('dsp_id', $dsp->id),
                   'dsp_wrap.addclass' => 'hidden',
-                  'close.removeclass' => 'hidden',
-                  'add-section.addclass' => 'hidden',
                   'destroy.removeclass' => 'hidden',
                   'destroy.data' => [
                       'modal' => [
@@ -112,6 +108,7 @@
   </x-section.one>
 
   @include('dsp.modal.add')
+  @include('dsp.modal.create')
   @include('dsp.modal.destroy')
 
 </x-layout.app>

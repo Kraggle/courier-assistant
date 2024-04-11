@@ -282,4 +282,13 @@ class Route extends Model {
     public function hasExtra() {
         return $this->bonus || $this->note;
     }
+
+    /**
+     * Get the dsp for this route
+     * 
+     * @return \App\Models\DSP
+     */
+    public function dsp(): DSP {
+        return $this->user->dspByDate($this->date);
+    }
 }

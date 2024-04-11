@@ -17,7 +17,9 @@ class DSP extends Model {
 
     protected $fillable = [
         'name',
-        'identifier'
+        'identifier',
+        'in_hand',
+        'pay_day',
     ];
 
     protected $appends = [
@@ -26,7 +28,7 @@ class DSP extends Model {
 
     public function getActivitylogOptions(): LogOptions {
         return LogOptions::defaults()
-            ->logOnly(['name', 'identifier'])
+            ->logOnly(['name', 'identifier', 'in_hand', 'pay_day'])
             ->logOnlyDirty();
     }
 

@@ -1,8 +1,8 @@
-@props(['title' => '', 'help' => false])
+@props(['title' => '', 'help' => false, 'ref' => 'title'])
 
 <div class="relative mb-3">
   <div class="text-center font-serif text-xl font-light uppercase tracking-widest text-gray-400"
-    @if ($title) ref="title" @endif>
+    @if ($title && $ref) ref="title" @endif>
     @if ($title)
       {{ $title }}
     @else

@@ -375,6 +375,14 @@ class K {
     }
 
     /**
+     * Get a now date without the time
+     * @return Illuminate\Support\Carbon;
+     */
+    public static function now() {
+        return self::date(now()->format('Y-m-d'));
+    }
+
+    /**
      * Parse a date string or a Carbon object into a formatted string.
      * 
      * @param string|Carbon $date
@@ -404,6 +412,8 @@ class K {
     }
 
     public static function getPayDay($date, $weeks = 2, $day = 'Thursday') {
+        if (self::type($day) != 'string')
+            $day = Lists::weekDays($day);
         $date = self::date($date);
         $dN = array_search(ucfirst($day), Carbon::getDays());
 

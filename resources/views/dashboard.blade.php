@@ -104,15 +104,73 @@
     </x-slot:one>
 
     <x-slot:two
-      class="grid grid-cols-1 content-center justify-center gap-1 md:gap-3">
-      <div class="text-center font-serif text-lg font-light uppercase tracking-widest text-gray-400 md:text-xl">{{ __('Current fuel rate') }}</div>
-      <div class="mx-auto flex place-items-center gap-3">
+      class="grid grid-cols-2 content-center justify-center gap-1 md:gap-3">
+      <div class="mx-auto flex place-items-center gap-3"
+        title="{{ __('Latest fuel rate') }}">
         <x-icon class="fat fa-gauge-low text-3xl text-gray-400 md:text-4xl" />
         @if ($user->hasRefuels())
-          <span class="text-xl text-gray-700 md:text-2xl">{{ K::formatCurrency($user->lastRefuel()->fuel_rate) }}</span>
+          <span class="text-bold text-xl text-gray-700 md:text-2xl">
+            {{ K::formatCurrency($user->lastRefuel()->fuel_rate) }}
+          </span>
         @else
           <span class="text-gray-400">
             {{ __('Not yet added a refuel!') }}
+          </span>
+        @endif
+      </div>
+
+      @php
+        $results = collect();
+        foreach ($weeks as $date) {
+            $routes = $user->routesByWeek($date->copy());
+            $first = $routes->first();
+            $paydate = K::getPayDay($first->date, $first->dsp()->in_hand, $first->dsp()->pay_day);
+            if ($paydate >= K::now()) {
+                $results->push(['routes' => $routes, 'pay' => $paydate]);
+            }
+        }
+
+        $use = $results->sortBy('pay')->first() ?? null;
+      @endphp
+      <div class="mx-auto flex place-items-center gap-3"
+        title="{{ __('Next pay amount') }}">
+        <x-icon class="fat fa-coin text-3xl text-gray-400 md:text-4xl" />
+        @if ($use)
+          <span class="text-bold text-xl text-gray-700 md:text-2xl">
+            {{ K::formatCurrency($use['routes']->sum('total_pay')) }}
+          </span>
+        @else
+          <span class="text-gray-400">
+            {{ __('Not due any pay yet!') }}
+          </span>
+        @endif
+      </div>
+
+      <div class="mx-auto flex place-items-center gap-3"
+        title="{{ __('Latest invoice rate') }}">
+        <x-icon class="fat fa-gauge-high text-3xl text-gray-400 md:text-4xl" />
+        @define($last = $user->route())
+        @if ($last && $last->hasRate('fuel'))
+          <span class="text-bold text-xl text-gray-700 md:text-2xl">
+            {{ K::formatCurrency($last->rate('fuel')->amount) }}
+          </span>
+        @else
+          <span class="text-gray-400">
+            {{ __('Not set a rate yet!') }}
+          </span>
+        @endif
+      </div>
+
+      <div class="mx-auto flex place-items-center gap-3"
+        title="{{ __('Next pay date') }}">
+        <x-icon class="fat fa-calendar text-3xl text-gray-400 md:text-4xl" />
+        @if ($use)
+          <span class="text-bold text-xl text-gray-700 md:text-2xl">
+            {{ K::displayDate($use['pay']) }}
+          </span>
+        @else
+          <span class="text-gray-400">
+            {{ __('Not due any pay yet!') }}
           </span>
         @endif
       </div>
@@ -316,8 +374,12 @@
 
                   {{-- date --}}
                   <x-table.td class="whitespace-nowrap">
-                    <div class="text-xs font-light text-gray-600 sm:text-sm">Pay Date</div>
-                    <div>{{ K::displayDate(K::getPayDay($routes->first()->date)) }}</div>
+                    <div class="text-xs font-light text-gray-600 sm:text-sm">{{ __('Pay Date') }}</div>
+                    @php
+                      $r = $routes->first();
+                      $d = $r->dsp();
+                    @endphp
+                    <div>{{ K::displayDate(K::getPayDay($r->date, $d->in_hand, $d->pay_day)) }}</div>
                   </x-table.td>
 
                   {{-- time --}}

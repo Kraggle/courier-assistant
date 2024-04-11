@@ -573,10 +573,15 @@
         </div>
       </div>
 
-      <div class="flex items-center justify-center text-lg">
+      <div class="flex items-center justify-center gap-4 text-lg">
         <a class="px-4 tracking-wider text-gray-400"
-          href="{{ route('login') }}">
-          {{ __('Back to login?') }}
+          href="{{ route('dashboard') }}">
+          {{ __('Home?') }}
+        </a>
+
+        <a class="px-4 tracking-wider text-gray-400"
+          href="{{ url()->full() }}">
+          {{ __('Reload?') }}
         </a>
       </div>
 

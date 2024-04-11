@@ -19,8 +19,12 @@
 
     {{-- date --}}
     <x-table.td class="whitespace-nowrap">
-      <div class="text-xs font-light text-gray-600 sm:text-sm">Pay Date</div>
-      <div class="">{{ K::displayDate(K::getPayDay($routes->first()->date)) }}</div>
+      <div class="text-xs font-light text-gray-600 sm:text-sm">{{ __('Pay Date') }}</div>
+      @php
+        $r = $routes->first();
+        $d = $r->dsp();
+      @endphp
+      <div>{{ K::displayDate(K::getPayDay($r->date, $d->in_hand, $d->pay_day)) }}</div>
     </x-table.td>
 
     {{-- time --}}

@@ -30,11 +30,15 @@ class DSPController extends Controller {
         $request->validate([
             'identifier' => ['required', 'max:5', 'unique:dsps'],
             'name' => ['required', 'max:60'],
+            'in_hand' => ['required', 'integer'],
+            'pay_day' => ['required', 'integer', 'in:0,1,2,3,4,5,6'],
         ]);
 
-        DSP::firstOrCreate([
+        DSP::create([
             'identifier' => Str::upper($request->identifier),
             'name' => Str::title($request->name),
+            'in_hand' => $request->in_hand,
+            'pay_day' => $request->pay_day,
         ]);
 
         return back()->with('success', Msg::added(__('DSP')));
