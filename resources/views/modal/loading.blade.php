@@ -1,4 +1,4 @@
-<div class="fixed inset-0 z-[9999] grid items-center justify-items-center bg-gray-700 transition-all duration-700 ease-in-out"
+<div class="bg-pattern-light fixed inset-0 z-[9999] grid items-center justify-items-center bg-gray-700 transition-all duration-700 ease-in-out"
   id="pageDoor">
 
   <div class="relative aspect-square w-1/2 max-w-[200px]">
