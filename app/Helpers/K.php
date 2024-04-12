@@ -412,8 +412,8 @@ class K {
     }
 
     public static function getPayDay($date, $weeks = 2, $day = 'Thursday') {
-        if (self::type($day) != 'string')
-            $day = Lists::weekDays($day);
+        if (is_numeric($day)) $day = Lists::weekDays($day);
+
         $date = self::date($date);
         $dN = array_search(ucfirst($day), Carbon::getDays());
 
