@@ -105,19 +105,6 @@
 
     <x-slot:two
       class="grid grid-cols-2 content-center justify-center gap-1 md:gap-3">
-      <div class="mx-auto flex place-items-center gap-3"
-        title="{{ __('Latest fuel rate') }}">
-        <x-icon class="fat fa-gauge-low text-3xl text-gray-400 md:text-4xl" />
-        @if ($user->hasRefuels())
-          <span class="text-bold text-xl text-gray-700 md:text-2xl">
-            {{ K::formatCurrency($user->lastRefuel()->fuel_rate) }}
-          </span>
-        @else
-          <span class="text-gray-400">
-            {{ __('Not yet added a refuel!') }}
-          </span>
-        @endif
-      </div>
 
       @php
         $results = collect();
@@ -129,51 +116,34 @@
                 $results->push(['routes' => $routes, 'pay' => $paydate]);
             }
         }
-
         $use = $results->sortBy('pay')->first() ?? null;
+
+        $last = $user->route();
       @endphp
-      <div class="mx-auto flex place-items-center gap-3"
-        title="{{ __('Next pay amount') }}">
-        <x-icon class="fat fa-coin text-3xl text-gray-400 md:text-4xl" />
-        @if ($use)
-          <span class="text-bold text-xl text-gray-700 md:text-2xl">
-            {{ K::formatCurrency($use['routes']->sum('total_pay')) }}
-          </span>
-        @else
-          <span class="text-gray-400">
-            {{ __('Not due any pay yet!') }}
-          </span>
-        @endif
-      </div>
 
-      <div class="mx-auto flex place-items-center gap-3"
-        title="{{ __('Latest invoice rate') }}">
-        <x-icon class="fat fa-gauge-high text-3xl text-gray-400 md:text-4xl" />
-        @define($last = $user->route())
-        @if ($last && $last->hasRate('fuel'))
-          <span class="text-bold text-xl text-gray-700 md:text-2xl">
-            {{ K::formatCurrency($last->rate('fuel')->amount) }}
-          </span>
-        @else
-          <span class="text-gray-400">
-            {{ __('Not set a rate yet!') }}
-          </span>
-        @endif
-      </div>
+      <x-section.detail :value="K::formatCurrency($user->lastRefuel()->fuel_rate)"
+        :title="__('Latest fuel rate')"
+        icon="fas fa-gauge-low text-yellow-500"
+        :none="__('Not yet added a refuel!')"
+        :active="$user->hasRefuels()" />
 
-      <div class="mx-auto flex place-items-center gap-3"
-        title="{{ __('Next pay date') }}">
-        <x-icon class="fat fa-calendar text-3xl text-gray-400 md:text-4xl" />
-        @if ($use)
-          <span class="text-bold text-xl text-gray-700 md:text-2xl">
-            {{ K::displayDate($use['pay']) }}
-          </span>
-        @else
-          <span class="text-gray-400">
-            {{ __('Not due any pay yet!') }}
-          </span>
-        @endif
-      </div>
+      <x-section.detail :value="K::formatCurrency($use['routes']->sum('total_pay'))"
+        :title="__('Next pay amount')"
+        icon="fas fa-coin text-yellow-500"
+        :none="__('Not due any pay yet!')"
+        :active="!!$use" />
+
+      <x-section.detail :value="K::formatCurrency($last->rate('fuel')->amount)"
+        :title="__('Latest invoice rate')"
+        icon="fas fa-gauge-high text-yellow-500"
+        :none="__('No invoiced rate yet!')"
+        :active="$last && $last->hasRate('fuel')" />
+
+      <x-section.detail :value="K::displayDate($use['pay'])"
+        :title="__('Next pay date')"
+        icon="fas fa-calendar-star text-yellow-500"
+        :none="__('Not due any pay yet!')"
+        :active="!!$use" />
 
     </x-slot:two>
 
