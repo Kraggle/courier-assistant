@@ -111,6 +111,9 @@
         foreach ($weeks as $date) {
             $routes = $user->routesByWeek($date->copy());
             $first = $routes->first();
+            if (!$first) {
+                continue;
+            }
             $paydate = K::getPayDay($first->date, $first->dsp()->in_hand, $first->dsp()->pay_day);
             if ($paydate >= K::now()) {
                 $results->push(['routes' => $routes, 'pay' => $paydate]);

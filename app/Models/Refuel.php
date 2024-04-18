@@ -53,7 +53,7 @@ class Refuel extends Model {
     }
 
     /**
-     * Check if the expense ahs an image.
+     * Check if the expense has an image.
      * 
      * @return bool
      */
