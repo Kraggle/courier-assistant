@@ -2,7 +2,8 @@
   $list = [__('Rooftop accurate address finder with navigation links.'), __('Shared geolocational information displayed on map.'), __('Accurately track and view your daily and weekly earnings.'), __('All your data displayed in a readable format.'), __('Store all your refuels and calculate the costs.'), __('Perform accurate calculations for predicted income.'), __('Store and calculate all of your expenses.'), __('Get an overview of everything calculated for your taxes.')];
 @endphp
 
-<x-layout.app :center="true">
+<x-layout.app :center="true"
+  :title="__('subscribe')">
   <x-section.one maxWidth="xl"
     px=""
     py="">

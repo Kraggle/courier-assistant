@@ -14,12 +14,12 @@
     if ($user->subscribed()) {
         $links = [
             [
-                'title' => __('home'),
+                'title' => __('dashboard'),
                 'route' => 'dashboard',
                 'icon' => 'fas fa-house',
             ],
             [
-                'title' => __('map'),
+                'title' => __('address finder'),
                 'route' => 'map.show',
                 'icon' => 'fas fa-map',
             ],
@@ -43,7 +43,7 @@
 
         if ($user->hasRoutes()) {
             $links[] = [
-                'title' => __('taxes'),
+                'title' => __('tax view'),
                 'route' => 'tax.show',
                 'href' => route('tax.show', $user->taxYears()->first()->year),
                 'icon' => 'fas fa-coins',
@@ -51,12 +51,12 @@
         }
 
         $links[] = [
-            'title' => __('rates'),
+            'title' => __('pay rates'),
             'route' => 'rate.show',
             'icon' => 'fas fa-chart-pie',
         ];
         $links[] = [
-            'title' => __('DSP'),
+            'title' => __('Your DSP'),
             'route' => 'dsp.show',
             'icon' => 'fas fa-box',
         ];
@@ -125,7 +125,7 @@
       </div>
 
       {{-- Settings Dropdown --}}
-      <div class="ms-6 flex items-center gap-3">
+      {{-- <div class="ms-6 flex items-center gap-3">
         <x-dropdown.language align="right"
           width="32">
           <button class="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none">
@@ -135,31 +135,31 @@
           </button>
         </x-dropdown.language>
 
-      </div>
+      </div> --}}
 
     </div>
   </div>
 
   {{-- nav manu --}}
-  <div class="absolute bottom-0 top-16 z-50 w-auto -translate-x-full overflow-y-auto bg-white pl-[calc((100vw_-_80rem)_/_2)] shadow-lg transition-all"
+  <div class="absolute bottom-0 top-16 z-50 w-auto -translate-x-full overflow-y-auto bg-white pl-[calc((100vw_-_80rem)_/_2)] shadow-lg transition-all duration-500 ease-in-out"
     :class="{ 'translate-x-0': show, '-translate-x-full': !show }">
     <div class="space-y-1">
 
       @foreach ($links as $link)
         @if (isset($link['items']))
           @foreach ($link['items'] as $item)
-            <x-nav.mobile-link :href="$item['href'] ?? route($item['route'])"
+            <x-nav.link :href="$item['href'] ?? route($item['route'])"
               :active="request()->routeIs($item['route'])"
               :icon="$item['icon'] ?? false">
               {{ $item['title'] }}
-            </x-nav.mobile-link>
+            </x-nav.link>
           @endforeach
         @else
-          <x-nav.mobile-link :href="$link['href'] ?? route($link['route'])"
+          <x-nav.link :href="$link['href'] ?? route($link['route'])"
             :active="request()->routeIs($link['route'])"
             :icon="$link['icon'] ?? false">
             {{ $link['title'] }}
-          </x-nav.mobile-link>
+          </x-nav.link>
         @endif
       @endforeach
 
@@ -175,21 +175,21 @@
         </div>
 
         <div class="mt-3 space-y-1">
-          <x-nav.mobile-link :href="route('user.show')"
+          <x-nav.link :href="route('user.show')"
             icon="fas fa-user">
             {{ __('profile') }}
-          </x-nav.mobile-link>
+          </x-nav.link>
 
           {{-- Authentication --}}
           <form method="POST"
             action="{{ route('logout') }}">
             @csrf
 
-            <x-nav.mobile-link :href="route('logout')"
+            <x-nav.link :href="route('logout')"
               onclick="event.preventDefault(); this.closest('form').submit();"
               icon="fas fa-right-from-bracket">
               {{ __('Log Out') }}
-            </x-nav.mobile-link>
+            </x-nav.link>
           </form>
         </div>
       </div>

@@ -426,6 +426,7 @@ class K {
 
         return $date->addWeeks($weeks);
     }
+
     /**
      * Join a string with a natural language conjunction at the end. 
      * 

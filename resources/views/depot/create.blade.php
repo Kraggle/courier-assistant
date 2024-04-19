@@ -1,4 +1,4 @@
-<x-layout.app :title="__('depot')">
+<x-layout.app :title="__('depot creator')">
 
   <x-section.one class="sm:mx-auto sm:max-w-2xl">
     <h1 class="text-2xl">{{ Msg::add(__('depot')) }}</h1>

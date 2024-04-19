@@ -3,7 +3,7 @@
   $dsps = $user->dsps;
 @endphp
 
-<x-layout.app :title="__('DSPs')">
+<x-layout.app :title="__('Your DSPs')">
 
   <x-section.one px="0">
     <x-section.title class="px-4 md:px-6">

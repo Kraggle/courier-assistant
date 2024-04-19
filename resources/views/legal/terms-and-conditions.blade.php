@@ -1,8 +1,4 @@
-@php
-  $title = __('Terms & Conditions');
-@endphp
-
-<x-layout.app :title="$title">
+<x-layout.app :title="__('Terms & Conditions')">
   <x-section.one maxWidth="5xl">
 
     <div class="flex flex-col gap-2 text-sm sm:text-base">

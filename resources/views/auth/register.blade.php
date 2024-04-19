@@ -1,6 +1,7 @@
 @define($gap = 'gap-4')
 
-<x-layout.app :center="true">
+<x-layout.app :center="true"
+  :title="__('register')">
   <x-section.one class="self-center"
     maxWidth="lg">
     <form class="{{ $gap }} flex flex-col"

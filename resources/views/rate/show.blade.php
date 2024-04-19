@@ -4,12 +4,12 @@
   $rates = $dsp->rates;
 @endphp
 
-<x-layout.app :title="__('rates')">
+<x-layout.app :title="__('pay rates')">
 
   <x-section.one px="0">
     <x-section.title class="px-4 md:px-6">
       <x-slot:title>
-        {{ "$dsp->name " . __('rates') }}
+        {{ "$dsp->name " . __('pay rates') }}
       </x-slot>
 
       <x-slot:buttons>

@@ -4,7 +4,7 @@
   $gap = 'gap-4 md:gap-6';
 @endphp
 
-<x-layout.app :title="__('taxes')">
+<x-layout.app :title="__('tax view')">
   <x-section.one px="">
     <x-tab.link-wrap class="mb-4 mt-2 px-4 text-2xl font-medium text-gray-900 md:mb-5 md:px-6">
       <x-slot name="tabs">
