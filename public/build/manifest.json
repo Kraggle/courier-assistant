@@ -3,7 +3,7 @@
     "file": "assets/K-htdgs9CQ.js"
   },
   "resources/css/app.css": {
-    "file": "assets/app-6cdjj7aM.css",
+    "file": "assets/app-a-DfpueP.css",
     "isEntry": true,
     "src": "resources/css/app.css"
   },
@@ -79,7 +79,7 @@
     "css": [
       "assets/app-C64i7G0l.css"
     ],
-    "file": "assets/app-ECawtgEV.js",
+    "file": "assets/app-EDZUe-ZN.js",
     "imports": [
       "_K-htdgs9CQ.js"
     ],
