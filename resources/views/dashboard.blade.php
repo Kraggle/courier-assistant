@@ -122,30 +122,35 @@
         $use = $results->sortBy('pay')->first() ?? null;
 
         $last = $user->route();
+
+        $fuel_rate = $user->lastRefuel()->fuel_rate ?? 0.22;
+        $total_pay = isset($use['routes']) ? $use['routes']->sum('total_pay') : 0;
+        $last_rate = $last->hasRate('fuel') ? $last->rate('fuel')->amount : 0.22;
+        $next_date = isset($use['pay']) ? $use['pay'] : '';
       @endphp
 
-      <x-section.detail :value="K::formatCurrency($user->lastRefuel()->fuel_rate)"
+      <x-section.detail :value="K::formatCurrency($fuel_rate)"
         :title="__('Latest fuel rate')"
         icon="fas fa-gauge-low text-yellow-500"
-        :none="__('Not yet added a refuel!')"
+        :none="__('No refuels!')"
         :active="$user->hasRefuels()" />
 
-      <x-section.detail :value="K::formatCurrency($use['routes']->sum('total_pay'))"
+      <x-section.detail :value="K::formatCurrency($total_pay)"
         :title="__('Next pay amount')"
         icon="fas fa-coin text-yellow-500"
-        :none="__('Not due any pay yet!')"
+        :none="__('Add routes!')"
         :active="!!$use" />
 
-      <x-section.detail :value="K::formatCurrency($last->rate('fuel')->amount)"
+      <x-section.detail :value="K::formatCurrency($last_rate)"
         :title="__('Latest invoice rate')"
         icon="fas fa-gauge-high text-yellow-500"
-        :none="__('No invoiced rate yet!')"
+        :none="__('Add rates!')"
         :active="$last && $last->hasRate('fuel')" />
 
-      <x-section.detail :value="K::displayDate($use['pay'])"
+      <x-section.detail :value="K::displayDate($next_date)"
         :title="__('Next pay date')"
         icon="fas fa-calendar-star text-yellow-500"
-        :none="__('Not due any pay yet!')"
+        :none="__('Add rout es!')"
         :active="!!$use" />
 
     </x-slot:two>
