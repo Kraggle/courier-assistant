@@ -141,7 +141,7 @@
   </div>
 
   {{-- nav manu --}}
-  <div class="absolute bottom-0 top-16 z-50 w-auto -translate-x-full overflow-y-auto bg-white pl-[calc((100vw_-_80rem)_/_2)] shadow-lg transition-all duration-500 ease-in-out"
+  <div class="absolute bottom-0 top-16 z-50 w-auto -translate-x-full overflow-y-auto bg-white shadow-lg transition-all duration-500 ease-in-out"
     :class="{ 'translate-x-0': show, '-translate-x-full': !show }">
     <div class="space-y-1">
 
@@ -169,9 +169,11 @@
       {{-- Responsive Settings Options --}}
       <div class="border-t border-gray-200 pb-1 pt-4">
 
-        <div class="px-4">
-          <div class="text-base font-medium text-gray-800">{{ Auth::user()->name }}</div>
-          <div class="text-sm font-medium text-gray-500">{{ Auth::user()->email }}</div>
+        <div class="pl-[calc((100vw_-_80rem)_/_2)]">
+          <div class="pe-12 ps-4">
+            <div class="text-base font-medium text-gray-800">{{ Auth::user()->name }}</div>
+            <div class="text-sm font-medium text-gray-500">{{ Auth::user()->email }}</div>
+          </div>
         </div>
 
         <div class="mt-3 space-y-1">

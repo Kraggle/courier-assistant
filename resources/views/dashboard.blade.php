@@ -125,7 +125,7 @@
 
         $fuel_rate = $user->lastRefuel()->fuel_rate ?? 0.22;
         $total_pay = isset($use['routes']) ? $use['routes']->sum('total_pay') : 0;
-        $last_rate = $last->hasRate('fuel') ? $last->rate('fuel')->amount : 0.22;
+        $last_rate = $last && $last->hasRate('fuel') ? $last->rate('fuel')->amount : 0.22;
         $next_date = isset($use['pay']) ? $use['pay'] : '';
       @endphp
 
@@ -138,7 +138,7 @@
       <x-section.detail :value="K::formatCurrency($total_pay)"
         :title="__('Next pay amount')"
         icon="fas fa-coin text-yellow-500"
-        :none="__('Add routes!')"
+        :none="__('Add new routes!')"
         :active="!!$use" />
 
       <x-section.detail :value="K::formatCurrency($last_rate)"
@@ -150,7 +150,7 @@
       <x-section.detail :value="K::displayDate($next_date)"
         :title="__('Next pay date')"
         icon="fas fa-calendar-star text-yellow-500"
-        :none="__('Add rout es!')"
+        :none="__('Add new routes!')"
         :active="!!$use" />
 
     </x-slot:two>
