@@ -1,5 +1,7 @@
 @php
   $list = [__('Rooftop accurate address finder with navigation links.'), __('Shared geolocational information displayed on map.'), __('Accurately track and view your daily and weekly earnings.'), __('All your data displayed in a readable format.'), __('Store all your refuels and calculate the costs.'), __('Perform accurate calculations for predicted income.'), __('Store and calculate all of your expenses.'), __('Get an overview of everything calculated for your taxes.')];
+
+  $trial = K::user()->hadTrial();
 @endphp
 
 <x-layout.app :center="true"
@@ -11,11 +13,21 @@
     <div class="flex flex-col gap-4 text-center text-lg">
 
       <h1 class="text-tracking bg-violet-700 px-4 pb-3 pt-3 font-serif text-4xl font-black text-white md:px-6 md:pt-5">
-        {{ __('7 Day FREE Trial') }}
+        @if ($trial)
+          {{ __('7 Day FREE Trial') }}
+        @else
+          {{ __('Subscription') }}
+        @endif
       </h1>
 
       <div class="flex flex-col gap-4 px-4 pb-3 md:px-6 md:pb-5">
-        <p class="text-gray-700">{{ __('You pay nothing for the first 7 days. Then only...') }}</p>
+        <p class="text-gray-700">
+          @if ($trial)
+            {{ __('You pay nothing for the first 7 days. Then only...') }}
+          @else
+            {{ __('You pay only...') }}
+          @endif
+        </p>
 
         <div class="flex flex-col"><span class="text-6xl font-extrabold text-orange-600">£4.99</span><span class="-mt-1 text-lg font-normal text-gray-400">{{ __('per month') }}</span></div>
 
