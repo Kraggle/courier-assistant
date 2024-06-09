@@ -29,6 +29,7 @@ class User extends Authenticatable {
         'password',
         'dsp_id',
         'options->depot_id',
+        'options->had_trial',
     ];
 
     /**
@@ -59,6 +60,15 @@ class User extends Authenticatable {
      */
     public function hasDepot(): bool {
         return $this->options->depot_id ?? false;
+    }
+
+    /**
+     * See if the user has had their trial.
+     * 
+     * @return bool
+     */
+    public function hadTrial(): bool {
+        return $this->options->had_trial ?? false;
     }
 
     /**

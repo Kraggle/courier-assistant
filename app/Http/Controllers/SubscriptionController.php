@@ -29,6 +29,14 @@ class SubscriptionController extends Controller {
     public function success(Request $request) {
         $user = K::user();
 
+        $trial = 7;
+        if ($user->hadTrial()) {
+            $trial = 0;
+            $user->update([
+                'options->had_trial' => 1
+            ]);
+        }
+
         $coupon = $request->coupon ? $user->findActivePromotionCode($request->coupon) : [];
 
         $user->createOrGetStripeCustomer();
@@ -39,7 +47,7 @@ class SubscriptionController extends Controller {
             ]
         ]);
         $user->newSubscription('default', env('STRIPE_PRICE'))
-            ->trialDays(7)
+            ->trialDays($trial)
             ->withPromotionCode($coupon->id ?? null)
             ->create($request->get('token'));
         return redirect('/')->with('success', 'Your subscription has been created successfully.');
