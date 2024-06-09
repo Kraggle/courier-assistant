@@ -29,16 +29,6 @@ class SubscriptionController extends Controller {
     public function success(Request $request) {
         $user = K::user();
 
-        $trial = 7;
-        if ($user->hadTrial()) {
-            $trial = 0;
-            $user->update([
-                'options->had_trial' => 1
-            ]);
-        }
-
-        $coupon = $request->coupon ? $user->findActivePromotionCode($request->coupon) : [];
-
         $user->createOrGetStripeCustomer();
         $user->updateStripeCustomer([
             'address' => [
@@ -46,10 +36,24 @@ class SubscriptionController extends Controller {
                 'postal_code' => $request->postal_code
             ]
         ]);
-        $user->newSubscription('default', env('STRIPE_PRICE'))
-            ->trialDays($trial)
-            ->withPromotionCode($coupon->id ?? null)
-            ->create($request->get('token'));
+
+        $sub = $user->newSubscription('default', env('STRIPE_PRICE'));
+
+        if ($request->coupon) {
+            $coupon =  $user->findActivePromotionCode($request->coupon);
+            $sub->withPromotionCode($coupon->id);
+        }
+
+        if (!$user->hadTrial()) {
+            $sub->trialDays(7);
+            $user->update([
+                'options->had_trial' => 1
+            ]);
+        }
+
+        $sub->create($request->get('token'));
+
+
         return redirect('/')->with('success', 'Your subscription has been created successfully.');
     }
 
