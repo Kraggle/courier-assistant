@@ -51,8 +51,14 @@ class SubscriptionController extends Controller {
             ]);
         }
 
-        $sub->create($request->get('token'));
-
+        try {
+            $sub->create($request->get('token'));
+        } catch (\Laravel\Cashier\Exceptions\IncompletePayment $exception) {
+            return redirect()->route(
+                'cashier.payment',
+                [$exception->payment->id, 'redirect' => route('dashboard')]
+            );
+        }
 
         return redirect('/')->with('success', 'Your subscription has been created successfully.');
     }

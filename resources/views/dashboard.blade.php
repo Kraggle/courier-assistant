@@ -11,6 +11,7 @@
 {{-- @log(K::firstDayOfWeek($weeks[0])->format('Y-m-d')) --}}
 
 <x-layout.app :title="__('dashboard')">
+  {{-- <a href="{{ route('cashier.payment', [2]) }}">stripe</a> --}}
 
   <x-section.two grid="grid-cols-1 lg:grid-cols-[auto_1fr]">
     <x-slot:one
