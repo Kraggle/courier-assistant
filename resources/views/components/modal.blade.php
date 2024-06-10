@@ -53,6 +53,12 @@
         show: @js($show),
 
         updateValues(e) {
+          // go to login if opening modal and not authorised
+          $.get("{{ route('get-status') }}", data => {
+            if (!data.status)
+              window.location.href = "{{ route('login') }}";
+          });
+
           this.show = true;
 
           $('body').addClass('overflow-y-hidden');

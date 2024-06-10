@@ -169,8 +169,9 @@
       {{-- Responsive Settings Options --}}
       <div class="border-t border-gray-200 pb-1 pt-4">
 
-        <div class="pl-[calc((100vw_-_80rem)_/_2)]">
-          <div class="pe-12 ps-4">
+        <div class="flex gap-3 py-2 pe-12 pl-[calc((100vw_-_80rem)_/_2)]">
+          <div class="w-2.5"></div>
+          <div>
             <div class="text-base font-medium text-gray-800">{{ Auth::user()->name }}</div>
             <div class="text-sm font-medium text-gray-500">{{ Auth::user()->email }}</div>
           </div>

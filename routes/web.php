@@ -4,10 +4,11 @@ use App\Helpers\K;
 use App\Http\Middleware\Ready;
 use App\Http\Middleware\Subscribed;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DSPController;
-use App\Http\Controllers\InfoController;
 use App\Http\Controllers\TaxController;
+use App\Http\Controllers\InfoController;
 use App\Http\Controllers\RateController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DepotController;
@@ -29,6 +30,10 @@ use App\Http\Controllers\StripeWebhookController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/get-status', function () {
+    return response()->json(['status' => Auth::check()]);
+})->name('get-status');
 
 Route::post('/stripe/webhook', [StripeWebhookController::class, 'handleWebhook'])->name('cashier.webhook')->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class);
 
