@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Helpers\K;
 use App\Helpers\Msg;
 use App\Models\Expense;
+use App\Models\RepeatRule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Spatie\SimpleExcel\SimpleExcelReader;
 
 class ExpenseController extends FilesController {
@@ -16,6 +18,9 @@ class ExpenseController extends FilesController {
      * @return \Illuminate\Contracts\View\View
      */
     public function show() {
+        // $rule = RepeatRule::get()->last();
+        // $rule->createRepeats();
+
         return view('expense.show', ['user' => K::user()]);
     }
 
@@ -28,18 +33,41 @@ class ExpenseController extends FilesController {
     public function add(Request $request) {
         $request->validate([
             'date' => ['required', 'date:Y-m-d'],
+            'date_to' => ['required', 'date:Y-m-d'],
             'cost' => ['required', 'decimal:0,2'],
             'type' => ['required', 'string'],
             'describe' => ['required', 'string'],
-            'image' => 'mimes:jpeg,jpg,png,pdf'
+            'image' => 'mimes:xpm,tif,jfif,gif,svg,webp,svgz,jpeg,jpg,png,bmp,pjp,apng,pjpeg,avif,pdf',
+            'repeat' => ['required', 'string'],
+            'every' => ['required', 'string'],
+            'every_x' => ['required', 'integer', 'min:1', 'max:999'],
+            'month' => ['required', 'string'],
         ]);
 
         $user = $request->user();
-        $link = $request->hasFile('image') ? $this->uploadFile($request->file('image'), "images/{$user->id}/expense") : null;
 
-        $user->expenses()->create(K::merge($request->all(), [
-            'image' => $link
-        ]));
+        $repeat = $request->input('repeat');
+        if ($repeat == 'never') {
+            $link = $request->hasFile('image') ? $this->uploadFile($request->file('image'), "images/{$user->id}/expense") : null;
+
+            $user->expenses()->create(K::merge($request->all(), [
+                'image' => $link,
+                'repeat_id' => null
+            ]));
+        } else {
+            $rules = $user->repeats()->create([
+                'start_date' => $request->input('date'),
+                'end_date' => $request->input('date_to'),
+                'rules->repeat' => $request->input('repeat'),
+                'rules->every' => $request->input('every'),
+                'rules->every_x' => $request->input('every_x'),
+                'rules->month' => $request->input('month'),
+                'item->describe' => $request->input('describe'),
+                'item->cost' => $request->input('cost'),
+                'item->type' => $request->input('type')
+            ]);
+            $rules->createRepeats();
+        }
 
         return back()->with('success', Msg::added(__('expense')));
     }
@@ -54,10 +82,16 @@ class ExpenseController extends FilesController {
     public function edit(Request $request, Expense $expense) {
         $request->validate([
             'date' => ['required', 'date:Y-m-d'],
+            'date_to' => ['required', 'date:Y-m-d'],
             'cost' => ['required', 'decimal:0,2'],
             'type' => ['required', 'string'],
             'describe' => ['required', 'string'],
-            'image' => 'mimes:jpeg,jpg,png,pdf'
+            'image' => 'mimes:xpm,tif,jfif,gif,svg,webp,svgz,jpeg,jpg,png,bmp,pjp,apng,pjpeg,avif,pdf',
+            'repeat' => ['required', 'string'],
+            'every' => ['required', 'string'],
+            'every_x' => ['required', 'integer', 'min:1', 'max:999'],
+            'month' => ['required', 'string'],
+            'choice' => 'string'
         ]);
 
         if ($request->hasFile('image')) {
@@ -71,6 +105,22 @@ class ExpenseController extends FilesController {
 
         $expense->update($request->except(['image']));
 
+        $choice = $request->input('choice');
+        if ($expense->isRepeat() && $choice != 'this') {
+            $repeat = $expense->repeat;
+            $repeat->update([
+                'end_date' => $request->input('date_to'),
+                'rules->repeat' => $request->input('repeat'),
+                'rules->every' => $request->input('every'),
+                'rules->every_x' => $request->input('every_x'),
+                'rules->month' => $request->input('month'),
+                'item->describe' => $request->input('describe'),
+                'item->cost' => $request->input('cost'),
+                'item->type' => $request->input('type')
+            ]);
+            $repeat->createRepeats($choice == 'next' ? $expense->date : null);
+        }
+
         return back()->with('success', Msg::edited(__('expense')));
     }
 
@@ -82,8 +132,19 @@ class ExpenseController extends FilesController {
      * @return redirect
      */
     public function destroy(Request $request, Expense $expense) {
-        if ($expense->hasImage())
-            $this->deleteFile($expense->image);
+
+        $choice = $request->input('choice');
+        if ($expense->isRepeat() && $choice != 'this') {
+            $rule = $expense->repeat;
+            if ($choice == 'next') {
+                $rule->deleteRepeats($expense->date);
+            } else {
+                $rule->delete();
+            }
+
+            return back()->with('success', Msg::deleted(__('recurring expenses')));
+        }
+
         $expense->delete();
 
         return back()->with('success', Msg::deleted(__('expense')));

@@ -103,7 +103,7 @@ class TaxController extends Controller {
             $time += $r->time ?? 0;
             $count += 1;
             $total += $r->total_pay ?? 0;
-            $actual += $r->actual_pay ?? 0;
+            // $actual += $r->actual_pay ?? 0;
             $bonus += $r->bonus ?? 0;
             $miles += $r->miles ?? 0;
         }
@@ -113,11 +113,15 @@ class TaxController extends Controller {
         $minutes = ($time % 3600) / 60;
 
         $expenses = $user->expensesByDate($start, $end)->lazy();
+        $expense_sum = $expenses->sum('cost');
 
-        if ($tax->claim_miles)
+        if ($tax->claim_miles) {
             $total_expense = $claimable + $expenses->where('type', '<>', 'maintenance')->sum('cost');
-        else
-            $total_expense = $expenses->sum('cost') + $fuel_spend;
+        } else {
+            $total_expense = $fuel_spend + $expense_sum;
+        }
+
+        $actual = $total - $expense_sum - $fuel_spend;
 
         $tax->update([
             'properties->miles->driven' => $miles,

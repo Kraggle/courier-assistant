@@ -366,7 +366,26 @@ class User extends Authenticatable {
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function expenses(): HasMany {
-        return $this->hasMany(Expense::class)->where('date', '<=',  K::date())->orderBy('date', 'desc');
+        return $this->hasMany(Expense::class)->orderBy('date', 'desc');
+        // ->where('date', '<=',  K::date())
+    }
+
+    /**
+     * Get the users expenses upto today.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function expensesToNow(): HasMany {
+        return $this->hasMany(Expense::class)->orderBy('date', 'desc')->where('date', '<=',  K::date());
+    }
+
+    /**
+     * Get the users expenses upto next week.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function expensesToNextWeek(): HasMany {
+        return $this->hasMany(Expense::class)->orderBy('date', 'desc')->where('date', '<=',  K::date()->add('week', 1));
     }
 
     /**
@@ -457,6 +476,15 @@ class User extends Authenticatable {
      */
     public function hasTaxes() {
         return $this->taxes->count() > 0;
+    }
+
+    /**
+     * Get the users repeat rules.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function repeats(): HasMany {
+        return $this->hasMany(RepeatRule::class);
     }
 
     /**

@@ -20,9 +20,12 @@
 </noresults>
 
 <script type="module">
-  const formatOption = function(option) {
+  const formatOption = function(option, container) {
     if (!option.id)
       return option.text;
+
+    const hidden = $(option.html).hasClass('hidden');
+    $(container)[hidden ? 'addClass' : 'removeClass']('hidden');
 
     return $(option.html).prop("outerHTML");
   };
@@ -63,13 +66,8 @@
   @endif
 
   @if ($placeholder !== false)
-    opts.placeholder = {
-      id: -1,
-      text: '{{ $placeholder }}'
-    };
+    opts.placeholder = '{{ $placeholder }}';
   @endif
-
-  {{-- console.log(opts); --}}
 
   const $el = $('#{{ $id }}');
   $el.select2(opts);

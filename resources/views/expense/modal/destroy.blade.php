@@ -14,13 +14,35 @@
     @method('delete')
 
     {{-- modal header --}}
-    <x-modal.header :title="Msg::delete(__('expense'))"
-      :help="true" />
+    <x-modal.header :title="Msg::delete(__('expense'))" />
 
     {{-- modal content --}}
-    <p class="text-sm">
+    <p class="text-sm"
+      ref="message">
       {{ Msg::sureDelete(__('expense')) }}
     </p>
+
+    {{-- choice --}}
+    @define($key = 'choice')
+    <x-form.wrap :key="$key"
+      ref="choice-wrap"
+      :value="__('')"
+      :help="__('')">
+
+      <x-form.select id="{{ $key }}_destroy"
+        name="{{ $key }}"
+        ref="{{ $key }}"
+        minresultsforsearch=999>
+
+        <x-slot:elements>
+          <div value="this">Just this recurrence</div>
+          <div value="next">This and all future recurrences</div>
+          <div value="all">All recurrences</div>
+        </x-slot>
+
+      </x-form.select>
+
+    </x-form.wrap>
 
     {{-- submit --}}
     <div class="{{ $gap }} flex justify-end">

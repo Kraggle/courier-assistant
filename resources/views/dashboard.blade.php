@@ -16,6 +16,7 @@
   <x-section.two grid="grid-cols-1 lg:grid-cols-[auto_1fr]">
     <x-slot:one
       class="flex justify-center gap-3 sm:gap-6">
+      {{-- add route --}}
       <x-button.icon x-data=""
         x-on:click.prevent="$dispatch('open-modal', 'add-route')"
         id="addRoute"
@@ -45,6 +46,7 @@
         <span class="block">{{ Msg::add(__('route')) }}</span>
       </x-button.icon>
 
+      {{-- add refuel --}}
       <x-button.icon x-data=""
         x-on:click.prevent="$dispatch('open-modal', 'add-refuel')"
         id="addRefuel"
@@ -65,6 +67,7 @@
         <span class="block">{{ Msg::add(__('refuel')) }}</span>
       </x-button.icon>
 
+      {{-- add rate --}}
       <x-button.icon x-data=""
         x-on:click.prevent="$dispatch('open-modal', 'add-rate')"
         id="addRate"
@@ -83,6 +86,7 @@
         <span class="block">{{ Msg::add(__('rate')) }}</span>
       </x-button.icon>
 
+      {{-- add expense --}}
       <x-button.icon x-data=""
         x-on:click.prevent="$dispatch('open-modal', 'add-expense')"
         id="addExpense"
@@ -90,7 +94,13 @@
             'title.text' => Msg::add(__('expense')),
             'form.action' => route('expense.add'),
             'date.value' => old('date', now()->format('Y-m-d')),
+            'date_to.value' => old('date_to', now()->add(1, 'year')->format('Y-m-d')),
             'type.value' => old('type', '-1'),
+            'repeat.value' => old('repeat', 'never'),
+            'every.value' => old('every', 'week'),
+            'every_x.value' => old('every_x', '1'),
+            'day.value' => old('day', now()->format('l')),
+            'month.value' => old('month', 'day'),
             'describe.value' => old('describe', ''),
             'cost.value' => old('cost', null),
             'image-wrap.set-inputs' => old('image', ''),
@@ -130,7 +140,7 @@
         $next_date = isset($use['pay']) ? $use['pay'] : '';
       @endphp
 
-      <x-section.detail :value="K::formatCurrency($fuel_rate)"
+      <x-section.detail :value="K::formatCurrency($fuel_rate, true)"
         :title="__('Latest fuel rate')"
         icon="fas fa-gauge-low text-yellow-500"
         :none="__('No refuels!')"
@@ -142,7 +152,7 @@
         :none="__('Add new routes!')"
         :active="!!$use" />
 
-      <x-section.detail :value="K::formatCurrency($last_rate)"
+      <x-section.detail :value="K::formatCurrency($last_rate, true)"
         :title="__('Latest invoice rate')"
         icon="fas fa-gauge-high text-yellow-500"
         :none="__('Add rates!')"

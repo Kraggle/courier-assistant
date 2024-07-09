@@ -146,21 +146,21 @@
         <x-form.section :label="__('income')">
           <div class="{{ $gap }} grid grid-cols-3">
             {{-- total --}}
-            <x-form.wrap :value="__('Total in Bank')">
+            <x-form.wrap :value="__('Gross Pay')">
               <x-form.text class="block w-full text-center text-base font-bold md:text-xl"
                 value="{{ K::formatCurrency($tax->properties->income->total->all) }}"
                 readonly />
             </x-form.wrap>
 
             {{-- daily --}}
-            <x-form.wrap :value="__('Total Per Day')">
+            <x-form.wrap :value="__('Gross Per Day')">
               <x-form.text class="block w-full text-center text-base font-bold md:text-xl"
                 value="{{ K::formatCurrency($tax->properties->income->total->day) }}"
                 readonly />
             </x-form.wrap>
 
             {{-- hourly --}}
-            <x-form.wrap :value="__('Total Per Hour')">
+            <x-form.wrap :value="__('Gross Per Hour')">
               <x-form.text class="block w-full text-center text-base font-bold md:text-xl"
                 value="{{ K::formatCurrency($tax->properties->income->total->hour) }}"
                 readonly />
@@ -169,21 +169,21 @@
 
           <div class="{{ $gap }} grid grid-cols-3">
             {{-- actual --}}
-            <x-form.wrap :value="__('Actual Pay')">
+            <x-form.wrap :value="__('Net Pay')">
               <x-form.text class="block w-full text-center text-base font-bold md:text-xl"
                 value="{{ K::formatCurrency($tax->properties->income->actual->all) }}"
                 readonly />
             </x-form.wrap>
 
             {{-- daily --}}
-            <x-form.wrap :value="__('Actual Per Day')">
+            <x-form.wrap :value="__('Net Per Day')">
               <x-form.text class="block w-full text-center text-base font-bold md:text-xl"
                 value="{{ K::formatCurrency($tax->properties->income->actual->day) }}"
                 readonly />
             </x-form.wrap>
 
             {{-- hourly --}}
-            <x-form.wrap :value="__('Actual Per Hour')">
+            <x-form.wrap :value="__('Net Per Hour')">
               <x-form.text class="block w-full text-center text-base font-bold md:text-xl"
                 value="{{ K::formatCurrency($tax->properties->income->actual->hour) }}"
                 readonly />

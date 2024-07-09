@@ -142,7 +142,7 @@
                 $el[0].datedropper('set', {
                   defaultDate: value
                 });
-                $el.siblings('.input-bro').val(dayjs(value).format('YYYY-MM-DD'));
+                $el.siblings('.input-bro').val(dayjs(value).format('YYYY-MM-DD')).trigger('change');
               }
               if ($el.hasClass('select-input')) {
                 $el.trigger('change');

@@ -112,7 +112,7 @@
 
               {{-- amount --}}
               <x-table.td>
-                {{ K::formatCurrency($rate->amount) }}
+                {{ K::formatCurrency($rate->amount, $rate->amount < 0.9999) }}
               </x-table.td>
 
               {{-- depot --}}

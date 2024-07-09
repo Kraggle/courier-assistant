@@ -357,8 +357,8 @@ class K {
         return date($format, strtotime($time));
     }
 
-    public static function formatCurrency($value) {
-        if ($value < 0.9999) return $value . 'p';
+    public static function formatCurrency($value, $perMile = false) {
+        if ($perMile) return $value . 'p';
         $fmt = new NumberFormatter('en_UK', NumberFormatter::CURRENCY);
         return $fmt->formatCurrency($value, 'GBP');
     }

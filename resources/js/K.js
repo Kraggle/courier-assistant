@@ -724,6 +724,40 @@ const K = {
 			return num >= i.value;
 		});
 		return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
+	},
+
+	ordinalSuffix(i) {
+		let j = i % 10,
+			k = i % 100;
+		if (j === 1 && k !== 11) {
+			return i + "st";
+		}
+		if (j === 2 && k !== 12) {
+			return i + "nd";
+		}
+		if (j === 3 && k !== 13) {
+			return i + "rd";
+		}
+		return i + "th";
+	},
+
+	ordinalWord(i) {
+		if (i == 1) {
+			return "first";
+		}
+		if (i == 2) {
+			return "second";
+		}
+		if (i == 3) {
+			return "third";
+		}
+		if (i == 4) {
+			return "fourth";
+		}
+		if (i == 5) {
+			return "fifth";
+		}
+		return "";
 	}
 };
 

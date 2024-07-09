@@ -65,7 +65,7 @@
         loopAll: true,
         onChange: (res) => {
           const $el = $(res.trigger).siblings('.input-bro');
-          $el.val(`${res.output.y}-${res.output.mm}-${res.output.dd}`);
+          $el.val(`${res.output.y}-${res.output.mm}-${res.output.dd}`).trigger('change');
         }
       });
     });

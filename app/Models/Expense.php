@@ -4,11 +4,16 @@ namespace App\Models;
 
 use App\Helpers\Lists;
 use Illuminate\Support\Facades\Vite;
+use Carbon\CarbonInterface as Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * Expense Model
+ */
 class Expense extends Model {
+
     /**
      * The attributes that are mass assignable.
      *
@@ -21,6 +26,8 @@ class Expense extends Model {
         'ignore',
         'type',
         'image',
+        'repeat_id',
+        'user_id',
     ];
 
     /**
@@ -71,12 +78,39 @@ class Expense extends Model {
     }
 
     /**
+     * See if this expense is in the future.
+     * 
+     * @return bool
+     */
+    public function isFuture() {
+        return $this->date > now();
+    }
+
+    /**
      * Is pdf file.
      * 
      * @return bool
      */
     public function isPDF() {
         return preg_match('/.pdf$/', $this->getImageURL() ?? '') ?? false;
+    }
+
+    /**
+     * Check if this is a repeat expense.
+     * 
+     * @return bool
+     */
+    public function isRepeat(): bool {
+        return $this->repeat != null;
+    }
+
+    /**
+     * Get the repeat rule for this expense.
+     * 
+     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function repeat(): BelongsTo {
+        return $this->belongsTo(RepeatRule::class, 'repeat_id');
     }
 
     /**

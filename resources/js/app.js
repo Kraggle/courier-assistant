@@ -2,19 +2,45 @@ import './bootstrap';
 
 import Alpine from 'alpinejs';
 import jQuery from 'jquery';
-import K from './K.js'
+import K, { timed } from './K.js'
 import dateDropper from './plugins/datedropper-javascript.js';
 import dayjs from 'dayjs';
+import weekOfYear from 'dayjs/plugin/weekOfYear.js';
 import tippy from 'tippy.js';
 import Cookies from 'js-cookie';
+import DataTable from 'datatables.net-dt'
+import 'datatables.net-responsive-dt';
 
 window.Alpine = Alpine;
+window.jQuery = jQuery;
 window.$ = jQuery;
 window.K = K;
 window.DateDropper = dateDropper;
 window.dayjs = dayjs;
 window.tippy = tippy;
 window.Cookies = Cookies;
+window.DataTable = DataTable;
+window.timed = timed;
+
+dayjs.extend(weekOfYear);
+
+dayjs.prototype.weekOfMonth = function() {
+	return Math.floor((this.date() - 1) / 7 + 1);
+};
+
+dayjs.prototype.weeksInMonth = function() {
+	return Math.ceil(this.daysInMonth() / 7);
+};
+
+dayjs.prototype.isInLastWeek = function() {
+	return this.daysInMonth() - this.date() + 1 <= 7;
+};
+
+dayjs.prototype.weeksToEnd = function() {
+	return this.weeksInMonth() + 1 - this.weekOfMonth();
+};
+
+// console.log(dayjs('2024-07-24').isInLastWeek());
 
 import 'tippy.js/dist/tippy.css';
 
@@ -38,6 +64,11 @@ const refreshAll = function() {
 			title = $el.attr('title'),
 			data = $el.data();
 		if (!title) return;
+
+		if ($el.hasClass('select2-selection__rendered')) {
+			$(this).attr('title', '');
+			return;
+		}
 
 		let t;
 		if (t = data.tippy) {

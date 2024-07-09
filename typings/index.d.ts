@@ -147,6 +147,8 @@ interface Window {
     refreshAll(): void;
     loader: Loader;
     _K: object;
+    DataTable: DataTable;
+    timed: timed;
 }
 
 interface ImportMeta {

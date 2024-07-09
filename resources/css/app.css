@@ -1,4 +1,5 @@
 @import "select2.css";
+@import "dataTables.css";
 
 @tailwind base;
 @tailwind components;
@@ -34,4 +35,8 @@ input[type="number"] {
     background-image: url("../images/bg-white.png");
     background-repeat: repeat;
     background-size: 250px 250px;
+}
+
+select {
+    background-position: right center;
 }
