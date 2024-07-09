@@ -62,6 +62,7 @@ class TaxController extends Controller {
         $current = $years->where('year', $year)->first();
         $start = $current->start;
         $end = $current->end;
+        $end = $end > now() ? now() : $end;
         $updated = $tax->updated_at;
 
         $updated_at = collect([

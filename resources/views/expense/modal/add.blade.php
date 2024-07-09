@@ -17,7 +17,8 @@
     @csrf
     @method('put')
 
-    <input type="hidden"
+    <input id="is-repeat"
+      type="hidden"
       ref="is-repeat" />
 
     {{-- modal header --}}
@@ -28,7 +29,8 @@
       <div class="{{ $gap }} flex flex-col">
         {{-- choice --}}
         @define($key = 'choice')
-        <x-form.wrap :key="$key"
+        <x-form.wrap class="choice-option"
+          :key="$key"
           ref="choice-wrap"
           :value="__('Edit recurrence')"
           :help="__('')">
@@ -65,7 +67,7 @@
 
           {{-- date_to --}}
           @define($key = 'date_to')
-          <x-form.wrap class="with-repeat on-day on-week on-month on-year on-custom flex-grow"
+          <x-form.wrap class="to-date-option flex-grow"
             :key="$key"
             :value="__('to date')"
             :help="__('The date to end the recurring expense.')">
@@ -141,7 +143,7 @@
 
         </x-form.wrap>
 
-        <div class="{{ $gap }} with-choice on-all on-next flex flex-col">
+        <div class="{{ $gap }} repeat-options flex flex-col">
           {{-- repeat --}}
           @define($key = 'repeat')
           <x-form.wrap :key="$key"
@@ -168,7 +170,7 @@
 
           </x-form.wrap>
 
-          <div class="{{ $gap }} with-repeat on-custom grid grid-cols-2">
+          <div class="{{ $gap }} every-options grid grid-cols-2">
             {{-- every x --}}
             @define($key = 'every_x')
             <x-form.wrap :key="$key"
@@ -209,7 +211,7 @@
 
           {{-- month --}}
           @define($key = 'month')
-          <x-form.wrap class="with-repeat on-custom-and-month"
+          <x-form.wrap class="month-option"
             :key="$key"
             :value="__('Repeat on')"
             :help="__('')">
@@ -237,7 +239,7 @@
 
         {{-- image --}}
         @define($key = 'image')
-        <x-form.wrap class="on-never on-this with-repeat with-choice"
+        <x-form.wrap class="image-option"
           ref="image-wrap"
           :key="$key"
           :value="__('receipt')"
@@ -281,6 +283,7 @@
   <script type="module">
     $(() => {
       const $repeat = $('#repeat'),
+        $isRepeat = $('#is-repeat'),
         $every = $('#every'),
         $every_x = $('#every_x'),
         $month = $('#month'),
@@ -289,28 +292,53 @@
         $form = $repeat.closest('form');
 
       function toggleInputs() {
-        const repeat = $repeat.val(),
+        let repeat = $repeat.val(),
+          isRepeat = $isRepeat.val() == 'true',
           every = $every.val(),
           mode = $form.attr('mode'),
           choice = $choice.val();
+        const $rO = $('.repeat-options'),
+          $eO = $('.every-options'),
+          $mO = $('.month-option'),
+          $iO = $('.image-option'),
+          $dO = $('.to-date-option');
 
-        $(`.with-repeat`).addClass('hidden');
-        $(`.with-repeat.on-${repeat}, .with-repeat.on-${repeat}-and-${every}`).removeClass('hidden');
+        $rO.add($eO).add($iO).add($mO).add($dO).removeClass('hidden');
 
-        if (mode === 'edit') {
-          $(`.with-choice`).addClass('hidden');
-          $(`.with-choice.on-${choice}`).removeClass('hidden');
-        } else {
-          $(`.with-choice`).removeClass('hidden');
+        if (mode == 'edit' && isRepeat) {
+          if (choice == 'this') {
+            $rO.addClass('hidden');
+          } else if (choice != 'this')
+            $iO.addClass('hidden');
+
+        } else if (mode == 'add') {
+          if (repeat != 'never')
+            $iO.addClass('hidden');
         }
 
-        const imgOn = $('[ref=image-wrap]').hasClass('hidden');
+        switch (repeat) {
+          case 'never':
+            $eO.add($mO).add($dO).addClass('hidden');
+            break;
+          case 'custom':
+            switch (every) {
+              case 'month':
+                break;
+              default:
+                $mO.addClass('hidden');
+            }
+            break;
+          default:
+            $eO.add($mO).addClass('hidden');
+        }
+
+        const imgOn = $iO.hasClass('hidden');
         $form[imgOn ? 'removeClass' : 'addClass']('cols-2');
         $modal.removeClass('sm:max-w-2xl, sm:max-w-md');
         $modal.addClass(imgOn ? 'sm:max-w-md' : 'sm:max-w-2xl');
       }
       $repeat.add($every).add($choice).on('change', toggleInputs);
-      toggleInputs();
+      setTimeout(toggleInputs, 200);
 
       $repeat.on('change', function() {
         // this updates the custom repeat options when selecting single
