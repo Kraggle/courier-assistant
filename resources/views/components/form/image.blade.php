@@ -23,7 +23,7 @@
         accept="image/*,application/pdf"
         capture="camera" />
 
-      {{ __('capture') }}
+      capture
     </div>
 
     <div class="{{ $btn_class }} border-l">
@@ -34,7 +34,7 @@
         {!! $attributes->except('class') !!}
         accept="image/*,application/pdf" />
 
-      {{ __('browse') }}
+      browse
     </div>
   </div>
 

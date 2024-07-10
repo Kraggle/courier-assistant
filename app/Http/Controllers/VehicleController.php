@@ -39,8 +39,8 @@ class VehicleController extends Controller {
 
         $user->refresh();
         if ($user->vehicles()->count() == 1)
-            return redirect()->route('dashboard')->with('success', __("You are all setup now, why don't you try adding your first route?"));
+            return redirect()->route('dashboard')->with('success', "You are all setup now, why don't you try adding your first route?");
 
-        return redirect()->route('refuels', $vehicle->id)->with('success', Msg::added(__('vehicle')));
+        return redirect()->route('refuels', $vehicle->id)->with('success', Msg::added('vehicle'));
     }
 }

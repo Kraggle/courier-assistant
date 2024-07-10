@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DSPController;
 use App\Http\Controllers\TaxController;
 use App\Http\Controllers\InfoController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\RateController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DepotController;
@@ -40,6 +41,11 @@ Route::post('/stripe/webhook', [StripeWebhookController::class, 'handleWebhook']
 Route::controller(Controller::class)->group(function () {
     Route::get('/privacy-policy', 'privacyPolicy')->name('privacy-policy');
     Route::get('/terms-and-conditions', 'termsAndConditions')->name('terms-and-conditions');
+});
+
+Route::controller(PostController::class)->group(function () {
+    Route::get('/{type}/{slug}', 'post')->name('post');
+    Route::get('/posts', 'posts')->name('posts');
 });
 
 Route::middleware(['auth'])->group(function () { # just signed in

@@ -22,6 +22,6 @@ class PasswordController extends Controller {
             'password' => Hash::make($validated['password']),
         ]);
 
-        return back()->with('status', __('Your password has been updated.'));
+        return back()->with('status', 'Your password has been updated.');
     }
 }

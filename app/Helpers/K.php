@@ -435,7 +435,7 @@ class K {
      * @return string
      */
     public static function readableJoin(array $list, string $conjunction = null): string {
-        if (!$conjunction) $conjunction = __('and');
+        if (!$conjunction) $conjunction = 'and';
         $last = array_pop($list);
         if ($list)
             return implode(', ', $list) . " $conjunction $last";
@@ -463,11 +463,11 @@ class K {
 
         $join = [];
         if ($days > 0)
-            $join[] = self::pluralize(__('% day'), __('% days'), $days);
+            $join[] = self::pluralize('% day', '% days', $days);
         if ($hrs > 0)
-            $join[] = self::pluralize(__('% hour'), __('% hours'), $hrs);
+            $join[] = self::pluralize('% hour', '% hours', $hrs);
         if ($mins > 0)
-            $join[] = self::pluralize(__('% minute'), __('% minutes'), $mins);
+            $join[] = self::pluralize('% minute', '% minutes', $mins);
 
         return self::readableJoin($join);
     }

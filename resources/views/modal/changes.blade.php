@@ -19,7 +19,7 @@
 
           @foreach (['Date', 'User', 'Attribute', 'Old', 'New'] as $header)
             <x-table.th class="{{ $loop->last ? 'w-[1%] pl-2' : ($loop->first ? 'pr-2' : 'px-2') }} whitespace-nowrap text-xs">
-              {{ __($header) }}
+              {{ $header }}
             </x-table.th>
           @endforeach
 
@@ -35,7 +35,7 @@
     {{-- close --}}
     <div class="{{ $gap }} flex justify-end">
       <x-button.dark x-on:click="$dispatch('close')">
-        {{ __('close') }}
+        close
       </x-button.dark>
     </div>
 

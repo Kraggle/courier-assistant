@@ -4,12 +4,12 @@
   $rates = $dsp->rates;
 @endphp
 
-<x-layout.app :title="__('pay rates')">
+<x-layout.app title="pay rates">
 
   <x-section.one px="0">
     <x-section.title class="px-4 md:px-6">
       <x-slot:title>
-        {{ "$dsp->name " . __('pay rates') }}
+        {{ "$dsp->name " . 'pay rates' }}
       </x-slot>
 
       <x-slot:buttons>
@@ -18,18 +18,18 @@
           x-on:click.prevent="$dispatch('open-modal', 'add-rate')"
           id="addRate"
           data-modal="{{ json_encode([
-              'title.text' => Msg::add(__('rate')),
+              'title.text' => Msg::add('rate'),
               'form.action' => route('rate.add'),
               'date.value' => old('date', now()->format('Y-m-d')),
               'type.value' => old('type', '-1'),
               'depot_id.value' => old('depot_id', $user->options->depot_id),
               'amount.value' => old('amount', ''),
               'destroy.addclass' => 'hidden',
-              'submit.text' => __('add'),
+              'submit.text' => 'add',
           ]) }}"
           color="bg-violet-800 hover:bg-violet-700 focus:bg-violet-700 active:bg-violet-900">
-          <span class="hidden sm:block">{{ Msg::add(__('rate')) }}</span>
-          <span class="block sm:hidden">{{ __('add') }}</span>
+          <span class="hidden sm:block">{{ Msg::add('rate') }}</span>
+          <span class="block sm:hidden">add</span>
         </x-button.dark>
 
         <x-dropdown.wrap contentClasses="font-normal py-1 bg-white">
@@ -44,7 +44,7 @@
             <x-dropdown.link x-data=""
               x-on:click.prevent="$dispatch('open-modal', 'bulk-rates')"
               class="cursor-pointer">
-              {{ __('bulk add') }}
+              bulk add
             </x-dropdown.link>
 
             {{-- export all --}}
@@ -52,12 +52,12 @@
               x-on:click.prevent="$dispatch('open-modal', 'export-modal')"
               class="cursor-pointer"
               data-modal="{{ json_encode([
-                  'title.text' => Msg::exportTitle(__('rates')),
-                  'question.text' => Msg::exportQuestion(__('rates')),
+                  'title.text' => Msg::exportTitle('rates'),
+                  'question.text' => Msg::exportQuestion('rates'),
                   'form.action' => route('rate.export'),
                   'form.filename' => 'rates-' . $user->id . '.csv',
               ]) }}">
-              {{ __('Export as CSV') }}
+              Export as CSV
             </x-dropdown.link>
           </x-slot>
         </x-dropdown.wrap>
@@ -68,11 +68,11 @@
       <table class="w-full table-auto whitespace-nowrap text-sm sm:text-lg [&_.sm-only]:hidden sm:[&_.sm-only]:table-cell sm:[&_.xs-only]:hidden">
 
         <x-table.thead>
-          <x-table.th class="pr-2">{{ __('from date') }}</x-table.th>
-          <x-table.th class="px-2">{{ __('type') }}</x-table.th>
-          <x-table.th class="px-2">{{ __('rate') }}</x-table.th>
-          <x-table.th class="px-2">{{ __('depot') }}</x-table.th>
-          <x-table.th class="sm-only px-2">{{ __('creator') }}</x-table.th>
+          <x-table.th class="pr-2">from date</x-table.th>
+          <x-table.th class="px-2">type</x-table.th>
+          <x-table.th class="px-2">rate</x-table.th>
+          <x-table.th class="px-2">depot</x-table.th>
+          <x-table.th class="sm-only px-2">creator</x-table.th>
           <x-table.th class="w-[1%] pl-2"></x-table.th>
 
         </x-table.thead>
@@ -85,7 +85,7 @@
               class="cursor-pointer"
               id="editRate{{ $rate->id }}"
               :data-modal="json_encode([
-                  'title.text' => Msg::edit(__('rate')),
+                  'title.text' => Msg::edit('rate'),
                   'form.action' => route('rate.edit', $rate->id),
                   'date.value' => old('date', $rate->date),
                   'type.value' => old('type', $rate->type),
@@ -97,7 +97,7 @@
                           'form.action' => route('rate.destroy', $rate->id),
                       ],
                   ],
-                  'submit.text' => __('save'),
+                  'submit.text' => 'save',
               ])">
 
               {{-- date --}}
@@ -149,16 +149,16 @@
                       x-on:click.prevent.stop="$dispatch('open-modal', 'changes-modal')"
                       class="far fa-rotate cursor-pointer text-green-600"
                       data-modal="{{ json_encode([
-                          'title.text' => __('changes'),
+                          'title.text' => 'changes',
                           'tbody.changes' => $logs,
                       ]) }}"
                       data-tooltip-position="left"
-                      title="{{ Str::title(__('changes')) }}" />
+                      title="{{ Str::title('changes') }}" />
                   @endif
 
                   <x-icon class="far fa-edit cursor-pointer text-orange-400"
                     data-tooltip-position="left"
-                    title="{{ Str::title(__('edit')) }}" />
+                    title="{{ Str::title('edit') }}" />
                 </div>
               </x-table.td>
             </x-table.tr>
@@ -169,7 +169,7 @@
       </table>
 
       @if (!$user->hasDSP())
-        <div class="px-6 pt-6 text-center">{{ Msg::noResults(__('rates')) }}</div>
+        <div class="px-6 pt-6 text-center">{{ Msg::noResults('rates') }}</div>
       @endif
     </div>
   </x-section.one>

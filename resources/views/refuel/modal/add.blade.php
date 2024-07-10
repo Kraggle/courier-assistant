@@ -17,7 +17,7 @@
     @method('PUT')
 
     {{-- modal header --}}
-    <x-modal.header :title="Msg::add(__('refuel'))"
+    <x-modal.header :title="Msg::add('refuel')"
       :help="true" />
 
     <div class="hidden"
@@ -26,11 +26,11 @@
         <x-icon class="far fa-info-circle text-base text-blue-400" />
         <div class="{{ $gap }} flex flex-col">
           <p class="text-xs text-gray-500">
-            {{ __('For this to work you have to completely fill your tank on each refuel, have the first reading from a full tank and complete this on each refuel.') }}
+            For this to work you have to completely fill your tank on each refuel, have the first reading from a full tank and complete this on each refuel.
           </p>
 
           <p class="text-xs text-gray-500">
-            {{ __('Honestly, it is worth it to see the extra money you earn on fuel each day though.') }}
+            Honestly, it is worth it to see the extra money you earn on fuel each day though.
           </p>
         </div>
       </div>
@@ -41,9 +41,9 @@
         {{-- date picker --}}
         @define($key = 'date')
         <x-form.wrap class="required"
+          value="date"
           :key="$key"
-          :value="__('date')"
-          :help="__('The date of the refuel. This will be used to both sort the refuels and to find the most accurate cost per mile on your routes.')">
+          help="The date of the refuel. This will be used to both sort the refuels and to find the most accurate cost per mile on your routes.">
 
           <x-form.date class="block w-full"
             id="{{ $key }}"
@@ -55,32 +55,32 @@
         {{-- mileage input --}}
         @define($key = 'mileage')
         <x-form.wrap class="required"
+          value="odometer reading"
           :key="$key"
-          :value="__('odometer reading')"
-          :help="__('The reading from your odometer when you fill the tank. You have to completely fill the tank to get an accurate reading of how many miles since the last refill it cost to fill up.')">
+          help="The reading from your odometer when you fill the tank. You have to completely fill the tank to get an accurate reading of how many miles since the last refill it cost to fill up.">
 
           <x-form.text class="block w-full"
             id="{{ $key }}"
             name="{{ $key }}"
             type="number"
             ref="{{ $key }}"
-            :placeholder="__('Please enter reading...')" />
+            placeholder="Please enter reading..." />
 
         </x-form.wrap>
 
         {{-- cost input --}}
         @define($key = 'cost')
         <x-form.wrap class="required"
+          value="cost to refuel"
           :key="$key"
-          :value="__('cost to refuel')"
-          :help="__('The amount the refuel cost. This has help to show the exact cost per mile since the last refuel.')">
+          help="The amount the refuel cost. This has help to show the exact cost per mile since the last refuel.">
 
           <x-form.text-prefix class="block w-full"
             id="{{ $key }}"
             name="{{ $key }}"
             type="number"
             ref="{{ $key }}"
-            :placeholder="__('Please enter value...')"
+            placeholder="Please enter value..."
             step="0.01">
 
             <x-icon class="fas fa-sterling-sign text-gray-400" />
@@ -94,7 +94,7 @@
           <x-form.check id="first"
             name="first"
             ref="first"
-            label="{{ __('Have you skipped any refuels to this one OR is this the first?') }}" />
+            label="Have you skipped any refuels to this one OR is this the first?" />
 
           <x-form.error class="mt-2"
             :messages="$errors->get('cost')" />
@@ -103,10 +103,10 @@
 
       {{-- image --}}
       @define($key = 'image')
-      <x-form.wrap ref="image-wrap"
+      <x-form.wrap value="receipt"
+        ref="image-wrap"
         :key="$key"
-        :value="__('receipt')"
-        :help="__('Add a photo of your receipt. This will be kept available to you for tax purposes.')">
+        help="Add a photo of your receipt. This will be kept available to you for tax purposes.">
 
         <x-form.image class="block w-full"
           id="{{ $key }}"
@@ -120,7 +120,7 @@
         x-on:click.prevent="$dispatch('open-modal', 'destroy-refuel')"
         class="no-loader"
         ref="destroy">
-        {{ __('delete') }}
+        delete
       </x-button.danger>
 
       <span></span>
@@ -128,11 +128,11 @@
       {{-- submit --}}
       <div class="{{ $gap }} flex justify-end">
         <x-button.light x-on:click="$dispatch('close')">
-          {{ __('cancel') }}
+          cancel
         </x-button.light>
 
         <x-button.dark ref="submit">
-          {{ __('add') }}
+          add
         </x-button.dark>
       </div>
     </div>

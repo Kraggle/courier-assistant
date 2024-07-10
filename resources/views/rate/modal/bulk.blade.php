@@ -16,14 +16,14 @@
     @method('PATCH')
 
     {{-- modal header --}}
-    <x-modal.header :title="Msg::bulkTitle(__('rates'))" />
+    <x-modal.header :title="Msg::bulkTitle('rates')" />
 
     <div>
       <p class="text-sm">
         {{ Msg::bulkHelper(['date', 'amount', 'type']) }}
       </p>
       <p class="text-sm">
-        {{ __('The available :type are below...', ['type' => '`types`']) }}
+        'The available `types` are below...
       </p>
       <div class="ml-2 grid grid-cols-[max-content_1fr] items-center gap-x-2">
         @foreach (Lists::rateTypes() as $k => $v)
@@ -36,8 +36,8 @@
     <div class="{{ $gap }} grid grid-cols-1 md:grid-cols-2">
       {{-- file input --}}
       @define($key = 'file')
-      <x-form.wrap :key="$key"
-        :value="__('CSV')"
+      <x-form.wrap value="CSV"
+        :key="$key"
         left="left-[5.75rem]">
 
         <x-form.file class="block w-full"
@@ -50,12 +50,12 @@
 
       {{-- depot --}}
       @define($key = 'depot_id')
-      <x-form.wrap :key="$key"
-        :value="__('depot')">
+      <x-form.wrap value="depot"
+        :key="$key">
 
         <x-form.select name="{{ $key }}"
           ref="{{ $key }}"
-          placeholder="{{ __('Please select...') }}">
+          placeholder="Please select...">
 
           <x-slot:elements>
 
@@ -70,7 +70,7 @@
           </x-slot>
 
           <x-slot:noresults>
-            <a href="{{ route('depot.create') }}">{{ __('Not Found, click to add!') }}</a>
+            <a href="{{ route('depot.create') }}">Not Found, click to add!</a>
           </x-slot>
 
         </x-form.select>
@@ -82,11 +82,11 @@
     {{-- submit --}}
     <div class="{{ $gap }} flex justify-end">
       <x-button.light x-on:click="$dispatch('close')">
-        {{ __('cancel') }}
+        cancel
       </x-button.light>
 
       <x-button.dark ref="submit">
-        {{ __('upload') }}
+        upload
       </x-button.dark>
     </div>
 

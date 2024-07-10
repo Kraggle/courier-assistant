@@ -69,7 +69,7 @@ class ExpenseController extends FilesController {
             $rules->createRepeats();
         }
 
-        return back()->with('success', Msg::added(__('expense')));
+        return back()->with('success', Msg::added('expense'));
     }
 
     /**
@@ -121,7 +121,7 @@ class ExpenseController extends FilesController {
             $repeat->createRepeats($choice == 'next' ? $expense->date : null);
         }
 
-        return back()->with('success', Msg::edited(__('expense')));
+        return back()->with('success', Msg::edited('expense'));
     }
 
     /**
@@ -142,12 +142,12 @@ class ExpenseController extends FilesController {
                 $rule->delete();
             }
 
-            return back()->with('success', Msg::deleted(__('recurring expenses')));
+            return back()->with('success', Msg::deleted('recurring expenses'));
         }
 
         $expense->delete();
 
-        return back()->with('success', Msg::deleted(__('expense')));
+        return back()->with('success', Msg::deleted('expense'));
     }
 
     /**
@@ -184,7 +184,7 @@ class ExpenseController extends FilesController {
                 $user->expenses()->create($row);
             });
 
-        return back()->with('success', Msg::added(__('expenses')));
+        return back()->with('success', Msg::added('expenses'));
     }
 
     /**

@@ -25,7 +25,7 @@ class InfoController extends Controller {
 
         Info::create($request->all());
 
-        return back()->with('success', Msg::added(__('marker')));
+        return back()->with('success', Msg::added('marker'));
     }
 
     /**
@@ -40,7 +40,7 @@ class InfoController extends Controller {
         $info = Info::find($request->id);
         $info->update($request->all());
 
-        return back()->with('success', Msg::edited(__('marker')));
+        return back()->with('success', Msg::edited('marker'));
     }
 
     /**
@@ -84,11 +84,11 @@ class InfoController extends Controller {
         $info = Info::find($request->id);
 
         if (!Gate::allows('delete-info', $info))
-            return back()->with('error', __('You do not have permission to delete this marker.'));
+            return back()->with('error', 'You do not have permission to delete this marker.');
 
         $info->delete();
 
-        return back()->with('success', Msg::deleted(__('marker')));
+        return back()->with('success', Msg::deleted('marker'));
     }
 
     /**

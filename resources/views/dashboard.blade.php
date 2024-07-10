@@ -10,7 +10,7 @@
 @endphp
 {{-- @log(K::firstDayOfWeek($weeks[0])->format('Y-m-d')) --}}
 
-<x-layout.app :title="__('dashboard')">
+<x-layout.app title="dashboard">
   {{-- <a href="{{ route('cashier.payment', [2]) }}">stripe</a> --}}
 
   <x-section.two grid="grid-cols-1 lg:grid-cols-[auto_1fr]">
@@ -21,7 +21,7 @@
         x-on:click.prevent="$dispatch('open-modal', 'add-route')"
         id="addRoute"
         data-modal="{{ json_encode([
-            'title.text' => Msg::add(__('route')),
+            'title.text' => Msg::add('route'),
             'form.action' => route('route.add'),
             'type.value' => old('type', $last_route->type ?? '-1'),
             'depot_id.value' => old('depot_id', $last_route->depot_id ?? $user->options->depot_id),
@@ -43,7 +43,7 @@
         ]) }}"
         color="bg-orange-600 hover:bg-orange-700 focus:bg-orange-700 active:bg-orange-700"
         icon="fa-thin fa-compass">
-        <span class="block">{{ Msg::add(__('route')) }}</span>
+        <span class="block">{{ Msg::add('route') }}</span>
       </x-button.icon>
 
       {{-- add refuel --}}
@@ -51,7 +51,7 @@
         x-on:click.prevent="$dispatch('open-modal', 'add-refuel')"
         id="addRefuel"
         data-modal="{{ json_encode([
-            'title.text' => Msg::add(__('refuel')),
+            'title.text' => Msg::add('refuel'),
             'form.action' => route('refuel.add', $vehicle->id ?? 1),
             'date.value' => old('date', now()->format('Y-m-d')),
             'mileage.value' => old('mileage', ''),
@@ -60,11 +60,11 @@
             'image-wrap.set-inputs' => old('image-wrap', ''),
             'image-wrap.set-img' => Vite::asset('resources/images/no-image.svg'),
             'destroy.addclass' => 'hidden',
-            'submit.text' => __('add'),
+            'submit.text' => 'add',
         ]) }}"
         color="bg-lime-600 hover:bg-lime-700 focus:bg-lime-700 active:bg-lime-700"
         icon="fa-thin fa-gas-pump">
-        <span class="block">{{ Msg::add(__('refuel')) }}</span>
+        <span class="block">{{ Msg::add('refuel') }}</span>
       </x-button.icon>
 
       {{-- add rate --}}
@@ -72,18 +72,18 @@
         x-on:click.prevent="$dispatch('open-modal', 'add-rate')"
         id="addRate"
         data-modal="{{ json_encode([
-            'title.text' => Msg::add(__('rate')),
+            'title.text' => Msg::add('rate'),
             'form.action' => route('rate.add'),
             'type.value' => old('type', '-1'),
             'date.value' => old('date', now()->format('Y-m-d')),
             'depot_id.value' => old('depot_id', $user->options->depot_id),
             'amount.value' => old('amount', ''),
             'destroy.addclass' => 'hidden',
-            'submit.text' => __('add'),
+            'submit.text' => 'add',
         ]) }}"
         color="bg-teal-600 hover:bg-teal-700 focus:bg-teal-700 active:bg-teal-700"
         icon="fa-thin fa-chart-simple">
-        <span class="block">{{ Msg::add(__('rate')) }}</span>
+        <span class="block">{{ Msg::add('rate') }}</span>
       </x-button.icon>
 
       {{-- add expense --}}
@@ -91,7 +91,7 @@
         x-on:click.prevent="$dispatch('open-modal', 'add-expense')"
         id="addExpense"
         data-modal="{{ json_encode([
-            'title.text' => Msg::add(__('expense')),
+            'title.text' => Msg::add('expense'),
             'form.action' => route('expense.add'),
             'date.value' => old('date', now()->format('Y-m-d')),
             'date_to.value' => old('date_to', now()->add(1, 'year')->format('Y-m-d')),
@@ -106,11 +106,11 @@
             'image-wrap.set-inputs' => old('image', ''),
             'image-wrap.set-img' => Vite::asset('resources/images/no-image.svg'),
             'destroy.addclass' => 'hidden',
-            'submit.text' => __('add'),
+            'submit.text' => 'add',
         ]) }}"
         color="bg-blue-600 hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-700"
         icon="fa-thin fa-file-invoice">
-        <span class="block">{{ Msg::add(__('expense')) }}</span>
+        <span class="block">{{ Msg::add('expense') }}</span>
       </x-button.icon>
     </x-slot:one>
 
@@ -140,28 +140,28 @@
         $next_date = isset($use['pay']) ? $use['pay'] : '';
       @endphp
 
-      <x-section.detail :value="K::formatCurrency($fuel_rate, true)"
-        :title="__('Latest fuel rate')"
+      <x-section.detail title="Latest fuel rate"
+        :value="K::formatCurrency($fuel_rate, true)"
         icon="fas fa-gauge-low text-yellow-500"
-        :none="__('No refuels!')"
+        none="No refuels!"
         :active="$user->hasRefuels()" />
 
-      <x-section.detail :value="K::formatCurrency($total_pay)"
-        :title="__('Next pay amount')"
+      <x-section.detail title="Next pay amount"
+        :value="K::formatCurrency($total_pay)"
         icon="fas fa-coin text-yellow-500"
-        :none="__('Add new routes!')"
+        none="Add new routes!"
         :active="!!$use" />
 
-      <x-section.detail :value="K::formatCurrency($last_rate, true)"
-        :title="__('Latest invoice rate')"
+      <x-section.detail title="Latest invoice rate"
+        :value="K::formatCurrency($last_rate, true)"
         icon="fas fa-gauge-high text-yellow-500"
-        :none="__('Add rates!')"
+        none="Add rates!"
         :active="$last && $last->hasRate('fuel')" />
 
-      <x-section.detail :value="K::displayDate($next_date)"
-        :title="__('Next pay date')"
+      <x-section.detail title="Next pay date"
+        :value="K::displayDate($next_date)"
         icon="fas fa-calendar-star text-yellow-500"
-        :none="__('Add new routes!')"
+        none="Add new routes!"
         :active="!!$use" />
 
     </x-slot:two>
@@ -177,7 +177,7 @@
         @foreach ($weeks as $week)
           <x-tab.button class="whitespace-nowrap"
             :tab="$loop->index">
-            {{ __('week') }} {{ $week->week() }}
+            week {{ $week->week() }}
           </x-tab.button>
         @endforeach
       </x-slot>
@@ -196,14 +196,14 @@
 
             <x-table.thead class="text-xs md:text-sm">
               <x-table.th class="pr-2">
-                {{ __('date') }}
-                <span class="xs-only"> & {{ __('time') }}</span>
+                date
+                <span class="xs-only"> & time</span>
               </x-table.th>
-              <x-table.th class="sm-only px-2">{{ __('time') }}</x-table.th>
-              <x-table.th class="px-2">{{ __('miles') }}</x-table.th>
-              <x-table.th class="px-2">{{ __('pay') }}</x-table.th>
-              <x-table.th class="sm-only px-2">{{ __('stops') }}</x-table.th>
-              <x-table.th class="sm-only px-2">{{ __('type') }}</x-table.th>
+              <x-table.th class="sm-only px-2">time</x-table.th>
+              <x-table.th class="px-2">miles</x-table.th>
+              <x-table.th class="px-2">pay</x-table.th>
+              <x-table.th class="sm-only px-2">stops</x-table.th>
+              <x-table.th class="sm-only px-2">type</x-table.th>
               <x-table.th class="w-[1%] pl-2"></x-table.th>
             </x-table.thead>
 
@@ -215,7 +215,7 @@
                   class="cursor-pointer"
                   id="editRoute{{ $r->id }}"
                   :data-modal="json_encode([
-                      'title.text' => Msg::edit(__('route')),
+                      'title.text' => Msg::edit('route'),
                       'form.action' => route('route.edit', $r->id),
                       'type.value' => old('type', $r->type),
                       'depot_id.value' => old('depot_id', $r->depot_id),
@@ -238,7 +238,7 @@
                               'form.action' => route('route.destroy', $r->id),
                           ],
                       ],
-                      'submit.text' => __('save'),
+                      'submit.text' => 'save',
                   ])">
 
                   @define($time = K::formatTime($r->start_time) . ' - ' . ($r->end_time ? K::formatTime($r->end_time) : '??'))
@@ -332,12 +332,12 @@
                           class="far fa-square-ellipsis-vertical mt-[2px] cursor-pointer text-blue-400"
                           data-modal="{{ json_encode($data) }}"
                           data-tooltip-position="left"
-                          :title="__('Extra information!')" />
+                          title="Extra information!" />
                       @endif
 
                       <x-icon class="far fa-edit cursor-pointer text-orange-400"
                         data-tooltip-position="left"
-                        title="{{ Str::title(__('edit')) }}" />
+                        title="{{ Str::title('edit') }}" />
                     </div>
                   </x-table.td>
                 </x-table.tr>
@@ -363,7 +363,7 @@
 
                   {{-- date --}}
                   <x-table.td class="whitespace-nowrap">
-                    <div class="text-xs font-light text-gray-600 sm:text-sm">{{ __('Pay Date') }}</div>
+                    <div class="text-xs font-light text-gray-600 sm:text-sm">Pay Date</div>
                     @php
                       $r = $routes->first();
                       $d = $r->dsp();
@@ -436,22 +436,22 @@
                           class="far fa-chart-simple cursor-pointer text-teal-400"
                           id="addRate{{ $loop->index }}"
                           data-modal="{{ json_encode([
-                              'title.text' => Msg::add(__('rate')),
+                              'title.text' => Msg::add('rate'),
                               'form.action' => route('rate.add'),
                               'type.value' => old('type', 'fuel'),
                               'date.value' => old('date', K::firstDayOfWeek($date)->format('Y-m-d')),
                               'depot_id.value' => old('depot_id', $routes->first()->depot_id),
                               'amount.value' => old('amount', ''),
                               'destroy.addclass' => 'hidden',
-                              'submit.text' => __('add'),
+                              'submit.text' => 'add',
                           ]) }}"
                           data-tooltip-position="left"
-                          :title="__('Set weeks fuel rate?')" />
+                          title="Set weeks fuel rate?" />
                       @endunless
 
                       <x-icon class="far fa-edit cursor-pointer text-base text-orange-400 sm:text-xl"
                         data-tooltip-position="left"
-                        :title="Str::title(__('update entire week'))" />
+                        :title="Str::title('update entire week')" />
                     </div>
                   </x-table.td>
                 </x-table.tr>
@@ -461,7 +461,7 @@
 
           </table>
           @if (!$routes->count())
-            <div class="px-6 pt-6 text-center">{{ Msg::noResults(__('routes')) }}</div>
+            <div class="px-6 pt-6 text-center">{{ Msg::noResults('routes') }}</div>
           @endif
 
         </x-tab.content>

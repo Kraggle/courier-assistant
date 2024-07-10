@@ -15,7 +15,7 @@
         <div class="flex gap-2">
           <img class="h-5 rounded-sm border border-gray-700"
             src="{{ Vite::asset('resources/images/flags/en.svg') }}" />
-          <span>{{ __('English') }}</span>
+          <span>English</span>
         </div>
       </x-dropdown.link>
 
@@ -25,7 +25,7 @@
         <div class="flex gap-2">
           <img class="h-5 rounded-sm border border-gray-700"
             src="{{ Vite::asset('resources/images/flags/bg.svg') }}" />
-          <span>{{ __('Bulgarian') }}</span>
+          <span>Bulgarian</span>
         </div>
       </x-dropdown.link>
 
@@ -35,7 +35,7 @@
         <div class="flex gap-2">
           <img class="h-5 rounded-sm border border-gray-700"
             src="{{ Vite::asset('resources/images/flags/pl.svg') }}" />
-          <span>{{ __('Polish') }}</span>
+          <span>Polish</span>
         </div>
       </x-dropdown.link>
 
@@ -45,7 +45,7 @@
         <div class="flex gap-2">
           <img class="h-5 rounded-sm border border-gray-700"
             src="{{ Vite::asset('resources/images/flags/ro.svg') }}" />
-          <span>{{ __('Romanian') }}</span>
+          <span>Romanian</span>
         </div>
       </x-dropdown.link>
 

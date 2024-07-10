@@ -18,14 +18,14 @@
 
     {{-- modal header --}}
     <x-modal.header>
-      <span>{{ __('update week') }}</span>
+      <span>update week</span>
       <span ref="title"></span>
     </x-modal.header>
 
     <table class="w-full table-auto whitespace-nowrap text-sm sm:text-base">
       <x-table.thead>
 
-        @foreach ([__('date'), __('invoice miles'), __('bonus'), __('Claiming VAT?')] as $header)
+        @foreach (['date', 'invoice miles', 'bonus', 'Claiming VAT?'] as $header)
           <x-table.th class="{{ $loop->last ? 'w-[1%] pl-2' : ($loop->first ? 'pr-2' : 'px-2') }} whitespace-nowrap text-xs sm:text-sm">
             {{ $header }}
           </x-table.th>
@@ -97,11 +97,11 @@
     {{-- submit --}}
     <div class="{{ $gap }} flex justify-end px-4 md:px-6">
       <x-button.light x-on:click="$dispatch('close')">
-        {{ __('cancel') }}
+        cancel
       </x-button.light>
 
       <x-button.dark ref="submit">
-        {{ __('save') }}
+        save
       </x-button.dark>
     </div>
 

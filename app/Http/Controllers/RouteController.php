@@ -54,7 +54,7 @@ class RouteController extends FilesController {
     public function add(RouteRequest $request) {
         $request->user()->routes()->create($request->all());
 
-        return back()->with('success', Msg::added(__('route')));
+        return back()->with('success', Msg::added('route'));
     }
 
     /**
@@ -67,7 +67,7 @@ class RouteController extends FilesController {
     public function edit(RouteRequest $request, Route $route) {
         $route->update($request->all());
 
-        return back()->with('success', Msg::edited(__('route')));
+        return back()->with('success', Msg::edited('route'));
     }
 
     /**
@@ -88,7 +88,7 @@ class RouteController extends FilesController {
             ]);
         }
 
-        return back()->with('success', __('Successfully updated the week!'));
+        return back()->with('success', 'Successfully updated the week!');
     }
 
     /**
@@ -142,7 +142,7 @@ class RouteController extends FilesController {
                 $user->routes()->create($row);
             });
 
-        return back()->with('success', Msg::added(__('routes')));
+        return back()->with('success', Msg::added('routes'));
     }
 
     /**
@@ -155,7 +155,7 @@ class RouteController extends FilesController {
     public function destroy(Request $request, Route $route) {
         $route->delete();
 
-        return back()->with('success', Msg::deleted(__('route')));
+        return back()->with('success', Msg::deleted('route'));
     }
 
     /**

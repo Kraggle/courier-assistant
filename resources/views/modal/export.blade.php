@@ -20,7 +20,7 @@
     {{-- submit --}}
     <div class="{{ $gap }} flex justify-end">
       <x-button.light x-on:click="$dispatch('close')">
-        {{ __('close') }}
+        close
       </x-button.light>
 
       <form id="exportForm"
@@ -33,7 +33,7 @@
         <x-button.dark x-on:click="$dispatch('close')"
           id="exportBtn"
           color="no-loader bg-green-700 hover:bg-green-600 focus:bg-green-600 active:bg-green-800">
-          {{ __('export') }}
+          export
         </x-button.dark>
 
       </form>

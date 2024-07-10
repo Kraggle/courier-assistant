@@ -19,7 +19,7 @@
 
     {{-- date --}}
     <x-table.td class="whitespace-nowrap">
-      <div class="text-xs font-light text-gray-600 sm:text-sm">{{ __('Pay Date') }}</div>
+      <div class="text-xs font-light text-gray-600 sm:text-sm">Pay Date</div>
       @php
         $r = $routes->first();
         $d = $r->dsp();
@@ -90,22 +90,22 @@
             class="far fa-chart-simple cursor-pointer text-teal-400"
             id="addRate"
             data-modal="{{ json_encode([
-                'title.text' => Msg::add(__('rate')),
+                'title.text' => Msg::add('rate'),
                 'form.action' => route('rate.add'),
                 'type.value' => old('type', 'fuel'),
                 'date.value' => old('date', K::firstDayOfWeek($first->date)->format('Y-m-d')),
                 'depot_id.value' => old('depot_id', $first->depot_id),
                 'amount.value' => old('amount', ''),
                 'destroy.addclass' => 'hidden',
-                'submit.text' => __('add'),
+                'submit.text' => 'add',
             ]) }}"
             data-tooltip-position="left"
-            :title="__('Set weeks fuel rate?')" />
+            title="Set weeks fuel rate?" />
         @endunless
 
         <x-icon class="far fa-edit hidden cursor-pointer text-base text-orange-400 sm:block sm:text-xl"
           data-tooltip-position="left"
-          :title="Str::title(__('update entire week'))" />
+          :title="Str::title('update entire week')" />
 
         <span class="text-lg font-bold sm:hidden">#{{ $weekNo }}</span>
       </div>
@@ -123,7 +123,7 @@
     id="editRoute{{ $r->id }}"
     data-date="{{ $r->date->format('Y-m-d') }}"
     :data-modal="json_encode([
-        'title.text' => Msg::edit(__('route')),
+        'title.text' => Msg::edit('route'),
         'form.action' => route('route.edit', $r->id),
         'type.value' => old('type', $r->type),
         'depot_id.value' => old('depot_id', $r->depot_id),
@@ -146,7 +146,7 @@
                 'form.action' => route('route.destroy', $r->id),
             ],
         ],
-        'submit.text' => __('save'),
+        'submit.text' => 'save',
     ])">
 
     @define($time = K::formatTime($r->start_time) . ' - ' . ($r->end_time ? K::formatTime($r->end_time) : '??'))
@@ -241,12 +241,12 @@
             class="far fa-square-ellipsis-vertical mt-[2px] cursor-pointer text-blue-400"
             data-modal="{{ json_encode($data) }}"
             data-tooltip-position="left"
-            :title="__('Extra information!')" />
+            title="Extra information!" />
         @endif
 
         <x-icon class="far fa-edit cursor-pointer text-orange-400"
           data-tooltip-position="left"
-          title="{{ Str::title(__('edit')) }}" />
+          title="{{ Str::title('edit') }}" />
       </div>
     </x-table.td>
   </x-table.tr>

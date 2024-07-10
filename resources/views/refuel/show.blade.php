@@ -1,6 +1,6 @@
 @define($refuels = $vehicle->refuels)
 
-<x-layout.app :title="__('refuels')">
+<x-layout.app title="refuels">
   <x-section.one px="">
     <x-tab.link-wrap class="mb-4 px-4 text-2xl font-medium text-gray-900 md:mb-5 md:px-6">
       <x-slot name="tabs">
@@ -13,7 +13,7 @@
 
         <x-tab.link :href="route('vehicle.show')"
           :active="false">
-          {{ __('New Vehicle') }}
+          New Vehicle
         </x-tab.link>
       </x-slot>
 
@@ -23,7 +23,7 @@
           x-on:click.prevent="$dispatch('open-modal', 'add-refuel')"
           id="addRefuel"
           data-modal="{{ json_encode([
-              'title.text' => Msg::add(__('refuel')),
+              'title.text' => Msg::add('refuel'),
               'form.action' => route('refuel.add', $vehicle->id),
               'date.value' => old('date', now()->format('Y-m-d')),
               'mileage.value' => old('mileage', ''),
@@ -32,11 +32,11 @@
               'image-wrap.set-inputs' => old('image-wrap', ''),
               'image-wrap.set-img' => Vite::asset('resources/images/no-image.svg'),
               'destroy.addclass' => 'hidden',
-              'submit.text' => __('add'),
+              'submit.text' => 'add',
           ]) }}"
           color="bg-violet-800 hover:bg-violet-700 focus:bg-violet-700 active:bg-violet-900">
-          <span class="hidden sm:block">{{ Msg::add(__('refuel')) }}</span>
-          <span class="block sm:hidden">{{ __('add') }}</span>
+          <span class="hidden sm:block">{{ Msg::add('refuel') }}</span>
+          <span class="block sm:hidden">add</span>
         </x-button.dark>
 
         <x-dropdown.wrap contentClasses="font-normal py-1 bg-white">
@@ -51,7 +51,7 @@
             <x-dropdown.link x-data=""
               x-on:click.prevent="$dispatch('open-modal', 'bulk-refuel')"
               class="cursor-pointer">
-              {{ __('bulk add') }}
+              bulk add
             </x-dropdown.link>
 
             {{-- export all --}}
@@ -59,12 +59,12 @@
               x-on:click.prevent="$dispatch('open-modal', 'export-modal')"
               class="cursor-pointer"
               data-modal="{{ json_encode([
-                  'title.text' => Msg::exportTitle(__('refuels')),
-                  'question.text' => Msg::exportQuestion(__('refuels')),
+                  'title.text' => Msg::exportTitle('refuels'),
+                  'question.text' => Msg::exportQuestion('refuels'),
                   'form.action' => route('refuel.export', $vehicle->id),
                   'form.filename' => 'refuel-' . $user->id . '.csv',
               ]) }}">
-              {{ __('Export as CSV') }}
+              Export as CSV
             </x-dropdown.link>
           </x-slot>
         </x-dropdown.wrap>
@@ -78,9 +78,9 @@
 
         <x-table.thead>
 
-          @foreach ([__('date'), __('cost'), __('odometer'), __('miles'), __('ppm'), ''] as $header)
+          @foreach (['date', 'cost', 'odometer', 'miles', 'ppm', ''] as $header)
             <x-table.th class="{{ $loop->last ? 'w-[1%] pl-2' : ($loop->first ? 'pr-2' : 'px-2') }} whitespace-nowrap text-xs md:text-sm">
-              {{ __($header) }}
+              {{ $header }}
             </x-table.th>
           @endforeach
 
@@ -94,7 +94,7 @@
               class="cursor-pointer"
               id="editRefuel{{ $r->id }}"
               :data-modal="json_encode([
-                  'title.text' => Msg::edit(__('refuel')),
+                  'title.text' => Msg::edit('refuel'),
                   'form.action' => route('refuel.edit', $r->id),
                   'date.value' => old('date', $r->date->format('Y-m-d')),
                   'mileage.value' => old('mileage', $r->mileage),
@@ -108,7 +108,7 @@
                           'form.action' => route('refuel.destroy', $r->id),
                       ],
                   ],
-                  'submit.text' => __('save'),
+                  'submit.text' => 'save',
               ])">
 
               {{-- date --}}
@@ -136,12 +136,12 @@
                         'image.src' => $r->getImageURL(),
                     ]) }}"
                     data-tooltip-position="left"
-                    title="{{ Str::title(__('receipt')) }}" />
+                    title="{{ Str::title('receipt') }}" />
                 @endif
 
                 <x-icon class="far fa-edit cursor-pointer text-orange-400"
                   data-tooltip-position="left"
-                  title="{{ Str::title(__('edit')) }}" />
+                  title="{{ Str::title('edit') }}" />
               </x-table.td>
 
             </x-table.tr>
@@ -152,7 +152,7 @@
       </table>
 
       @if ($refuels->count() == 0)
-        <div class="px-6 pt-6 text-center">{{ Msg::noResults(__('refuels')) }}</div>
+        <div class="px-6 pt-6 text-center">{{ Msg::noResults('refuels') }}</div>
       @endif
 
     </div>

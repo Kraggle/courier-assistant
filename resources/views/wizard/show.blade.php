@@ -16,25 +16,25 @@
 
         <div class="flex items-center justify-between">
           <div class="font-serif text-xl">
-            {{ __('Select your DSP!') }}
+            Select your DSP!
           </div>
 
           <x-icon class="far fa-circle-question cursor-pointer"
             data-help-trigger="false"
-            :title="__('Toggle help text!')" />
+            title="Toggle help text!" />
 
         </div>
 
         {{-- dsp_id --}}
         @define($key = 'dsp_id')
-        <x-form.wrap :key="$key"
-          :value="__('DSP')"
-          :help="__('Search here for the name of the Delivery Service Provider you work for. It\'s important you select the correct one, as they differ in their pay rates. The one you select, if already added, will most likely already have rates set to date.')">
+        <x-form.wrap value="DSP"
+          :key="$key"
+          help="Search here for the name of the Delivery Service Provider you work for. It\'s important you select the correct one, as they differ in their pay rates. The one you select, if already added, will most likely already have rates set to date.">
 
           <x-form.select id="{{ $key }}"
             name="{{ $key }}"
             style="width: 100%"
-            :placeholder="__('Select your Delivery Service Provider')">
+            placeholder="Select your Delivery Service Provider">
 
             <x-slot:elements>
 
@@ -49,7 +49,7 @@
             </x-slot>
 
             <x-slot:noresults>
-              <span class="font-semibold">{{ __('Not Found, please add below!') }}</span>
+              <span class="font-semibold">Not Found, please add below!</span>
             </x-slot>
 
           </x-form.select>
@@ -58,9 +58,9 @@
 
         {{-- date --}}
         @define($key = 'date')
-        <x-form.wrap :key="$key"
-          :value="__('start date')"
-          :help="__('The date that you started working for this DSP. As you can add many, you will only be able to change anything on the latest one you have selected.')">
+        <x-form.wrap value="start date"
+          :key="$key"
+          help="The date that you started working for this DSP. As you can add many, you will only be able to change anything on the latest one you have selected.">
 
           <x-form.date class="block w-full"
             id="{{ $key }}"
@@ -71,7 +71,7 @@
         {{-- submit --}}
         <div class="{{ $gap }} flex justify-end">
           <x-button.dark>
-            {{ __('choose') }}
+            choose
           </x-button.dark>
         </div>
 
@@ -87,15 +87,15 @@
 
         <div class="flex items-center justify-between">
           <div class="font-serif text-xl">
-            {{ __('OR ... add it here!') }}
+            OR ... add it here!
           </div>
         </div>
 
         {{-- name --}}
         @define($key = 'name')
-        <x-form.wrap :key="$key"
-          :value="__('DSPs Name')"
-          :help="__('The name of your Delivery Service Provider. Please be accurate with this as anyone else searching for your DSP will want to find it easily. Also if there is any profanity found the DSP will be removed and you will loose any data added.')">
+        <x-form.wrap value="DSPs Name"
+          :key="$key"
+          help="The name of your Delivery Service Provider. Please be accurate with this as anyone else searching for your DSP will want to find it easily. Also if there is any profanity found the DSP will be removed and you will loose any data added.">
 
           <x-form.text class="block w-full"
             id="{{ $key }}"
@@ -105,21 +105,21 @@
 
         {{-- identifier --}}
         @define($key = 'identifier')
-        <x-form.wrap :key="$key"
-          :value="__('Amazon identifier')"
-          :help="__('Amazons identifier for your Delivery Service Provider, you can ask your OSM for this if you don\'t know it. It\'s another way for other drivers to find the correct DSP.')">
+        <x-form.wrap value="Amazon identifier"
+          :key="$key"
+          help="Amazons identifier for your Delivery Service Provider, you can ask your OSM for this if you don\'t know it. It\'s another way for other drivers to find the correct DSP.">
 
           <x-form.text class="block w-full"
             id="{{ $key }}"
             name="{{ $key }}"
-            placeholder="{{ __('e.g. CLBT, LWTS, ROKL, GAMD') }}" />
+            placeholder="e.g. CLBT, LWTS, ROKL, GAMD" />
 
         </x-form.wrap>
 
         {{-- submit --}}
         <div class="{{ $gap }} flex justify-end">
           <x-button.dark>
-            {{ __('create') }}
+            create
           </x-button.dark>
         </div>
 
@@ -136,20 +136,20 @@
 
         <div class="flex items-center justify-between">
           <div class="font-serif text-xl">
-            {{ __('Add your first vehicle!') }}
+            Add your first vehicle!
           </div>
 
           <x-icon class="far fa-circle-question cursor-pointer"
             data-help-trigger="false"
-            :title="__('Toggle help text!')" />
+            title="Toggle help text!" />
 
         </div>
 
         {{-- reg --}}
         @define($key = 'reg')
-        <x-form.wrap :key="$key"
-          :value="__('Vehicle Regestration')"
-          :help="__('We separate each vehicle for refuels, this makes it easier to see the difference in your fuel costs, like if one vehicle ran cheaper than another.')">
+        <x-form.wrap value="Vehicle Regestration"
+          :key="$key"
+          help="We separate each vehicle for refuels, this makes it easier to see the difference in your fuel costs, like if one vehicle ran cheaper than another.">
 
           <x-form.text class="block w-full text-center text-2xl font-extrabold uppercase"
             id="{{ $key }}"
@@ -160,7 +160,7 @@
         {{-- submit --}}
         <div class="flex justify-end">
           <x-button.dark>
-            {{ __('add') }}
+            add
           </x-button.dark>
         </div>
 
@@ -177,20 +177,20 @@
 
           <div class="flex items-center justify-between">
             <div class="font-serif text-xl">
-              {{ __('Select your Depot!') }}
+              Select your Depot!
             </div>
 
             <x-icon class="far fa-circle-question cursor-pointer"
               data-help-trigger="false"
-              :title="__('Toggle help text!')" />
+              title="Toggle help text!" />
 
           </div>
 
           {{-- depot --}}
           @define($key = 'depot_id')
-          <x-form.wrap :key="$key"
-            :value="__('depot')"
-            :help="__('The depot that you work out of, this can be changed per route, but it is better to have a default so you don\'t need to change it each time you add a new route.')">
+          <x-form.wrap value="depot"
+            :key="$key"
+            help="The depot that you work out of, this can be changed per route, but it is better to have a default so you don\'t need to change it each time you add a new route.">
 
             <x-form.select id="{{ $key }}_rate"
               name="{{ $key }}"
@@ -209,7 +209,7 @@
               </x-slot>
 
               <x-slot:noresults>
-                <a href="{{ route('depot.create') }}">{{ __('Not Found, click to add!') }}</a>
+                <a href="{{ route('depot.create') }}">Not Found, click to add!</a>
               </x-slot>
 
             </x-form.select>
@@ -219,7 +219,7 @@
           {{-- submit --}}
           <div class="{{ $gap }} flex justify-end">
             <x-button.dark>
-              {{ __('choose') }}
+              choose
             </x-button.dark>
           </div>
 
@@ -236,15 +236,15 @@
           {{-- split header --}}
           <div class="flex items-center justify-between">
             <div class="font-serif text-xl">
-              {{ __('OR ... add it here!') }}
+              OR ... add it here!
             </div>
           </div>
 
           {{-- location --}}
           @define($key = 'location')
-          <x-form.wrap :key="$key"
-            :value="__('Depot location')"
-            :help="__('The location of your depot, for instance this could be Chester, Liverpool, Warrington etc...')">
+          <x-form.wrap value="Depot location"
+            :key="$key"
+            help="The location of your depot, for instance this could be Chester, Liverpool, Warrington etc...">
 
             <x-form.text class="block w-full"
               id="{{ $key }}"
@@ -255,9 +255,9 @@
 
           {{-- identifier --}}
           @define($key = 'identifier')
-          <x-form.wrap :key="$key"
-            :value="__('Amazon identifier')"
-            :help="__('Amazons identifier for your depot, you can ask your OSM for this if you don\'t know it. It\'s another way for other drivers to find the correct depot.')">
+          <x-form.wrap value="Amazon identifier"
+            :key="$key"
+            help="Amazons identifier for your depot, you can ask your OSM for this if you don\'t know it. It\'s another way for other drivers to find the correct depot.">
 
             <x-form.text class="block w-full"
               id="{{ $key }}"
@@ -269,7 +269,7 @@
           {{-- submit --}}
           <div class="{{ $gap }} flex justify-end">
             <x-button.dark>
-              {{ __('create') }}
+              create
             </x-button.dark>
           </div>
 
@@ -293,12 +293,12 @@
 
         <div class="flex items-center justify-between">
           <div class="font-serif text-xl">
-            {{ __('Add your day rate!') }}
+            Add your day rate!
           </div>
 
           <x-icon class="far fa-circle-question cursor-pointer"
             data-help-trigger="false"
-            :title="__('Toggle help text!')" />
+            title="Toggle help text!" />
 
         </div>
 
@@ -307,17 +307,17 @@
           <div class="flex gap-2">
             <x-icon class="far fa-info-circle text-base text-blue-400" />
             <div class="text-xs text-gray-500">
-              <p>{{ __('Here you should add your day rate if you know it. First select the type of route you do, then set the date that rate started at, then the actual rate.') }}</p>
-              <p>{{ __('With these done, when you add your first route, the amount you are being paid will be calculated.') }}</p>
+              <p>Here you should add your day rate if you know it. First select the type of route you do, then set the date that rate started at, then the actual rate.</p>
+              <p>With these done, when you add your first route, the amount you are being paid will be calculated.</p>
             </div>
           </div>
         </div>
 
         {{-- type --}}
         @define($key = 'type')
-        <x-form.wrap :key="$key"
-          :value="__('rate type')"
-          :help="__('The type of rate you want to add. They are all explained on the selection.')">
+        <x-form.wrap value="rate type"
+          :key="$key"
+          help="The type of rate you want to add. They are all explained on the selection.">
 
           <x-form.select id="{{ $key }}_rate"
             name="{{ $key }}"
@@ -340,9 +340,9 @@
         <div class="{{ $gap }} grid grid-cols-1 md:grid-cols-2">
           {{-- date --}}
           @define($key = 'date')
-          <x-form.wrap :key="$key"
-            :value="__('from date')"
-            :help="__('The date that the rate is started from, just set your first day if you do not know that actual date it started.')">
+          <x-form.wrap value="from date"
+            :key="$key"
+            help="The date that the rate is started from, just set your first day if you do not know that actual date it started.">
 
             <x-form.date class="block w-full"
               id="{{ $key }}"
@@ -352,9 +352,9 @@
 
           {{-- amount --}}
           @define($key = 'amount')
-          <x-form.wrap :key="$key"
-            :value="__('rate')"
-            :help="__('The rate of the type you are adding.')">
+          <x-form.wrap value="rate"
+            :key="$key"
+            help="The rate of the type you are adding.">
 
             <x-form.text-prefix class="block w-full"
               id="{{ $key }}"
@@ -372,7 +372,7 @@
         {{-- submit --}}
         <div class="{{ $gap }} flex justify-end">
           <x-button.dark>
-            {{ __('add') }}
+            add
           </x-button.dark>
         </div>
 

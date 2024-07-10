@@ -19,11 +19,11 @@
         <div class="{{ $gap }} flex flex-grow flex-col">
 
           {{-- modal header --}}
-          <x-modal.header :title="__('Session ending')" />
+          <x-modal.header title="Session ending" />
 
           {{-- modal content --}}
           <p class="text-sm">
-            {{ __('Do you want to keep the session alive?') }}
+            Do you want to keep the session alive?
           </p>
         </div>
 
@@ -39,13 +39,13 @@
           action="{{ route('logout') }}">
           @csrf
           <x-button.light type="submit">
-            {{ __('no') }}
+            no
           </x-button.light>
         </form>
 
         <x-button.dark x-on:click="$dispatch('close')"
           id="keepAlive">
-          {{ __('yes') }}
+          yes
         </x-button.dark>
       </div>
 

@@ -1,11 +1,11 @@
 @php
-  $list = [__('Rooftop accurate address finder with navigation links.'), __('Shared geolocational information displayed on map.'), __('Accurately track and view your daily and weekly earnings.'), __('All your data displayed in a readable format.'), __('Store all your refuels and calculate the costs.'), __('Perform accurate calculations for predicted income.'), __('Store and calculate all of your expenses.'), __('Get an overview of everything calculated for your taxes.')];
+  $list = ['Rooftop accurate address finder with navigation links.', 'Shared geolocational information displayed on map.', 'Accurately track and view your daily and weekly earnings.', 'All your data displayed in a readable format.', 'Store all your refuels and calculate the costs.', 'Perform accurate calculations for predicted income.', 'Store and calculate all of your expenses.', 'Get an overview of everything calculated for your taxes.'];
 
   $trial = K::user()->hadTrial();
 @endphp
 
-<x-layout.app :center="true"
-  :title="__('subscribe')">
+<x-layout.app title="subscribe"
+  :center="true">
   <x-section.one maxWidth="xl"
     px=""
     py="">
@@ -14,22 +14,22 @@
 
       <h1 class="text-tracking bg-violet-700 px-4 pb-3 pt-3 font-serif text-4xl font-black text-white md:px-6 md:pt-5">
         @if ($trial)
-          {{ __('7 Day FREE Trial') }}
+          7 Day FREE Trial
         @else
-          {{ __('Subscription') }}
+          Subscription
         @endif
       </h1>
 
       <div class="flex flex-col gap-4 px-4 pb-3 md:px-6 md:pb-5">
         <p class="text-gray-700">
           @if ($trial)
-            {{ __('You pay nothing for the first 7 days. Then only...') }}
+            You pay nothing for the first 7 days. Then only...
           @else
-            {{ __('You pay only...') }}
+            You pay only...
           @endif
         </p>
 
-        <div class="flex flex-col"><span class="text-6xl font-extrabold text-orange-600">£4.99</span><span class="-mt-1 text-lg font-normal text-gray-400">{{ __('per month') }}</span></div>
+        <div class="flex flex-col"><span class="text-6xl font-extrabold text-orange-600">£4.99</span><span class="-mt-1 text-lg font-normal text-gray-400">per month</span></div>
 
         <ul class="flex flex-col gap-2 text-left text-base">
           @foreach ($list as $item)
@@ -46,7 +46,7 @@
             class="grow justify-center"
             color="bg-orange-600 text-2xl hover:bg-orange-500 focus:bg-orange-500 active:bg-orange-700"
             size="md">
-            {{ __('try it free') }}
+            try it free
           </x-button.dark>
         </div>
       </div>
@@ -78,7 +78,7 @@
           <div class="align-center flex justify-end">
             <x-button.dark id="payment-button"
               color="bg-violet-800 text-2xl hover:bg-violet-700 focus:bg-violet-700 active:bg-violet-900 no-loader relative">
-              <span class="text opacity-100">{{ __('subscribe') }}</span>
+              <span class="text opacity-100">subscribe</span>
               <div class="loader absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0"
                 role="status">
                 <svg xmlns="http://www.w3.org/2000/svg"

@@ -39,7 +39,7 @@ class TaxController extends Controller {
             'force_update' => 1
         ]);
 
-        return back()->with('success', Msg::edited(__('tax')));
+        return back()->with('success', Msg::edited('tax'));
     }
 
     /**

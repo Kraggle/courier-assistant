@@ -41,7 +41,7 @@ class DSPController extends Controller {
             'pay_day' => $request->pay_day,
         ]);
 
-        return back()->with('success', Msg::added(__('DSP')));
+        return back()->with('success', Msg::added('DSP'));
     }
 
     /**
@@ -61,13 +61,13 @@ class DSPController extends Controller {
             $request->dsp_id => ['date' => K::date($request->date)]
         ]);
 
-        return back()->with('success', Msg::added(__('DSP connection')));
+        return back()->with('success', Msg::added('DSP connection'));
     }
 
     public function edit(Request $request, DSP $dsp) {
         $request->user()->dsps()->updateExistingPivot($dsp->id, ['date' => K::date($request->date)]);
 
-        return back()->with('success', Msg::edited(__('DSP connection')));
+        return back()->with('success', Msg::edited('DSP connection'));
     }
 
     /**
@@ -79,6 +79,6 @@ class DSPController extends Controller {
     public function detach(Request $request, DSP $dsp) {
         $request->user()->dsps()->detach($dsp->id);
 
-        return back()->with('success', Msg::deleted(__('DSP connection')));
+        return back()->with('success', Msg::deleted('DSP connection'));
     }
 }

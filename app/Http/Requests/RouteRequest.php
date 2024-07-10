@@ -46,7 +46,7 @@ class RouteRequest extends FormRequest {
 
     public function messages(): array {
         return [
-            'date.after_or_equal' => __('You can not add a route before your start date with the DSP.')
+            'date.after_or_equal' => 'You can not add a route before your start date with the DSP.'
         ];
     }
 }

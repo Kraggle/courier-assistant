@@ -14,11 +14,11 @@
     @method('PATCH')
 
     <h2 class="text-lg font-medium text-gray-900">
-      {{ __('You are about to resume your subscription!') }}
+      You are about to resume your subscription!
     </h2>
 
     <p class="text-sm text-gray-600">
-      {{ __('Thank you for returning, you will not regret it.') }}
+      Thank you for returning, you will not regret it.
     </p>
 
     @define($key = 'password')
@@ -27,17 +27,17 @@
       <x-form.text class="block w-full placeholder:capitalize"
         name="{{ $key }}"
         type="password"
-        placeholder="{{ __('password') }}" />
+        placeholder="password" />
 
     </x-form.wrap>
 
     <div class="{{ $gap }} flex justify-end">
       <x-button.light x-on:click="$dispatch('close')">
-        {{ __('cancel') }}
+        cancel
       </x-button.light>
 
       <x-button.dark class="bg-green-700 hover:bg-green-600 focus:bg-green-600 active:bg-green-800">
-        {{ __('resume subscription') }}
+        resume subscription
       </x-button.dark>
     </div>
   </form>

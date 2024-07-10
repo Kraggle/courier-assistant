@@ -1,8 +1,8 @@
-<x-layout.app :title="__('expenses')">
+<x-layout.app title="expenses">
   <x-section.one px="">
     <x-section.title class="px-4 md:px-6">
       <x-slot:title>
-        {{ __('expenses') }}
+        expenses
       </x-slot>
 
       <x-slot:buttons>
@@ -12,7 +12,7 @@
           x-on:click.prevent="$dispatch('open-modal', 'add-expense')"
           id="addExpense"
           data-modal="{{ json_encode([
-              'title.text' => Msg::add(__('expense')),
+              'title.text' => Msg::add('expense'),
               'form.action' => route('expense.add'),
               'form.mode' => 'add',
               'choice-wrap.addclass' => 'hidden',
@@ -29,12 +29,12 @@
               'image-wrap.set-inputs' => old('image', ''),
               'image-wrap.set-img' => Vite::asset('resources/images/no-image.svg'),
               'destroy.addclass' => 'hidden',
-              'submit.text' => __('add'),
+              'submit.text' => 'add',
               'is-repeat.value' => 0,
           ]) }}"
           color="bg-violet-800 hover:bg-violet-700 focus:bg-violet-700 active:bg-violet-900">
-          <span class="hidden sm:block">{{ Msg::add(__('expense')) }}</span>
-          <span class="block sm:hidden">{{ __('add') }}</span>
+          <span class="hidden sm:block">{{ Msg::add('expense') }}</span>
+          <span class="block sm:hidden">add</span>
         </x-button.dark>
 
         <x-dropdown.wrap contentClasses="font-normal py-1 bg-white">
@@ -48,14 +48,14 @@
             {{-- toggle all --}}
             <x-dropdown.link class="cursor-pointer"
               href="\expense?future=1">
-              {{ __('Show future expenses') }}
+              Show future expenses
             </x-dropdown.link>
 
             {{-- bulk add --}}
             <x-dropdown.link x-data=""
               x-on:click.prevent="$dispatch('open-modal', 'bulk-expense')"
               class="cursor-pointer">
-              {{ __('bulk add') }}
+              bulk add
             </x-dropdown.link>
 
             {{-- export all --}}
@@ -63,12 +63,12 @@
               x-on:click.prevent="$dispatch('open-modal', 'export-modal')"
               class="cursor-pointer"
               data-modal="{{ json_encode([
-                  'title.text' => Msg::exportTitle(__('expenses')),
-                  'question.text' => Msg::exportQuestion(__('expenses')),
+                  'title.text' => Msg::exportTitle('expenses'),
+                  'question.text' => Msg::exportQuestion('expenses'),
                   'form.action' => route('expense.export'),
                   'form.filename' => 'expenses-' . $user->id . '.csv',
               ]) }}">
-              {{ __('Export as CSV') }}
+              Export as CSV
             </x-dropdown.link>
           </x-slot>
         </x-dropdown.wrap>
@@ -83,13 +83,13 @@
 
         <x-table.thead>
           <x-table.th class="pr-2"
-            data-priority="1">{{ __('date') }}</x-table.th>
+            data-priority="1">date</x-table.th>
           <x-table.th class="px-2"
-            data-priority="1">{{ __('expense') }}</x-table.th>
+            data-priority="1">expense</x-table.th>
           <x-table.th class="px-2"
-            data-priority="1">{{ __('cost') }}</x-table.th>
+            data-priority="1">cost</x-table.th>
           <x-table.th class="__sm-only px-2"
-            data-priority="2">{{ __('type') }}</x-table.th>
+            data-priority="2">type</x-table.th>
           <x-table.th class="w-[1%] pl-2"
             data-priority="1"
             data-dt-order="disable"></x-table.th>
@@ -132,12 +132,12 @@
                       'modal' => [
                           'form.action' => route('expense.destroy', $e->id),
                           'title.text' => $repeat ? 'Delete repeat expense' : 'Delete expense',
-                          'message.text' => $repeat ? 'Choose which of these repeat expenses you want to delete.' : Msg::sureDelete(__('expense')),
+                          'message.text' => $repeat ? 'Choose which of these repeat expenses you want to delete.' : Msg::sureDelete('expense'),
                           $hide => 'hidden',
                           'submit.text' => $repeat ? 'delete' : 'yes',
                       ],
                   ],
-                  'submit.text' => __('save'),
+                  'submit.text' => 'save',
                   'is-repeat.value' => old('is-repeat', $e->isRepeat()),
               ])">
 
@@ -175,24 +175,24 @@
                           'path.value' => $e->image,
                       ]) }}"
                       data-tooltip-position="left"
-                      title="{{ Str::title(__('receipt')) }}" />
+                      title="{{ Str::title('receipt') }}" />
                   @endif
 
                   @if ($e->isFuture())
                     <x-icon class="far fa-up cursor-pointer text-green-500"
                       data-tooltip-position="left"
-                      title="{{ Str::title(__('upcoming')) }}" />
+                      title="{{ Str::title('upcoming') }}" />
                   @endif
 
                   @if ($e->isRepeat())
                     <x-icon class="far fa-repeat cursor-pointer text-blue-400"
                       data-tooltip-position="left"
-                      title="{{ Str::title(__('repeat')) }}" />
+                      title="{{ Str::title('repeat') }}" />
                   @endif
 
                   <x-icon class="far fa-edit cursor-pointer text-orange-400"
                     data-tooltip-position="left"
-                    title="{{ Str::title(__('edit')) }}" />
+                    title="{{ Str::title('edit') }}" />
                 </div>
               </x-table.td>
             </x-table.tr>
@@ -202,7 +202,7 @@
 
       </table>
       @if (!$user->hasExpenses())
-        <div class="px-6 pt-6 text-center">{{ Msg::noResults(__('expenses')) }}</div>
+        <div class="px-6 pt-6 text-center">{{ Msg::noResults('expenses') }}</div>
       @else
         <x-loader class="hidden pb-6 pt-12"
           id="spinner"

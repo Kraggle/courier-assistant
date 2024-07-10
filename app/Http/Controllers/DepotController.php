@@ -36,6 +36,6 @@ class DepotController extends Controller {
             'identifier' => Str::upper($request->identifier),
         ]);
 
-        return back()->with('success', Msg::added(__('depot')));
+        return back()->with('success', Msg::added('depot'));
     }
 }

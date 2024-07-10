@@ -1,4 +1,4 @@
-<x-layout.app :title="__('vehicle')">
+<x-layout.app title="vehicle">
 
   <x-section.one maxWidth="2xl">
     <form class="flex flex-col gap-6"
@@ -7,12 +7,12 @@
       @csrf
       @method('PUT')
 
-      <h1 class="text-2xl font-light uppercase tracking-wider">{{ __('Add your first vehicle!') }}</h1>
+      <h1 class="text-2xl font-light uppercase tracking-wider">Add your first vehicle!</h1>
 
       {{-- reg input --}}
       @define($key = 'reg')
-      <x-form.wrap :key="$key"
-        :value="__('Vehicle Regestration')">
+      <x-form.wrap value="Vehicle Regestration"
+        :key="$key">
 
         <x-form.text class="block w-full text-center text-5xl font-extrabold uppercase"
           id="{{ $key }}"
@@ -24,7 +24,7 @@
       {{-- submit --}}
       <div class="flex justify-end">
         <x-button.dark>
-          {{ __('add') }}
+          add
         </x-button.dark>
       </div>
 

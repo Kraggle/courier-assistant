@@ -85,11 +85,11 @@ class SubscriptionController extends Controller {
             'pk' => config('cashier.key'),
             'url' => route('subscription.success'),
             'str' => [
-                'error' => __('An unexpected error has occurred.'),
-                'success' => __('Payment succeeded!'),
-                'process' => __('Your payment is processing.'),
-                'failed' => __('Your payment was not successful, please try again.'),
-                'wrong' => __('Something went wrong.'),
+                'error' => 'An unexpected error has occurred.',
+                'success' => 'Payment succeeded!',
+                'process' => 'Your payment is processing.',
+                'failed' => 'Your payment was not successful, please try again.',
+                'wrong' => 'Something went wrong.',
             ]
         ]);
     }
@@ -106,7 +106,7 @@ class SubscriptionController extends Controller {
         ]);
 
         $request->user()->subscription('default')->cancel();
-        return back()->with('info', __('Your subscription has been cancelled successfully.'));
+        return back()->with('info', 'Your subscription has been cancelled successfully.');
     }
 
     /**
@@ -121,6 +121,6 @@ class SubscriptionController extends Controller {
         ]);
 
         $request->user()->subscription('default')->resume();
-        return back()->with('info', __('Your subscription has been resumed successfully.'));
+        return back()->with('info', 'Your subscription has been resumed successfully.');
     }
 }

@@ -1,3 +1,3 @@
-<x-layout.error :title="__('Page Expired')"
+<x-layout.error title="Page Expired"
   :code="419"
-  :message="__('Page Expired')" />
+  message="Page Expired" />

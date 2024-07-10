@@ -10,13 +10,13 @@ class Lists {
 	 */
 	public static function expenseTypes(string $type = null) {
 		$c = collect([
-			'work' => __('Cost of equipment used at work'),
-			'vehicle' => __('Vehicle and travel expenses'),
-			'maintenance' => __('Repairs and maintenance for vehicles'),
-			'office' => __('Office costs (phones and stationery)'),
-			'interest' => __('Interest on loans'),
-			'charges' => __('Bank, credit card and other financial charges'),
-			'professional' => __('Accountancy, legal and other professional costs')
+			'work' => 'Cost of equipment used at work',
+			'vehicle' => 'Vehicle and travel expenses',
+			'maintenance' => 'Repairs and maintenance for vehicles',
+			'office' => 'Office costs (phones and stationery)',
+			'interest' => 'Interest on loans',
+			'charges' => 'Bank, credit card and other financial charges',
+			'professional' => 'Accountancy, legal and other professional costs'
 		]);
 		if ($type) return $c[$type];
 		return $c;
@@ -29,11 +29,11 @@ class Lists {
 	 */
 	public static function routeTypes(string $type = null) {
 		$c = collect([
-			'md' => __('Standard Van'),
-			'lg' => __('Large Van'),
-			'mfn-md' => __('Standard Van Collection'),
-			'mfn-lg' => __('Large Van Collection'),
-			'poc' => __('On Site Manager'),
+			'md' => 'Standard Van',
+			'lg' => 'Large Van',
+			'mfn-md' => 'Standard Van Collection',
+			'mfn-lg' => 'Large Van Collection',
+			'poc' => 'On Site Manager',
 		]);
 		if ($type) return $c[$type];
 		return $c;
@@ -46,12 +46,12 @@ class Lists {
 	 */
 	public static function rateTypes(string $type = null) {
 		$c = collect([
-			'fuel' => __('Invoice fuel rate (per mile)'),
-			'md' => __('Standard van (per day)'),
-			'lg' => __('Large van (per day)'),
-			'mfn-md' => __('Standard van collection (per day)'),
-			'mfn-lg' => __('Large van collection (per day)'),
-			'poc' => __('On site manager (per day)'),
+			'fuel' => 'Invoice fuel rate (per mile)',
+			'md' => 'Standard van (per day)',
+			'lg' => 'Large van (per day)',
+			'mfn-md' => 'Standard van collection (per day)',
+			'mfn-lg' => 'Large van collection (per day)',
+			'poc' => 'On site manager (per day)',
 		]);
 		if ($type) return $c[$type];
 		return $c;
@@ -64,13 +64,13 @@ class Lists {
 	 */
 	public static function weekDays(int $day = null) {
 		$c = collect([
-			0 => __('Sunday'),
-			1 => __('Monday'),
-			2 => __('Tuesday'),
-			3 => __('Wednesday'),
-			4 => __('Thursday'),
-			5 => __('Friday'),
-			6 => __('Saturday'),
+			0 => 'Sunday',
+			1 => 'Monday',
+			2 => 'Tuesday',
+			3 => 'Wednesday',
+			4 => 'Thursday',
+			5 => 'Friday',
+			6 => 'Saturday',
 		]);
 		if ($day) return $c[$day];
 		return $c;

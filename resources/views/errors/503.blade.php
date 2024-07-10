@@ -1,3 +1,3 @@
-<x-layout.error :title="__('Service Unavailable')"
+<x-layout.error title="Service Unavailable"
   :code="503"
-  :message="__('Service Unavailable')" />
+  message="Service Unavailable" />

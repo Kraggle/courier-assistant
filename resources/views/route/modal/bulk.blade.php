@@ -16,25 +16,25 @@
     @method('PATCH')
 
     {{-- modal header --}}
-    <x-modal.header :title="Msg::bulkTitle(__('routes'))" />
+    <x-modal.header :title="Msg::bulkTitle('routes')" />
 
     <div>
       <p class="text-sm">
         {{ Msg::bulkHelper(['date', 'start_time', 'end_time', 'start_mileage', 'end_mileage'], ['invoice_mileage', 'bonus', 'stops', 'type', 'depot_id', 'ttfs', 'vat']) }}
       </p>
       <p class="text-sm">
-        {{ __('If :type is missing, it will just be set as :work.', ['type' => '`type`', 'work' => '`Standard`']) }}
+        If `type` is missing, it will just be set as `Standard`.
       </p>
       <p class="text-sm">
-        {{ __('By selecting the depot you work out of below, if you are importing data that was NOT exported from this site, it will add these routes to that depot.') }}
+        By selecting the depot you work out of below, if you are importing data that was NOT exported from this site, it will add these routes to that depot.
       </p>
     </div>
 
     <div class="{{ $gap }} grid grid-cols-1 md:grid-cols-2">
       {{-- file input --}}
       @define($key = 'file')
-      <x-form.wrap :key="$key"
-        :value="__('CSV')"
+      <x-form.wrap value="CSV"
+        :key="$key"
         left="left-[5.75rem]">
 
         <x-form.file class="block w-full"
@@ -47,12 +47,12 @@
 
       {{-- depot --}}
       @define($key = 'depot_id')
-      <x-form.wrap :key="$key"
-        :value="__('depot')">
+      <x-form.wrap value="depot"
+        :key="$key">
 
         <x-form.select name="{{ $key }}"
           ref="{{ $key }}"
-          placeholder="{{ __('Please select...') }}">
+          placeholder="Please select...">
 
           <x-slot:elements>
 
@@ -67,7 +67,7 @@
           </x-slot>
 
           <x-slot:noresults>
-            <a href="{{ route('depot.create') }}">{{ __('Not Found, click to add!') }}</a>
+            <a href="{{ route('depot.create') }}">Not Found, click to add!</a>
           </x-slot>
 
         </x-form.select>
@@ -79,11 +79,11 @@
     {{-- submit --}}
     <div class="{{ $gap }} flex justify-end">
       <x-button.light x-on:click="$dispatch('close')">
-        {{ __('cancel') }}
+        cancel
       </x-button.light>
 
       <x-button.dark ref="submit">
-        {{ __('upload') }}
+        upload
       </x-button.dark>
     </div>
 

@@ -14,21 +14,21 @@
     @method('delete')
 
     {{-- modal header --}}
-    <x-modal.header :title="Msg::delete(__('refuel'))" />
+    <x-modal.header :title="Msg::delete('refuel')" />
 
     {{-- modal content --}}
     <p class="text-sm">
-      {{ Msg::sureDelete(__('refuel')) }}
+      {{ Msg::sureDelete('refuel') }}
     </p>
 
     {{-- submit --}}
     <div class="{{ $gap }} flex justify-end">
       <x-button.light x-on:click="$dispatch('close')">
-        {{ __('no') }}
+        no
       </x-button.light>
 
       <x-button.dark ref="submit">
-        {{ __('yes') }}
+        yes
       </x-button.dark>
     </div>
 

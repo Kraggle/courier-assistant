@@ -1,7 +1,7 @@
 @define($gap = 'gap-4')
 
 <x-layout.app :center="true"
-  :title="__('sign in')">
+  title="sign in">
   <x-section.one class="self-center"
     maxWidth="md">
 
@@ -10,7 +10,7 @@
       action="{{ route('login') }}">
       @csrf
 
-      <x-modal.header :title="__('Sign in')" />
+      <x-modal.header title="Sign in" />
 
       {{-- Session Status --}}
       <x-notify.status :status="session('status')" />
@@ -18,7 +18,7 @@
       {{-- email --}}
       @define($key = 'email')
       <x-form.wrap :key="$key"
-        :value="__('email')">
+        value="email">
 
         <x-form.text class="block w-full"
           id="{{ $key }}"
@@ -33,7 +33,7 @@
       {{-- password --}}
       @define($key = 'password')
       <x-form.wrap :key="$key"
-        :value="__('password')">
+        value="password">
 
         <x-form.text class="block w-full"
           id="{{ $key }}"
@@ -49,12 +49,12 @@
         @if (Route::has('password.request'))
           <a class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             href="{{ route('password.request') }}">
-            {{ __('Forgot your password?') }}
+            Forgot your password?
           </a>
         @endif
 
         <x-button.dark>
-          {{ __('Log in') }}
+          Log in
         </x-button.dark>
       </div>
     </form>

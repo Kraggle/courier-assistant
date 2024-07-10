@@ -1,3 +1,3 @@
-<x-layout.error :title="__('Unauthorized')"
+<x-layout.error title="Unauthorized"
   :code="401"
-  :message="__('Unauthorized')" />
+  message="Unauthorized" />

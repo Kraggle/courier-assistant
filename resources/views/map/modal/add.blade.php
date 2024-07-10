@@ -47,9 +47,9 @@
 
     {{-- address --}}
     @define($key = 'address')
-    <x-form.wrap :key="$key"
-      :value="__('address')"
-      :help="__('The address of the location.')">
+    <x-form.wrap value="address"
+      :key="$key"
+      help="The address of the location.">
 
       <x-form.textarea class="block w-full"
         id="{{ $key }}"
@@ -61,15 +61,15 @@
 
     {{-- note --}}
     @define($key = 'note')
-    <x-form.wrap :key="$key"
-      :value="__('note')"
-      :help="__('The note you want to display at this location.')">
+    <x-form.wrap value="note"
+      :key="$key"
+      help="The note you want to display at this location.">
 
       <x-form.textarea class="block w-full"
         id="{{ $key }}"
         name="{{ $key }}"
         ref="{{ $key }}"
-        :placeholder="__('The note you want to either save for future reference or share with other users')" />
+        placeholder="The note you want to either save for future reference or share with other users" />
 
     </x-form.wrap>
 
@@ -78,7 +78,7 @@
         x-on:click.prevent="$dispatch('open-modal', 'destroy-info')"
         class="no-loader"
         ref="destroy">
-        {{ __('delete') }}
+        delete
       </x-button.danger>
 
       <span></span>
@@ -86,11 +86,11 @@
       {{-- submit --}}
       <div class="{{ $gap }} flex justify-end">
         <x-button.light x-on:click="$dispatch('close')">
-          {{ __('cancel') }}
+          cancel
         </x-button.light>
 
         <x-button.dark ref="submit">
-          {{ __('add') }}
+          add
         </x-button.dark>
       </div>
     </div>

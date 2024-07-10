@@ -24,7 +24,7 @@
       $messages['message'] = session()->get('message');
   }
 
-  $title = ($title ? __(':title - ', ['title' => Str::title($title)]) : '') . config('app.name', 'Laravel');
+  $title = ($title ? Str::title($title) . ' - ' : '') . config('app.name', 'Laravel');
 
   $center = $center ? 'sm:justify-center' : '';
 @endphp

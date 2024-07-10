@@ -14,11 +14,11 @@
     @method('DELETE')
 
     <h2 class="text-lg font-medium text-gray-900">
-      {{ __('Are you sure you want to cancel your subscription?') }}
+      Are you sure you want to cancel your subscription?
     </h2>
 
     <p class="text-sm text-gray-600">
-      {{ __('Once your subscribed period has ended you will not be able to add any new data. You will have to subscribe once again to access your account. After 3 months your data will be removed. We will notify you when this is drawing near.') }}
+      Once your subscribed period has ended you will not be able to add any new data. You will have to subscribe once again to access your account. After 3 months your data will be removed. We will notify you when this is drawing near.
     </p>
 
     @define($key = 'password')
@@ -27,17 +27,17 @@
       <x-form.text class="block w-full placeholder:capitalize"
         name="{{ $key }}"
         type="password"
-        placeholder="{{ __('password') }}" />
+        placeholder="password" />
 
     </x-form.wrap>
 
     <div class="{{ $gap }} flex justify-end">
       <x-button.light x-on:click="$dispatch('close')">
-        {{ __('cancel') }}
+        cancel
       </x-button.light>
 
       <x-button.danger>
-        {{ __('cancel subscription') }}
+        cancel subscription
       </x-button.danger>
     </div>
   </form>

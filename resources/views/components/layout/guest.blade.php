@@ -14,7 +14,7 @@
       '7xl' => 'sm:max-w-7xl',
   ][$maxWidth];
 
-  $title = ($title ? __(':Title - ', ['title' => $title]) : '') . config('app.name', 'Laravel');
+  $title = ($title ? Str::title($title) . ' - ' : '') . config('app.name', 'Laravel');
 @endphp
 
 <!DOCTYPE html>
@@ -72,7 +72,7 @@
     <button class="inline-flex items-center rounded-md border border-transparent bg-transparent px-3 py-2 text-sm font-medium leading-4 text-gray-900 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none">
       <x-icon class="far fa-language text-lg"
         data-tooltip-position="left"
-        title="{{ Str::title(__('language selection')) }}" />
+        title="{{ Str::title('language selection') }}" />
     </button>
   </x-dropdown.language>
 

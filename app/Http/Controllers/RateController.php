@@ -20,7 +20,7 @@ class RateController extends FilesController {
      */
     public function show() {
         if (!Gate::allows('is-ready'))
-            return redirect('dsp.show')->with('error', __('You first have to add or select your Delivery Service Provider.'));
+            return redirect('dsp.show')->with('error', 'You first have to add or select your Delivery Service Provider.');
 
         return view('rate.show');
     }
@@ -41,7 +41,7 @@ class RateController extends FilesController {
 
         $request->user()->dsp()->rates()->create($request->all());
 
-        return back()->with('success', Msg::added(__('rate')));
+        return back()->with('success', Msg::added('rate'));
     }
 
     /**
@@ -61,7 +61,7 @@ class RateController extends FilesController {
 
         $rate->update($request->all());
 
-        return back()->with('success', Msg::edited(__('rate')));
+        return back()->with('success', Msg::edited('rate'));
     }
 
 
@@ -105,7 +105,7 @@ class RateController extends FilesController {
                 $user->dsp()->rates()->create($row);
             });
 
-        return back()->with('success', Msg::added(__('rates')));
+        return back()->with('success', Msg::added('rates'));
     }
 
     /**
@@ -117,7 +117,7 @@ class RateController extends FilesController {
     public function destroy(Request $request, Rate $rate) {
         $rate->delete();
 
-        return back()->with('success', Msg::deleted(__('rate')));
+        return back()->with('success', Msg::deleted('rate'));
     }
 
     /**

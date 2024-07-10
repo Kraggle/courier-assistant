@@ -4,11 +4,11 @@
   $weeks = [$date->copy(), $date->copy()->sub('week', 1), $date->copy()->sub('week', 2), $date->copy()->sub('week', 3)];
 @endphp
 
-<x-layout.app :title="__('routes')">
+<x-layout.app title="routes">
   <x-section.one px="">
     <x-section.title class="px-4 md:px-6">
       <x-slot:title>
-        {{ __('routes') }}
+        routes
       </x-slot>
 
       <x-slot:buttons>
@@ -17,7 +17,7 @@
           x-on:click.prevent="$dispatch('open-modal', 'add-route')"
           id="addRoute"
           data-modal="{{ json_encode([
-              'title.text' => Msg::add(__('route')),
+              'title.text' => Msg::add('route'),
               'form.action' => route('route.add'),
               'type.value' => old('type', $last_route->type ?? null),
               'depot_id.value' => old('depot_id', $last_route->depot_id ?? null),
@@ -35,11 +35,11 @@
               'ttfs.value' => old('ttfs', $last_route->ttfs ?? 60),
               'note.value' => old('note', ''),
               'destroy.addclass' => 'hidden',
-              'submit.text' => __('add'),
+              'submit.text' => 'add',
           ]) }}"
           color="bg-violet-800 hover:bg-violet-700 focus:bg-violet-700 active:bg-violet-900">
-          <span class="hidden sm:block">{{ Msg::add(__('route')) }}</span>
-          <span class="block sm:hidden">{{ __('add') }}</span>
+          <span class="hidden sm:block">{{ Msg::add('route') }}</span>
+          <span class="block sm:hidden">add</span>
         </x-button.dark>
 
         <x-dropdown.wrap contentClasses="font-normal py-1 bg-white">
@@ -54,7 +54,7 @@
             <x-dropdown.link x-data=""
               x-on:click.prevent="$dispatch('open-modal', 'bulk-route')"
               class="cursor-pointer">
-              {{ __('bulk add') }}
+              bulk add
             </x-dropdown.link>
 
             {{-- export all --}}
@@ -62,12 +62,12 @@
               x-on:click.prevent="$dispatch('open-modal', 'export-modal')"
               class="cursor-pointer"
               data-modal="{{ json_encode([
-                  'title.text' => Msg::exportTitle(__('routes')),
-                  'question.text' => Msg::exportQuestion(__('routes')),
+                  'title.text' => Msg::exportTitle('routes'),
+                  'question.text' => Msg::exportQuestion('routes'),
                   'form.action' => route('route.export'),
                   'form.filename' => 'routes-' . $user->id . '.csv',
               ]) }}">
-              {{ __('Export as CSV') }}
+              Export as CSV
             </x-dropdown.link>
           </x-slot>
         </x-dropdown.wrap>
@@ -81,14 +81,14 @@
 
         <x-table.thead>
           <x-table.th class="pr-2' : 'px-2">
-            {{ __('date') }}
-            <span class="xs-only"> & {{ __('time') }}</span>
+            date
+            <span class="xs-only"> & time</span>
           </x-table.th>
-          <x-table.th class="sm-only px-2">{{ __('time') }}</x-table.th>
-          <x-table.th class="px-2">{{ __('miles') }}</x-table.th>
-          <x-table.th class="px-2">{{ __('pay') }}</x-table.th>
-          <x-table.th class="sm-only px-2">{{ __('stops') }}</x-table.th>
-          <x-table.th class="sm-only px-2">{{ __('type') }}</x-table.th>
+          <x-table.th class="sm-only px-2">time</x-table.th>
+          <x-table.th class="px-2">miles</x-table.th>
+          <x-table.th class="px-2">pay</x-table.th>
+          <x-table.th class="sm-only px-2">stops</x-table.th>
+          <x-table.th class="sm-only px-2">type</x-table.th>
           <x-table.th class="w-[1%] pl-2"></x-table.th>
         </x-table.thead>
 
@@ -102,7 +102,7 @@
       </table>
 
       @if (!$user->hasRoutes())
-        <div class="px-6 pt-6 text-center">{{ Msg::noResults(__('routes')) }}</div>
+        <div class="px-6 pt-6 text-center">{{ Msg::noResults('routes') }}</div>
       @else
         <x-loader class="hidden pb-6 pt-12"
           id="spinner"

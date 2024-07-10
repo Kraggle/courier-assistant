@@ -14,20 +14,20 @@
     @method('delete')
 
     {{-- modal header --}}
-    <x-modal.header :title="Msg::delete(__('expense'))" />
+    <x-modal.header :title="Msg::delete('expense')" />
 
     {{-- modal content --}}
     <p class="text-sm"
       ref="message">
-      {{ Msg::sureDelete(__('expense')) }}
+      {{ Msg::sureDelete('expense') }}
     </p>
 
     {{-- choice --}}
     @define($key = 'choice')
     <x-form.wrap :key="$key"
       ref="choice-wrap"
-      :value="__('')"
-      :help="__('')">
+      :value="''"
+      :help="''">
 
       <x-form.select id="{{ $key }}_destroy"
         name="{{ $key }}"
@@ -47,12 +47,12 @@
     {{-- submit --}}
     <div class="{{ $gap }} flex justify-end">
       <x-button.light x-on:click="$dispatch('close')">
-        {{ __('no') }}
+        no
       </x-button.light>
 
       <x-button.dark class=""
         ref="submit">
-        {{ __('yes') }}
+        yes
       </x-button.dark>
     </div>
 

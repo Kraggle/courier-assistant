@@ -22,7 +22,7 @@ class RefuelController extends FilesController {
      */
     public function show(Request $request, Vehicle $vehicle) {
         if (!Gate::allows('view-vehicle', $vehicle))
-            return redirect('/')->with('error', __('You do not have permission to view this vehicle.'));
+            return redirect('/')->with('error', 'You do not have permission to view this vehicle.');
 
         return view('refuel.show', ['user' => $request->user(), 'vehicle' => $vehicle]);
     }
@@ -64,7 +64,7 @@ class RefuelController extends FilesController {
 
         $this->calculateRefuels($vehicle);
 
-        return back()->with('success', Msg::added(__('refuel')));
+        return back()->with('success', Msg::added('refuel'));
     }
 
     /**
@@ -106,7 +106,7 @@ class RefuelController extends FilesController {
 
         $this->calculateRefuels($refuel->vehicle);
 
-        return back()->with('success', Msg::edited(__('refuel')));
+        return back()->with('success', Msg::edited('refuel'));
     }
 
     /**
@@ -183,7 +183,7 @@ class RefuelController extends FilesController {
 
         $this->calculateRefuels($vehicle);
 
-        return back()->with('success', Msg::added(__('refuels')));
+        return back()->with('success', Msg::added('refuels'));
     }
 
     /**
@@ -199,7 +199,7 @@ class RefuelController extends FilesController {
 
         $this->calculateRefuels($refuel->vehicle);
 
-        return back()->with('success', Msg::deleted(__('refuel')));
+        return back()->with('success', Msg::deleted('refuel'));
     }
 
     /**

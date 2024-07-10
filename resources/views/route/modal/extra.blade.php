@@ -11,22 +11,22 @@
   <div class="{{ $gap }} flex flex-col">
 
     {{-- modal header --}}
-    <x-modal.header :title="__('Extra Information!')" />
+    <x-modal.header title="Extra Information!" />
 
     <x-form.section ref="note-wrap"
-      :label="__('note')">
+      label="note">
       <p class="-m-2"
         ref="note"></p>
     </x-form.section>
 
     <x-form.section ref="bonus-wrap"
-      :label="__('bonus')">
+      label="bonus">
       <p class="-m-2">£<span ref="bonus"></span></p>
     </x-form.section>
 
     <div class="{{ $gap }} flex justify-end">
       <x-button.light x-on:click="$dispatch('close')">
-        {{ __('close') }}
+        close
       </x-button.light>
     </div>
 

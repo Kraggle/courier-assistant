@@ -1,3 +1,3 @@
-<x-layout.error :title="__('Forbidden')"
+<x-layout.error title="Forbidden"
   :code="403"
-  :message="__($exception->getMessage() ?: 'Forbidden')" />
+  :message="$exception->getMessage() ?: 'Forbidden'" />

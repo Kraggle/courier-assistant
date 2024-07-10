@@ -5,7 +5,7 @@
 
     $links = [
         [
-            'title' => __('subscribe'),
+            'title' => 'subscribe',
             'route' => 'subscription',
             'icon' => 'fas fa-receipt',
         ],
@@ -14,28 +14,28 @@
     if ($user->subscribed()) {
         $links = [
             [
-                'title' => __('dashboard'),
+                'title' => 'dashboard',
                 'route' => 'dashboard',
                 'icon' => 'fas fa-house',
             ],
             [
-                'title' => __('address finder'),
+                'title' => 'address finder',
                 'route' => 'map.show',
                 'icon' => 'fas fa-map',
             ],
             [
-                'title' => __('routes'),
+                'title' => 'routes',
                 'route' => 'route.show',
                 'icon' => 'fas fa-compass',
             ],
             [
-                'title' => __('refuels'),
+                'title' => 'refuels',
                 'route' => 'refuels',
                 'href' => $refuel_link,
                 'icon' => 'fas fa-gas-pump',
             ],
             [
-                'title' => __('expenses'),
+                'title' => 'expenses',
                 'route' => 'expense.show',
                 'icon' => 'fas fa-chart-simple',
             ],
@@ -43,7 +43,7 @@
 
         if ($user->hasRoutes()) {
             $links[] = [
-                'title' => __('tax view'),
+                'title' => 'tax view',
                 'route' => 'tax.show',
                 'href' => route('tax.show', $user->taxYears()->first()->year),
                 'icon' => 'fas fa-coins',
@@ -51,12 +51,12 @@
         }
 
         $links[] = [
-            'title' => __('pay rates'),
+            'title' => 'pay rates',
             'route' => 'rate.show',
             'icon' => 'fas fa-chart-pie',
         ];
         $links[] = [
-            'title' => __('Your DSP'),
+            'title' => 'Your DSP',
             'route' => 'dsp.show',
             'icon' => 'fas fa-box',
         ];
@@ -69,12 +69,12 @@
   @php
     $links = [
         [
-            'title' => __('login'),
+            'title' => 'login',
             'route' => 'login',
             'icon' => 'fas fa-right-to-bracket',
         ],
         [
-            'title' => __('register'),
+            'title' => 'register',
             'route' => 'register',
             'icon' => 'fas fa-address-card',
         ],
@@ -131,7 +131,7 @@
           <button class="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none">
             <x-icon class="far fa-language text-base"
               data-tooltip-position="left"
-              title="{{ Str::title(__('language selection')) }}" />
+              title="{{ Str::title('language selection') }}" />
           </button>
         </x-dropdown.language>
 
@@ -180,7 +180,7 @@
         <div class="mt-3 space-y-1">
           <x-nav.link :href="route('user.show')"
             icon="fas fa-user">
-            {{ __('profile') }}
+            profile
           </x-nav.link>
 
           {{-- Authentication --}}
@@ -191,7 +191,7 @@
             <x-nav.link :href="route('logout')"
               onclick="event.preventDefault(); this.closest('form').submit();"
               icon="fas fa-right-from-bracket">
-              {{ __('Log Out') }}
+              Log Out
             </x-nav.link>
           </form>
         </div>

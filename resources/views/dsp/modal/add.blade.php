@@ -9,7 +9,7 @@
   help-root>
 
   {{-- modal header --}}
-  <x-modal.header :title="__('Select your DSP')"
+  <x-modal.header title="Select your DSP"
     :help="true" />
 
   {{-- modal content --}}
@@ -24,14 +24,14 @@
       ref="dsp_wrap">
       {{-- dsp_id --}}
       @define($key = 'dsp_id')
-      <x-form.wrap :key="$key"
-        :value="__('delivery service provider')"
-        :help="__('Search here for the name of the Delivery Service Provider you work for. It\'s important you select the correct one, as they differ in their pay rates. The one you select, if already added, will most likely already have rates set to date.')">
+      <x-form.wrap value="delivery service provider"
+        :key="$key"
+        help="Search here for the name of the Delivery Service Provider you work for. It\'s important you select the correct one, as they differ in their pay rates. The one you select, if already added, will most likely already have rates set to date.">
 
         <x-form.select id="{{ $key }}"
           name="{{ $key }}"
           ref="{{ $key }}"
-          :placeholder="__('Select your Delivery Service Provider')">
+          placeholder="Select your Delivery Service Provider">
 
           <x-slot:elements>
 
@@ -58,15 +58,15 @@
             'pay_day.value' => old('pay_day', 4),
         ]) }}"
         color="bg-violet-700 hover:bg-violet-600 focus:bg-violet-600 active:bg-violet-800">
-        {{ __('create dsp') }}
+        create dsp
       </x-button.dark>
     </div>
 
     {{-- date --}}
     @define($key = 'date')
-    <x-form.wrap :key="$key"
-      :value="__('start date')"
-      :help="__('The date that you started working for this DSP. As you can add many, you will only be able to change anything on the latest one you have selected.')">
+    <x-form.wrap value="start date"
+      :key="$key"
+      help="The date that you started working for this DSP. As you can add many, you will only be able to change anything on the latest one you have selected.">
 
       <x-form.date class="block w-full"
         id="{{ $key }}"
@@ -80,7 +80,7 @@
         x-on:click.prevent="$dispatch('open-modal', 'destroy-dsp')"
         class="no-loader"
         ref="destroy">
-        {{ __('delete') }}
+        delete
       </x-button.danger>
 
       <span></span>
@@ -89,11 +89,11 @@
       <div class="{{ $gap }} flex justify-end">
         <x-button.light x-on:click="$dispatch('close')"
           ref="close">
-          {{ __('cancel') }}
+          cancel
         </x-button.light>
 
         <x-button.dark ref="submit">
-          {{ __('select') }}
+          select
         </x-button.dark>
       </div>
     </div>

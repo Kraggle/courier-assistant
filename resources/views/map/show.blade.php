@@ -2,7 +2,7 @@
 
 @endphp
 
-<x-layout.app :title="__('address finder')">
+<x-layout.app title="address finder">
 
   <div class="absolute -top-96 w-[84%] max-w-[500px] rounded-br-md bg-white p-3 font-sans shadow-md"
     id="search-card">
@@ -10,7 +10,7 @@
       {{-- <div class="text-xl font-bold uppercase"></div> --}}
       <x-form.wrap class="-mt-1"
         id="lookup-field"
-        value="{{ __('address lookup') }}">
+        value="address lookup">
         <x-form.text class="w-full"
           id="map-search"
           placeholder="Enter a location..." />
@@ -27,7 +27,7 @@
     class="infoModal hidden"
     id="infoBtn"
     data-modal="{{ json_encode([
-        'title.text' => __('add location'),
+        'title.text' => 'add location',
         'form.action' => route('info.add'),
         'method.value' => 'PUT',
         'id.value' => '',
@@ -36,7 +36,7 @@
         'address.value' => old('address', ''),
         'note.value' => old('note', ''),
         'destroy.addclass' => 'hidden',
-        'submit.text' => __('add'),
+        'submit.text' => 'add',
     ]) }}"></button>
 
   <button x-data=""
@@ -44,7 +44,7 @@
     class="infoModal hidden"
     id="editBtn"
     data-modal="{{ json_encode([
-        'title.text' => __('edit location'),
+        'title.text' => 'edit location',
         'form.action' => route('info.update'),
         'method.value' => 'PATCH',
         'id.value' => old('id', ''),
@@ -58,7 +58,7 @@
                 'id.value' => old('id', ''),
             ],
         ],
-        'submit.text' => __('save'),
+        'submit.text' => 'save',
     ]) }}"></button>
 
   <button x-data=""
@@ -81,13 +81,13 @@
   @php
     $_K = [
         'str' => [
-            'editLocation' => __('edit location'),
-            'addLocation' => __('add location'),
-            'save' => __('save'),
-            'add' => __('add'),
+            'editLocation' => 'edit location',
+            'addLocation' => 'add location',
+            'save' => 'save',
+            'add' => 'add',
             'username' => K::user()->name,
-            'locationInformation' => __('Location Information'),
-            'mapLinks' => __('Map Service Links'),
+            'locationInformation' => 'Location Information',
+            'mapLinks' => 'Map Service Links',
         ],
         'route' => [
             'infoUpdate' => route('info.update'),

@@ -9,7 +9,7 @@
   help-root>
 
   {{-- modal header --}}
-  <x-modal.header :title="__('Create your DSP')"
+  <x-modal.header title="Create your DSP"
     :help="true" />
 
   {{-- modal content --}}
@@ -23,9 +23,9 @@
       {{-- name --}}
       @define($key = 'name')
       <x-form.wrap class="col-span-2"
+        value="Delivery service providers name"
         :key="$key"
-        :value="__('Delivery service providers name')"
-        :help="__('The name of your Delivery Service Provider. Please be accurate with this as anyone else searching for your DSP will want to find it easily. Also if there is any profanity found the DSP will be removed and you will loose any data added.')">
+        help="The name of your Delivery Service Provider. Please be accurate with this as anyone else searching for your DSP will want to find it easily. Also if there is any profanity found the DSP will be removed and you will loose any data added.">
 
         <x-form.text class="block w-full"
           id="{{ $key }}"
@@ -36,15 +36,15 @@
 
       {{-- identifier --}}
       @define($key = 'identifier')
-      <x-form.wrap :key="$key"
-        :value="__('Amazon identifier')"
-        :help="__('Amazons identifier for your Delivery Service Provider, you can ask your OSM for this if you don\'t know it. It\'s another way for other drivers to find the correct DSP.')">
+      <x-form.wrap value="Amazon identifier"
+        :key="$key"
+        help="Amazons identifier for your Delivery Service Provider, you can ask your OSM for this if you don\'t know it. It\'s another way for other drivers to find the correct DSP.">
 
         <x-form.text class="block w-full"
           id="{{ $key }}"
           name="{{ $key }}"
           ref="{{ $key }}"
-          placeholder="{{ __('e.g. CLBT, LWTS, ROKL, GAMD') }}" />
+          placeholder="e.g. CLBT, LWTS, ROKL, GAMD" />
 
       </x-form.wrap>
     </div>
@@ -52,9 +52,9 @@
     <div class="{{ $gap }} grid grid-cols-2">
       {{-- in hand --}}
       @define($key = 'in_hand')
-      <x-form.wrap :key="$key"
-        :value="__('weeks in hand')"
-        :help="__('How many weeks after you have worked before you are paid, this is usually 2 week, but your DSP may be different.')">
+      <x-form.wrap value="weeks in hand"
+        :key="$key"
+        help="How many weeks after you have worked before you are paid, this is usually 2 week, but your DSP may be different.">
 
         <x-form.text class="block w-full"
           id="{{ $key }}"
@@ -66,9 +66,9 @@
 
       {{-- pay day --}}
       @define($key = 'pay_day')
-      <x-form.wrap :key="$key"
-        :value="__('pay day')"
-        :help="__('The day of the week that your DSP pays it\'s drivers. This can be different for different DSPs.')">
+      <x-form.wrap value="pay day"
+        :key="$key"
+        help="The day of the week that your DSP pays it\'s drivers. This can be different for different DSPs.">
 
         <x-form.select id="{{ $key }}"
           name="{{ $key }}"
@@ -88,11 +88,11 @@
     {{-- submit --}}
     <div class="{{ $gap }} flex justify-end">
       <x-button.light x-on:click="$dispatch('close')">
-        {{ __('cancel') }}
+        cancel
       </x-button.light>
 
       <x-button.dark>
-        {{ __('create') }}
+        create
       </x-button.dark>
     </div>
 

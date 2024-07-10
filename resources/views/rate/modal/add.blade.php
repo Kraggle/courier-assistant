@@ -17,7 +17,7 @@
     @method('PUT')
 
     {{-- modal header --}}
-    <x-modal.header :title="Msg::add(__('rate'))"
+    <x-modal.header :title="Msg::add('rate')"
       :help="true" />
 
     <div class="hidden"
@@ -25,8 +25,8 @@
       <div class="flex gap-2">
         <x-icon class="far fa-info-circle text-base text-blue-400" />
         <div class="text-xs text-gray-500">
-          <p>{{ __('This is where the rates are set per DSP and Depot, as the rates are different for each of these things you have to make sure you select the correct ones.') }}</p>
-          <p>{{ __('These can be created by anyone that has selected the same DSP as yourself. There is a log of who created, updated or deleted any shared record.') }}</p>
+          <p>This is where the rates are set per DSP and Depot, as the rates are different for each of these things you have to make sure you select the correct ones.</p>
+          <p>These can be created by anyone that has selected the same DSP as yourself. There is a log of who created, updated or deleted any shared record.</p>
         </div>
       </div>
     </div>
@@ -35,15 +35,15 @@
       {{-- type --}}
       @define($key = 'type')
       <x-form.wrap class="required"
+        value="rate type"
         :key="$key"
-        :value="__('rate type')"
-        :help="__('The type of rate you want to add. They are all explained on the selection.')">
+        help="The type of rate you want to add. They are all explained on the selection.">
 
         <x-form.select id="{{ $key }}_rate"
           name="{{ $key }}"
           ref="{{ $key }}"
           minresultsforsearch=999
-          placeholder="{{ __('Please select...') }}">
+          placeholder="Please select...">
 
           @php
             $types = Lists::rateTypes();
@@ -61,9 +61,9 @@
       {{-- depot --}}
       @define($key = 'depot_id')
       <x-form.wrap class="required"
+        value="depot"
         :key="$key"
-        :value="__('depot')"
-        :help="__('The depot the rate is being added for.')">
+        help="The depot the rate is being added for.">
 
         <x-form.select id="{{ $key }}_rate"
           name="{{ $key }}"
@@ -82,7 +82,7 @@
           </x-slot>
 
           <x-slot:noresults>
-            <a href="{{ route('depot.create') }}">{{ __('Not Found, click to add!') }}</a>
+            <a href="{{ route('depot.create') }}">Not Found, click to add!</a>
           </x-slot>
 
         </x-form.select>
@@ -95,9 +95,9 @@
       {{-- date --}}
       @define($key = 'date')
       <x-form.wrap class="required"
+        value="from date"
         :key="$key"
-        :value="__('from date')"
-        :help="__('The date the new rate is starting from.')">
+        help="The date the new rate is starting from.">
 
         <x-form.date class="block w-full"
           id="{{ $key }}"
@@ -109,16 +109,16 @@
       {{-- amount --}}
       @define($key = 'amount')
       <x-form.wrap class="required"
+        value="rate"
         :key="$key"
-        :value="__('rate')"
-        :help="__('The rate of the type you are adding.')">
+        help="The rate of the type you are adding.">
 
         <x-form.text-prefix class="block w-full"
           id="{{ $key }}"
           name="{{ $key }}"
           type="number"
           ref="{{ $key }}"
-          :placeholder="__('Please enter value...')"
+          placeholder="Please enter value..."
           step="0.0001">
 
           <x-icon class="fas fa-sterling-sign text-gray-400" />
@@ -133,7 +133,7 @@
         x-on:click.prevent="$dispatch('open-modal', 'destroy-rate')"
         class="no-loader"
         ref="destroy">
-        {{ __('delete') }}
+        delete
       </x-button.danger>
 
       <span></span>
@@ -141,11 +141,11 @@
       {{-- submit --}}
       <div class="{{ $gap }} flex justify-end">
         <x-button.light x-on:click="$dispatch('close')">
-          {{ __('cancel') }}
+          cancel
         </x-button.light>
 
         <x-button.dark ref="submit">
-          {{ __('add') }}
+          add
         </x-button.dark>
       </div>
     </div>

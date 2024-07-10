@@ -1,3 +1,3 @@
-<x-layout.error :title="__('Not Found')"
+<x-layout.error title="Not Found"
   :code="404"
-  :message="__('Not Found')" />
+  message="Not Found" />

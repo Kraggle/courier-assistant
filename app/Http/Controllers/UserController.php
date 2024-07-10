@@ -38,7 +38,7 @@ class UserController extends Controller {
 
         $request->user()->save();
 
-        return Redirect::route('user.edit')->with('status', Msg::added(__('profile')));
+        return Redirect::route('user.edit')->with('status', Msg::added('profile'));
     }
 
     /**
@@ -60,7 +60,7 @@ class UserController extends Controller {
 
         $request->user()->update($options);
 
-        return back()->with('success', Msg::edited(__('options')));
+        return back()->with('success', Msg::edited('options'));
     }
 
     /**

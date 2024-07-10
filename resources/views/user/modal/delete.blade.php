@@ -13,32 +13,32 @@
     @method('delete')
 
     <h2 class="text-lg font-medium text-gray-900">
-      {{ __('Are you sure you want to delete your account?') }}
+      Are you sure you want to delete your account?
     </h2>
 
     <p class="text-sm text-gray-600">
-      {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.') }}
+      Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.
     </p>
 
     <x-form.label class="sr-only"
       for="password_modal"
-      value="{{ __('password') }}" />
+      value="password" />
 
     <x-form.text class="block w-full placeholder:capitalize"
       id="password_modal"
       name="password"
       type="password"
-      placeholder="{{ __('password') }}" />
+      placeholder="password" />
 
     <x-form.error :messages="$errors->userDeletion->get('password')" />
 
     <div class="{{ $gap }} flex justify-end">
       <x-button.light x-on:click="$dispatch('close')">
-        {{ __('cancel') }}
+        cancel
       </x-button.light>
 
       <x-button.danger>
-        {{ __('delete account') }}
+        delete account
       </x-button.danger>
     </div>
   </form>

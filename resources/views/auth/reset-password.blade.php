@@ -1,7 +1,7 @@
 @define($gap = 'gap-4')
 
-<x-layout.app :center="true"
-  :title="__('password reset')">
+<x-layout.app title="password reset"
+  :center="true">
   <x-section.one class="self-center"
     maxWidth="lg">
 
@@ -10,7 +10,7 @@
       action="{{ route('password.store') }}">
       @csrf
 
-      <x-modal.header :title="__('Reset your password')" />
+      <x-modal.header title="Reset your password" />
 
       {{-- Password Reset Token --}}
       <input name="token"
@@ -19,8 +19,8 @@
 
       {{-- email --}}
       @define($key = 'email')
-      <x-form.wrap :key="$key"
-        :value="__('email')">
+      <x-form.wrap value="email"
+        :key="$key">
 
         <x-form.text class="block w-full"
           id="{{ $key }}"
@@ -34,8 +34,8 @@
 
       {{-- password --}}
       @define($key = 'password')
-      <x-form.wrap :key="$key"
-        :value="__('new password')">
+      <x-form.wrap value="new password"
+        :key="$key">
 
         <x-form.text class="block w-full"
           id="{{ $key }}"
@@ -47,8 +47,8 @@
 
       {{-- confirm password --}}
       @define($key = 'password_confirmation')
-      <x-form.wrap :key="$key"
-        :value="__('confirm password')">
+      <x-form.wrap value="confirm password"
+        :key="$key">
 
         <x-form.text class="block w-full"
           id="{{ $key }}"
@@ -60,7 +60,7 @@
 
       <div class="flex items-center justify-end">
         <x-button.dark>
-          {{ __('reset password') }}
+          reset password
         </x-button.dark>
       </div>
     </form>

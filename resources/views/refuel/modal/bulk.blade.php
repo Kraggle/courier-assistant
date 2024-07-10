@@ -16,21 +16,21 @@
     @method('patch')
 
     {{-- modal header --}}
-    <x-modal.header :title="Msg::bulkTitle(__('refuels'))" />
+    <x-modal.header :title="Msg::bulkTitle('refuels')" />
 
     <div>
       <p class="text-sm">
         {{ Msg::bulkHelper(['date', 'cost', 'mileage']) }}
       </p>
       <p class="text-sm">
-        {{ __('Make sure the data is only for the currently selected vehicle.') }}
+        Make sure the data is only for the currently selected vehicle.
       </p>
     </div>
 
     {{-- file input --}}
     @define($key = 'file')
-    <x-form.wrap :key="$key"
-      :value="__('CSV')"
+    <x-form.wrap value="CSV"
+      :key="$key"
       left="left-[5.75rem]">
 
       <x-form.file class="block w-full"
@@ -44,11 +44,11 @@
     {{-- submit --}}
     <div class="{{ $gap }} flex justify-end">
       <x-button.light x-on:click="$dispatch('close')">
-        {{ __('cancel') }}
+        cancel
       </x-button.light>
 
       <x-button.dark ref="submit">
-        {{ __('upload') }}
+        upload
       </x-button.dark>
     </div>
 

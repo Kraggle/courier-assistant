@@ -6,7 +6,7 @@
     <x-svg.icon class="absolute inset-0 animate-[spin_3s_linear_infinite] fill-current text-gray-400" />
     <x-svg.icon class="absolute inset-0 animate-[spin_2.8s_linear_infinite] fill-current text-gray-500" />
 
-    <div class="absolute -bottom-20 w-full text-center text-2xl font-bold capitalize tracking-widest text-gray-400 sm:text-3xl">{{ __('loading') }}...</div>
+    <div class="absolute -bottom-20 w-full text-center text-2xl font-bold capitalize tracking-widest text-gray-400 sm:text-3xl">loading...</div>
   </div>
 
   <script type="module">

@@ -36,7 +36,7 @@ class InfoRequest extends FormRequest {
 
     public function messages(): array {
         return [
-            'lng.required' => __('Something went wrong. Please refresh the page.'),
+            'lng.required' => 'Something went wrong. Please refresh the page.',
         ];
     }
 }

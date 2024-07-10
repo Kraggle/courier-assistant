@@ -1,7 +1,7 @@
-<x-layout.app :title="__('depot creator')">
+<x-layout.app title="depot creator">
 
   <x-section.one class="sm:mx-auto sm:max-w-2xl">
-    <h1 class="text-2xl">{{ Msg::add(__('depot')) }}</h1>
+    <h1 class="text-2xl">{{ Msg::add('depot') }}</h1>
 
     <form ref="form"
       method="POST"
@@ -11,8 +11,8 @@
 
       {{-- location --}}
       @define($key = 'location')
-      <x-form.wrap :key="$key"
-        :value="__('location')">
+      <x-form.wrap value="location"
+        :key="$key">
 
         <x-form.text class="block w-full"
           id="{{ $key }}"
@@ -24,8 +24,8 @@
 
       {{-- abbreviation --}}
       @define($key = 'identifier')
-      <x-form.wrap :key="$key"
-        :value="__('identifier')">
+      <x-form.wrap value="identifier"
+        :key="$key">
 
         <x-form.text class="block w-full"
           id="{{ $key }}"
@@ -39,7 +39,7 @@
       <div class="mt-6 flex justify-end">
         <x-button.dark class="ms-3"
           ref="submit">
-          {{ __('add') }}
+          add
         </x-button.dark>
       </div>
 

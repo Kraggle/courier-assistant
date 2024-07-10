@@ -1,3 +1,3 @@
-<x-layout.error :title="__('Payment Required')"
+<x-layout.error title="Payment Required"
   :code="402"
-  :message="__('Payment Required')" />
+  message="Payment Required" />

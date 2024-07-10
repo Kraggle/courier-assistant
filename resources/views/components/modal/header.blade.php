@@ -13,6 +13,6 @@
   @if ($help)
     <x-icon class="far fa-circle-question absolute right-0 top-0 cursor-pointer"
       data-help-trigger="false"
-      :title="__('Toggle help text!')" />
+      title="Toggle help text!" />
   @endif
 </div>

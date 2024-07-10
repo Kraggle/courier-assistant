@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 @props(['title' => null, 'code' => '101', 'message' => 'Happy Days!'])
-@define($title = ($title ? __(':Title ☼ ', ['title' => $title]) : '') . config('app.name', 'Laravel'))
+@define($title = ($title ? Str::title($title) . ' - ' : '') . config('app.name', 'Laravel'))
 
 <head>
   <meta charset="utf-8">
@@ -576,12 +576,12 @@
       <div class="flex items-center justify-center gap-4 text-lg">
         <a class="px-4 tracking-wider text-gray-400"
           href="{{ route('dashboard') }}">
-          {{ __('Home?') }}
+          Home?
         </a>
 
         <a class="px-4 tracking-wider text-gray-400"
           href="{{ url()->full() }}">
-          {{ __('Reload?') }}
+          Reload?
         </a>
       </div>
 

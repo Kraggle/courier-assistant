@@ -12,7 +12,7 @@
   <div class="{{ $gap }} flex flex-col">
 
     {{-- modal header --}}
-    <x-modal.header :title="__('receipt')" />
+    <x-modal.header title="receipt" />
 
     <img src="{{ Vite::asset('resources/images/no-image.svg') }}"
       ref="image">
@@ -29,13 +29,13 @@
           ref="path" />
 
         <x-button.dark color="no-loader bg-green-700 hover:bg-green-600 focus:bg-green-600 active:bg-green-800">
-          {{ __('download') }}
+          download
         </x-button.dark>
 
       </form>
 
       <x-button.light x-on:click="$dispatch('close')">
-        {{ __('close') }}
+        close
       </x-button.light>
     </div>
 

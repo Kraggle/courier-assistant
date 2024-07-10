@@ -1,3 +1,3 @@
-<x-layout.error :title="__('Server Error')"
+<x-layout.error title="Server Error"
   :code="500"
-  :message="__('Server Error')" />
+  message="Server Error" />

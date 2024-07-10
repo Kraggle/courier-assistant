@@ -1,7 +1,7 @@
 @define($gap = 'gap-4')
 
-<x-layout.app :center="true"
-  :title="__('forgot password')">
+<x-layout.app title="forgot password"
+  :center="true">
   <x-section.one class="self-center"
     maxWidth="lg">
 
@@ -10,10 +10,10 @@
       action="{{ route('password.email') }}">
       @csrf
 
-      <x-modal.header :title="__('Forgot your password?')" />
+      <x-modal.header title="Forgot your password?" />
 
       <div class="text-sm text-gray-600">
-        {{ __('No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+        No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.
       </div>
 
       {{-- Session Status --}}
@@ -22,8 +22,8 @@
       {{-- email --}}
       @define($key = 'email')
       <x-form.wrap class=""
-        :key="$key"
-        :value="__('email')">
+        value="email"
+        :key="$key">
 
         <x-form.text class="block w-full"
           id="{{ $key }}"
@@ -38,11 +38,11 @@
       <div class="{{ $gap }} flex items-center justify-end">
         <a class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           href="{{ route('login') }}">
-          {{ __('Back to login?') }}
+          Back to login?
         </a>
 
         <x-button.dark>
-          {{ __('Email Password Reset Link') }}
+          Email Password Reset Link
         </x-button.dark>
       </div>
     </form>

@@ -1,7 +1,7 @@
 @define($gap = 'gap-4')
 
-<x-layout.app :center="true"
-  :title="__('confirm password')">
+<x-layout.app title="confirm password"
+  :center="true">
   <x-section.one class="self-center"
     maxWidth="md">
 
@@ -10,16 +10,16 @@
       action="{{ route('password.confirm') }}">
       @csrf
 
-      <x-modal.header :title="__('Secure area')" />
+      <x-modal.header title="Secure area" />
 
       <div class="text-sm text-gray-600">
-        {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
+        This is a secure area of the application. Please confirm your password before continuing.
       </div>
 
       {{-- password --}}
       @define($key = 'password')
-      <x-form.wrap :key="$key"
-        :value="__('password')">
+      <x-form.wrap value="password"
+        :key="$key">
 
         <x-form.text class="block w-full"
           id="{{ $key }}"
@@ -31,7 +31,7 @@
 
       <div class="flex justify-end">
         <x-button.dark>
-          {{ __('confirm') }}
+          confirm
         </x-button.dark>
       </div>
     </form>
