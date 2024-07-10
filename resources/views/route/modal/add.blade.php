@@ -52,7 +52,7 @@
       <x-form.wrap class="required"
         value="depot"
         :key="$key"
-        help="The depot you\'re working out of for this route. Also used to determine the day rate for the route. If the depot you\'re working out of is not present, click the `Not Found` button to add it yourself.">
+        help="The depot you're working out of for this route. Also used to determine the day rate for the route. If the depot you're working out of is not present, click the `Not Found` button to add it yourself.">
 
         <x-form.select id="{{ $key }}_route"
           name="{{ $key }}"
@@ -164,7 +164,7 @@
       @define($key = 'end_mileage')
       <x-form.wrap value="end mileage"
         :key="$key"
-        help="The odometer reading for the end of your route, when you have returned to the depot. If you don\'t go back, set it to what it would have been back at the depot. This helps for accurate fuel costs and earnings.">
+        help="The odometer reading for the end of your route, when you have returned to the depot. If you don't go back, set it to what it would have been back at the depot. This helps for accurate fuel costs and earnings.">
 
         <div class="flex items-center gap-2">
           <x-form.text class="flex-grow"

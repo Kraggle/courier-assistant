@@ -26,7 +26,7 @@
       @define($key = 'dsp_id')
       <x-form.wrap value="delivery service provider"
         :key="$key"
-        help="Search here for the name of the Delivery Service Provider you work for. It\'s important you select the correct one, as they differ in their pay rates. The one you select, if already added, will most likely already have rates set to date.">
+        help="Search here for the name of the Delivery Service Provider you work for. It's important you select the correct one, as they differ in their pay rates. The one you select, if already added, will most likely already have rates set to date.">
 
         <x-form.select id="{{ $key }}"
           name="{{ $key }}"

@@ -44,8 +44,8 @@ Route::controller(Controller::class)->group(function () {
 });
 
 Route::controller(PostController::class)->group(function () {
-    Route::get('/{type}/{slug}', 'post')->name('post');
-    Route::get('/posts', 'posts')->name('posts');
+    Route::get('/post/{type}/{slug}', 'post')->name('post');
+    Route::get('/post/{type}', 'posts')->name('posts');
 });
 
 Route::middleware(['auth'])->group(function () { # just signed in

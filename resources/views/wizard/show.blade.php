@@ -29,7 +29,7 @@
         @define($key = 'dsp_id')
         <x-form.wrap value="DSP"
           :key="$key"
-          help="Search here for the name of the Delivery Service Provider you work for. It\'s important you select the correct one, as they differ in their pay rates. The one you select, if already added, will most likely already have rates set to date.">
+          help="Search here for the name of the Delivery Service Provider you work for. It's important you select the correct one, as they differ in their pay rates. The one you select, if already added, will most likely already have rates set to date.">
 
           <x-form.select id="{{ $key }}"
             name="{{ $key }}"
@@ -107,7 +107,7 @@
         @define($key = 'identifier')
         <x-form.wrap value="Amazon identifier"
           :key="$key"
-          help="Amazons identifier for your Delivery Service Provider, you can ask your OSM for this if you don\'t know it. It\'s another way for other drivers to find the correct DSP.">
+          help="Amazons identifier for your Delivery Service Provider, you can ask your OSM for this if you don't know it. It's another way for other drivers to find the correct DSP.">
 
           <x-form.text class="block w-full"
             id="{{ $key }}"
@@ -190,7 +190,7 @@
           @define($key = 'depot_id')
           <x-form.wrap value="depot"
             :key="$key"
-            help="The depot that you work out of, this can be changed per route, but it is better to have a default so you don\'t need to change it each time you add a new route.">
+            help="The depot that you work out of, this can be changed per route, but it is better to have a default so you don't need to change it each time you add a new route.">
 
             <x-form.select id="{{ $key }}_rate"
               name="{{ $key }}"
@@ -257,7 +257,7 @@
           @define($key = 'identifier')
           <x-form.wrap value="Amazon identifier"
             :key="$key"
-            help="Amazons identifier for your depot, you can ask your OSM for this if you don\'t know it. It\'s another way for other drivers to find the correct depot.">
+            help="Amazons identifier for your depot, you can ask your OSM for this if you don't know it. It's another way for other drivers to find the correct depot.">
 
             <x-form.text class="block w-full"
               id="{{ $key }}"

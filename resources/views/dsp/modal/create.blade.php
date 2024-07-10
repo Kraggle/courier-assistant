@@ -38,7 +38,7 @@
       @define($key = 'identifier')
       <x-form.wrap value="Amazon identifier"
         :key="$key"
-        help="Amazons identifier for your Delivery Service Provider, you can ask your OSM for this if you don\'t know it. It\'s another way for other drivers to find the correct DSP.">
+        help="Amazons identifier for your Delivery Service Provider, you can ask your OSM for this if you don't know it. It's another way for other drivers to find the correct DSP.">
 
         <x-form.text class="block w-full"
           id="{{ $key }}"
@@ -68,7 +68,7 @@
       @define($key = 'pay_day')
       <x-form.wrap value="pay day"
         :key="$key"
-        help="The day of the week that your DSP pays it\'s drivers. This can be different for different DSPs.">
+        help="The day of the week that your DSP pays it's drivers. This can be different for different DSPs.">
 
         <x-form.select id="{{ $key }}"
           name="{{ $key }}"
