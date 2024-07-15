@@ -1,14 +1,9 @@
-@php
-  $space = 3;
-  $gap = ['gap-1', 'gap-2', 'gap-3', 'gap-4', 'gap-5', 'gap-6', 'gap-7'][$space];
-@endphp
-
 {{-- add route modal --}}
 <x-modal class="p-4 md:p-6"
   name="add-expense"
   help-root>
   {{-- modal content --}}
-  <form class="{{ $gap }} cols-2 flex flex-col"
+  <form class="cols-2 flex flex-col"
     mode="add"
     ref="form"
     method="POST"
@@ -25,8 +20,8 @@
     <x-modal.header :title="Msg::add('expense')"
       :help="true" />
 
-    <div class="{{ $gap }} grid grid-cols-1 [.cols-2_&]:md:grid-cols-2">
-      <div class="{{ $gap }} flex flex-col">
+    <div class="grid grid-cols-1 [.cols-2_&]:md:grid-cols-2">
+      <div class="flex flex-col">
         {{-- choice --}}
         @define($key = 'choice')
         <x-form.wrap class="choice-option"
@@ -50,7 +45,7 @@
 
         </x-form.wrap>
 
-        <div class="{{ $gap }} flex">
+        <div class="flex">
           {{-- date --}}
           @define($key = 'date')
           <x-form.wrap class="flex-grow"
@@ -143,7 +138,7 @@
 
         </x-form.wrap>
 
-        <div class="{{ $gap }} repeat-options flex flex-col">
+        <div class="repeat-options flex flex-col">
           {{-- repeat --}}
           @define($key = 'repeat')
           <x-form.wrap value="Repeat?"
@@ -170,7 +165,7 @@
 
           </x-form.wrap>
 
-          <div class="{{ $gap }} every-options grid grid-cols-2">
+          <div class="every-options grid grid-cols-2">
             {{-- every x --}}
             @define($key = 'every_x')
             <x-form.wrap value="Repeat every"
@@ -235,7 +230,7 @@
 
       </div>
 
-      <div class="{{ $gap }} flex flex-col">
+      <div class="flex flex-col">
 
         {{-- image --}}
         @define($key = 'image')
@@ -254,7 +249,7 @@
       </div>
     </div>
 
-    <div class="{{ $gap }} flex justify-between">
+    <div class="flex justify-between">
       <x-button.danger x-data=""
         x-on:click.prevent="$dispatch('open-modal', 'destroy-expense')"
         class="no-loader"
@@ -265,7 +260,7 @@
       <span></span>
 
       {{-- submit --}}
-      <div class="{{ $gap }} flex justify-end">
+      <div class="flex justify-end">
         <x-button.light x-on:click="$dispatch('close')">
           cancel
         </x-button.light>

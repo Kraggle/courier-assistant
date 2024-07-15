@@ -1,8 +1,3 @@
-@php
-  $space = 3;
-  $gap = ['gap-1', 'gap-2', 'gap-3', 'gap-4', 'gap-5', 'gap-6', 'gap-7'][$space];
-@endphp
-
 @auth
   <div x-data=""
     x-on:click="$dispatch('open-modal', 'keep-alive')"
@@ -14,9 +9,9 @@
     name="keep-alive"
     maxWidth="sm">
 
-    <div class="{{ $gap }} flex flex-col">
-      <div class="{{ $gap }} flex">
-        <div class="{{ $gap }} flex flex-grow flex-col">
+    <div class="flex flex-col">
+      <div class="flex">
+        <div class="flex flex-grow flex-col">
 
           {{-- modal header --}}
           <x-modal.header title="Session ending" />
@@ -33,7 +28,7 @@
       </div>
 
       {{-- submit --}}
-      <div class="{{ $gap }} flex justify-end">
+      <div class="flex justify-end">
         <form id="logoutForm"
           method="POST"
           action="{{ route('logout') }}">

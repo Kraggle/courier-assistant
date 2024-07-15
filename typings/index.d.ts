@@ -149,6 +149,7 @@ interface Window {
     _K: object;
     DataTable: DataTable;
     timed: timed;
+    Trix: Trix;
 }
 
 interface ImportMeta {

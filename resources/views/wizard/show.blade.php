@@ -1,14 +1,9 @@
-@php
-  $space = 3;
-  $gap = ['gap-1', 'gap-2', 'gap-3', 'gap-4', 'gap-5', 'gap-6', 'gap-7'][$space];
-@endphp
-
 <x-layout.app center="true">
 
   @if (!$user->hasDSP())
 
     <x-section.one maxWidth="md">
-      <form class="{{ $gap }} flex flex-col"
+      <form class="flex flex-col"
         method="POST"
         action="{{ route('dsp.attach') }}">
         @csrf
@@ -69,7 +64,7 @@
         </x-form.wrap>
 
         {{-- submit --}}
-        <div class="{{ $gap }} flex justify-end">
+        <div class="flex justify-end">
           <x-button.dark>
             choose
           </x-button.dark>
@@ -79,7 +74,7 @@
     </x-section.one>
 
     <x-section.one maxWidth="md">
-      <form class="{{ $gap }} flex flex-col"
+      <form class="flex flex-col"
         method="POST"
         action="{{ route('dsp.create') }}">
         @csrf
@@ -117,7 +112,7 @@
         </x-form.wrap>
 
         {{-- submit --}}
-        <div class="{{ $gap }} flex justify-end">
+        <div class="flex justify-end">
           <x-button.dark>
             create
           </x-button.dark>
@@ -127,7 +122,7 @@
     </x-section.one>
   @elseif (!$user->hasVehicle())
     <x-section.one maxWidth="md">
-      <form class="{{ $gap }} flex flex-col"
+      <form class="flex flex-col"
         method="POST"
         help-root
         action="{{ route('vehicle.create') }}">
@@ -170,7 +165,7 @@
     <div class="flex flex-col gap-[inherit]"
       help-root>
       <x-section.one maxWidth="md">
-        <form class="{{ $gap }} flex flex-col"
+        <form class="flex flex-col"
           method="POST"
           action="{{ route('user.options') }}">
           @csrf
@@ -217,7 +212,7 @@
           </x-form.wrap>
 
           {{-- submit --}}
-          <div class="{{ $gap }} flex justify-end">
+          <div class="flex justify-end">
             <x-button.dark>
               choose
             </x-button.dark>
@@ -227,7 +222,7 @@
       </x-section.one>
 
       <x-section.one maxWidth="md">
-        <form class="{{ $gap }} flex flex-col"
+        <form class="flex flex-col"
           method="POST"
           action="{{ route('depot.store') }}">
           @csrf
@@ -267,7 +262,7 @@
           </x-form.wrap>
 
           {{-- submit --}}
-          <div class="{{ $gap }} flex justify-end">
+          <div class="flex justify-end">
             <x-button.dark>
               create
             </x-button.dark>
@@ -278,7 +273,7 @@
     </div>
   @elseif(!$user->hasRate())
     <x-section.one maxWidth="md">
-      <form class="{{ $gap }} flex flex-col"
+      <form class="flex flex-col"
         help-root
         method="POST"
         action="{{ route('rate.add') }}">
@@ -337,7 +332,7 @@
 
         </x-form.wrap>
 
-        <div class="{{ $gap }} grid grid-cols-1 md:grid-cols-2">
+        <div class="grid grid-cols-1 md:grid-cols-2">
           {{-- date --}}
           @define($key = 'date')
           <x-form.wrap value="from date"
@@ -370,7 +365,7 @@
         </div>
 
         {{-- submit --}}
-        <div class="{{ $gap }} flex justify-end">
+        <div class="flex justify-end">
           <x-button.dark>
             add
           </x-button.dark>

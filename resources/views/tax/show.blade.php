@@ -52,8 +52,8 @@
 
     </x-tab.link-wrap>
 
-    <div class="{{ $gap }} flex flex-col">
-      <div class="{{ $gap }} grid grid-cols-1 px-4 sm:grid-cols-2 md:px-6 lg:grid-cols-3">
+    <div class="flex flex-col">
+      <div class="grid grid-cols-1 px-4 sm:grid-cols-2 md:px-6 lg:grid-cols-3">
         {{-- miles --}}
         <x-form.section label="miles">
           {{-- worked --}}
@@ -106,7 +106,7 @@
         {{-- workload --}}
         <x-form.section class="col-span-1 sm:col-span-2 lg:col-span-1"
           label="workload">
-          <div class="{{ $gap }} grid grid-cols-2">
+          <div class="grid grid-cols-2">
             {{-- work days --}}
             <x-form.wrap value="Days of Work">
               <x-form.text class="block w-full text-center text-base font-bold md:text-xl"
@@ -140,11 +140,11 @@
 
       </div>
 
-      <div class="{{ $gap }} grid grid-cols-1 px-4 md:px-6 lg:grid-cols-2">
+      <div class="grid grid-cols-1 px-4 md:px-6 lg:grid-cols-2">
 
         {{-- income --}}
         <x-form.section label="income">
-          <div class="{{ $gap }} grid grid-cols-3">
+          <div class="grid grid-cols-3">
             {{-- total --}}
             <x-form.wrap value="Gross Pay">
               <x-form.text class="block w-full text-center text-base font-bold md:text-xl"
@@ -167,7 +167,7 @@
             </x-form.wrap>
           </div>
 
-          <div class="{{ $gap }} grid grid-cols-3">
+          <div class="grid grid-cols-3">
             {{-- actual --}}
             <x-form.wrap value="Net Pay">
               <x-form.text class="block w-full text-center text-base font-bold md:text-xl"
@@ -200,7 +200,7 @@
 
         {{-- expenses --}}
         <x-form.section label="expenses">
-          <div class="{{ $gap }} grid grid-cols-3">
+          <div class="grid grid-cols-3">
             {{-- work --}}
             <x-form.wrap value="work">
               <x-form.text class="block w-full text-center text-base font-bold md:text-xl"
@@ -223,7 +223,7 @@
             </x-form.wrap>
           </div>
 
-          <div class="{{ $gap }} grid grid-cols-3">
+          <div class="grid grid-cols-3">
             {{-- office --}}
             <x-form.wrap value="office">
               <x-form.text class="block w-full text-center text-base font-bold md:text-xl"

@@ -8,7 +8,7 @@
   {!! $attributes->only('class')->merge(['class' => 'relative w-full rounded-md border border-solid border-gray-300 shadow-sm transition duration-300 ease-in-out focus-within:outline-none focus-within:ring-indigo-500 overflow-hidden']) !!}>
 
   <img class="border-b-1 aspect-square w-full border-0 object-cover"
-    src="{{ Vite::asset('resources/images/no-image.svg') }}"
+    src="@noImage"
     image-src />
 
   {{-- the input to use --}}

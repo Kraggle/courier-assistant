@@ -13,6 +13,7 @@ export default defineConfig({
             input: [
                 'resources/css/app.css',
                 'resources/js/app.js',
+                'resources/js/editor.js',
                 'resources/js/map.js',
                 'resources/js/stripe.js',
             ],

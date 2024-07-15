@@ -11,11 +11,13 @@ return new class extends Migration {
     public function up(): void {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
+            $table->string('slug')->unique();
             $table->foreignId('user_id');
             $table->string('title');
-            $table->string('slug')->unique();
-            $table->text('content');
             $table->string('type');
+            $table->string('banner')->nullable();
+            $table->text('content');
+            $table->boolean('is_live')->default(0);
             $table->timestamps();
         });
     }

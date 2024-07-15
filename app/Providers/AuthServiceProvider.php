@@ -34,5 +34,9 @@ class AuthServiceProvider extends ServiceProvider {
         Gate::define('delete-info', function (User $user, Info $info) {
             return $user->id == 1 || $user->name == $info->creator;
         });
+
+        Gate::define('is-admin', function (User $user) {
+            return $user->role === 'admin';
+        });
     }
 }

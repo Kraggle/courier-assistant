@@ -1,14 +1,9 @@
-@php
-  $space = 3;
-  $gap = ['gap-1', 'gap-2', 'gap-3', 'gap-4', 'gap-5', 'gap-6', 'gap-7'][$space];
-@endphp
-
 {{-- add route modal --}}
 <x-modal class="p-4 md:p-6"
   name="add-route"
   help-root>
   {{-- modal content --}}
-  <form class="{{ $gap }} flex flex-col"
+  <form class="flex flex-col"
     ref="form"
     method="POST"
     action="{{ route('route.add') }}">
@@ -19,7 +14,7 @@
     <x-modal.header :title="Msg::add('route')"
       :help="true" />
 
-    <div class="{{ $gap }} grid grid-cols-1 md:grid-cols-2">
+    <div class="grid grid-cols-1 md:grid-cols-2">
       {{-- type --}}
       @define($key = 'type')
       <x-form.wrap class="required"
@@ -97,7 +92,7 @@
 
     </x-form.wrap>
 
-    <div class="{{ $gap }} grid grid-cols-1 md:grid-cols-2">
+    <div class="grid grid-cols-1 md:grid-cols-2">
       {{-- time start --}}
       @define($key = 'start_time')
       <x-form.wrap class="required"
@@ -131,7 +126,7 @@
 
     </div>
 
-    <div class="{{ $gap }} grid grid-cols-1 md:grid-cols-2">
+    <div class="grid grid-cols-1 md:grid-cols-2">
       {{-- mileage start --}}
       @define($key = 'start_mileage')
       <x-form.wrap class="required"
@@ -187,7 +182,7 @@
       </x-form.wrap>
     </div>
 
-    <div class="{{ $gap }} grid grid-cols-1 md:grid-cols-3">
+    <div class="grid grid-cols-1 md:grid-cols-3">
       {{-- invoice mileage --}}
       @define($key = 'invoice_mileage')
       <x-form.wrap value="invoiced miles"
@@ -239,7 +234,7 @@
       </x-form.wrap>
     </div>
 
-    <div class="{{ $gap }} grid grid-cols-1 md:grid-cols-2">
+    <div class="grid grid-cols-1 md:grid-cols-2">
       {{-- ttfs --}}
       @define($key = 'ttfs')
       <x-form.wrap value="Minutes to First Stop"
@@ -287,7 +282,7 @@
     </x-form.wrap>
 
     {{-- submit --}}
-    <div class="{{ $gap }} flex justify-between">
+    <div class="flex justify-between">
       <x-button.danger x-data=""
         x-on:click.prevent="$dispatch('open-modal', 'destroy-route')"
         class="no-loader"
@@ -297,7 +292,7 @@
 
       <span></span>
 
-      <div class="{{ $gap }} flex justify-end">
+      <div class="flex justify-end">
         <x-button.light x-on:click="$dispatch('close')">
           cancel
         </x-button.light>

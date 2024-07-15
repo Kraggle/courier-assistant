@@ -1,102 +1,112 @@
 {
-  "_K-2SipYZUg.js": {
-    "file": "assets/K-2SipYZUg.js"
+  "_K-DdhWtVxH.js": {
+    "file": "assets/K-DdhWtVxH.js",
+    "name": "K"
   },
   "resources/css/app.css": {
-    "file": "assets/app-FDhf0XJg.css",
-    "isEntry": true,
-    "src": "resources/css/app.css"
+    "file": "assets/app-CYSYbaeT.css",
+    "src": "resources/css/app.css",
+    "isEntry": true
   },
   "resources/images/bg-white.png": {
-    "file": "assets/bg-white-z2ddVXv_.png",
+    "file": "assets/bg-white-DPZ11Ve_.png",
     "src": "resources/images/bg-white.png"
   },
   "resources/images/bg.png": {
-    "file": "assets/bg-6yxviMgq.png",
+    "file": "assets/bg-DrLG-IyC.png",
     "src": "resources/images/bg.png"
   },
   "resources/images/flags/bg.svg": {
-    "file": "assets/bg-N-ikBhgk.svg",
+    "file": "assets/bg-36KQGGCT.svg",
     "src": "resources/images/flags/bg.svg"
   },
   "resources/images/flags/en.svg": {
-    "file": "assets/en-014i0KHs.svg",
+    "file": "assets/en-DTXiLQoe.svg",
     "src": "resources/images/flags/en.svg"
   },
   "resources/images/flags/pl.svg": {
-    "file": "assets/pl-KN_CUTqH.svg",
+    "file": "assets/pl-o38JROoc.svg",
     "src": "resources/images/flags/pl.svg"
   },
   "resources/images/flags/ro.svg": {
-    "file": "assets/ro-qEnqimNc.svg",
+    "file": "assets/ro-CoSeqKY1.svg",
     "src": "resources/images/flags/ro.svg"
   },
   "resources/images/icon-color.svg": {
-    "file": "assets/icon-color-IRyp0YNt.svg",
+    "file": "assets/icon-color-hHKnRg21.svg",
     "src": "resources/images/icon-color.svg"
   },
   "resources/images/icon.svg": {
-    "file": "assets/icon-sT7Y5wmE.svg",
+    "file": "assets/icon-CxPtjnCY.svg",
     "src": "resources/images/icon.svg"
   },
   "resources/images/logo-ala.svg": {
-    "file": "assets/logo-ala-HRZrfHV4.svg",
+    "file": "assets/logo-ala-dFmt8dXg.svg",
     "src": "resources/images/logo-ala.svg"
   },
   "resources/images/logo-color-ala.svg": {
-    "file": "assets/logo-color-ala-aIikVClO.svg",
+    "file": "assets/logo-color-ala-BoiKRUKU.svg",
     "src": "resources/images/logo-color-ala.svg"
   },
   "resources/images/logo-google.png": {
-    "file": "assets/logo-google-7I0Rb48n.png",
+    "file": "assets/logo-google-DsjRFvjy.png",
     "src": "resources/images/logo-google.png"
   },
   "resources/images/logo.png": {
-    "file": "assets/logo-bRNVUOMB.png",
+    "file": "assets/logo-BtE1VQ4w.png",
     "src": "resources/images/logo.png"
   },
   "resources/images/logo.svg": {
-    "file": "assets/logo-p5ZmwAIN.svg",
+    "file": "assets/logo-CnlmbAAg.svg",
     "src": "resources/images/logo.svg"
   },
   "resources/images/marker.png": {
-    "file": "assets/marker-v5RbE_HP.png",
+    "file": "assets/marker-C_lFsT8c.png",
     "src": "resources/images/marker.png"
   },
   "resources/images/no-image.svg": {
-    "file": "assets/no-image-_Is7cDln.svg",
+    "file": "assets/no-image-D8iztwOW.svg",
     "src": "resources/images/no-image.svg"
   },
   "resources/images/no-pdf.svg": {
-    "file": "assets/no-pdf-y3Xw7F3n.svg",
+    "file": "assets/no-pdf-DLdfDsXe.svg",
     "src": "resources/images/no-pdf.svg"
   },
   "resources/images/stripe-powered.svg": {
-    "file": "assets/stripe-powered-2gtvQ6XJ.svg",
+    "file": "assets/stripe-powered-DaC29Dpc.svg",
     "src": "resources/images/stripe-powered.svg"
   },
   "resources/js/app.js": {
-    "css": [
-      "assets/app-C64i7G0l.css"
-    ],
-    "file": "assets/app-S8aV2D4S.js",
-    "imports": [
-      "_K-2SipYZUg.js"
-    ],
+    "file": "assets/app-CE2H0tD8.js",
+    "name": "app",
+    "src": "resources/js/app.js",
     "isEntry": true,
-    "src": "resources/js/app.js"
+    "imports": [
+      "_K-DdhWtVxH.js"
+    ],
+    "css": [
+      "assets/app-LriLsbSV.css"
+    ]
+  },
+  "resources/js/editor.js": {
+    "file": "assets/editor-BxviE-V_.js",
+    "name": "editor",
+    "src": "resources/js/editor.js",
+    "isEntry": true
   },
   "resources/js/map.js": {
-    "file": "assets/map-0hq6f8eJ.js",
-    "imports": [
-      "_K-2SipYZUg.js"
-    ],
+    "file": "assets/map-DDPb3u7c.js",
+    "name": "map",
+    "src": "resources/js/map.js",
     "isEntry": true,
-    "src": "resources/js/map.js"
+    "imports": [
+      "_K-DdhWtVxH.js"
+    ]
   },
   "resources/js/stripe.js": {
-    "file": "assets/stripe-teWJzHyL.js",
-    "isEntry": true,
-    "src": "resources/js/stripe.js"
+    "file": "assets/stripe-Ko2Cf1gV.js",
+    "name": "stripe",
+    "src": "resources/js/stripe.js",
+    "isEntry": true
   }
 }

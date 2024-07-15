@@ -59,15 +59,19 @@ import.meta.glob([
  * Used to refresh all tooltips when triggered.
  */
 const refreshAll = function() {
+	const ignore = ['.select2', '.no-tooltip'];
+
 	$('[title][title!=""]').each(function() {
 		const $el = $(this),
 			title = $el.attr('title'),
 			data = $el.data();
 		if (!title) return;
 
-		if ($el.hasClass('select2-selection__rendered')) {
-			$(this).attr('title', '');
-			return;
+		for (const item of ignore) {
+			if ($el.hasClass(item) || $el.closest(item).length) {
+				$(this).attr('title', '');
+				return;
+			}
 		}
 
 		let t;

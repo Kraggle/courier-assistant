@@ -1,10 +1,5 @@
-@php
-  $space = 3;
-  $gap = ['gap-1', 'gap-2', 'gap-3', 'gap-4', 'gap-5', 'gap-6', 'gap-7'][$space];
-@endphp
-
 {{-- add dsp modal --}}
-<x-modal class="{{ $gap }} flex flex-col p-4 md:p-6"
+<x-modal class="flex flex-col p-4 md:p-6"
   name="add-dsp"
   help-root>
 
@@ -13,14 +8,14 @@
     :help="true" />
 
   {{-- modal content --}}
-  <form class="{{ $gap }} flex flex-col"
+  <form class="flex flex-col"
     ref="form"
     method="POST"
     action="{{ route('dsp.attach') }}">
     @csrf
     @method('PUT')
 
-    <div class="{{ $gap }} grid grid-cols-[1fr_auto]"
+    <div class="grid grid-cols-[1fr_auto]"
       ref="dsp_wrap">
       {{-- dsp_id --}}
       @define($key = 'dsp_id')
@@ -75,7 +70,7 @@
 
     </x-form.wrap>
 
-    <div class="{{ $gap }} flex justify-between">
+    <div class="flex justify-between">
       <x-button.danger x-data=""
         x-on:click.prevent="$dispatch('open-modal', 'destroy-dsp')"
         class="no-loader"
@@ -86,7 +81,7 @@
       <span></span>
 
       {{-- submit --}}
-      <div class="{{ $gap }} flex justify-end">
+      <div class="flex justify-end">
         <x-button.light x-on:click="$dispatch('close')"
           ref="close">
           cancel

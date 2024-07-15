@@ -1,8 +1,3 @@
-@php
-  $space = 3;
-  $gap = ['gap-1', 'gap-2', 'gap-3', 'gap-4', 'gap-5', 'gap-6', 'gap-7'][$space];
-@endphp
-
 {{-- add route modal --}}
 <x-modal class="p-4 md:p-6"
   name="add-info"
@@ -10,7 +5,7 @@
   help-root>
 
   {{-- modal content --}}
-  <form class="{{ $gap }} flex flex-col"
+  <form class="flex flex-col"
     ref="form"
     method="POST"
     action="{{ route('info.add') }}">
@@ -73,7 +68,7 @@
 
     </x-form.wrap>
 
-    <div class="{{ $gap }} flex justify-between">
+    <div class="flex justify-between">
       <x-button.danger x-data=""
         x-on:click.prevent="$dispatch('open-modal', 'destroy-info')"
         class="no-loader"
@@ -84,7 +79,7 @@
       <span></span>
 
       {{-- submit --}}
-      <div class="{{ $gap }} flex justify-end">
+      <div class="flex justify-end">
         <x-button.light x-on:click="$dispatch('close')">
           cancel
         </x-button.light>

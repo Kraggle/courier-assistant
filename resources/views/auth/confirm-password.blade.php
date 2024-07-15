@@ -5,7 +5,7 @@
   <x-section.one class="self-center"
     maxWidth="md">
 
-    <form class="{{ $gap }} flex flex-col"
+    <form class="flex flex-col"
       method="POST"
       action="{{ route('password.confirm') }}">
       @csrf

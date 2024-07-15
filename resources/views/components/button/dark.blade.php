@@ -9,7 +9,7 @@
 @endphp
 
 <{{ $href ? 'a' : 'button' }} tabindex="0"
-  {{ $attributes->merge(['type' => 'submit', 'class' => "inline-flex items-center border border-transparent rounded-md font-semibold text-white uppercase tracking-widest focus:outline-none focus:ring-2 shadow-sm focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 $sized $color"]) }}
+  {{ $attributes->merge(['type' => 'submit', 'class' => "inline-flex items-center justify-center border border-transparent rounded-md font-semibold text-white uppercase tracking-widest focus:outline-none focus:ring-2 shadow-sm focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 $sized $color"]) }}
   {{ $href ? "href=$href" : '' }}>
   {{ $slot }}
   </{{ $href ? 'a' : 'button' }}>

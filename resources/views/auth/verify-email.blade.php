@@ -5,7 +5,7 @@
   <x-section.one class="self-center"
     maxWidth="md">
 
-    <div class="{{ $gap }} flex flex-col">
+    <div class="flex flex-col">
 
       <div class="text-sm text-gray-600">
         Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn't receive the email, we will gladly send you another.

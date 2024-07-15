@@ -1,15 +1,10 @@
-@php
-  $space = 3;
-  $gap = ['gap-1', 'gap-2', 'gap-3', 'gap-4', 'gap-5', 'gap-6', 'gap-7'][$space];
-@endphp
-
 {{-- add route modal --}}
 <x-modal class="p-4 md:p-6"
   name="export-modal"
   maxWidth="sm">
 
   {{-- modal content --}}
-  <div class="{{ $gap }} flex flex-col">
+  <div class="flex flex-col">
 
     {{-- modal header --}}
     <x-modal.header title="none" />
@@ -18,7 +13,7 @@
       ref="question"></p>
 
     {{-- submit --}}
-    <div class="{{ $gap }} flex justify-end">
+    <div class="flex justify-end">
       <x-button.light x-on:click="$dispatch('close')">
         close
       </x-button.light>

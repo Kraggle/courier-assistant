@@ -1,12 +1,7 @@
-@php
-  $space = 3;
-  $gap = ['gap-1', 'gap-2', 'gap-3', 'gap-4', 'gap-5', 'gap-6', 'gap-7'][$space];
-@endphp
-
 <x-modal class="p-4 md:p-6"
   name="confirm-user-deletion"
   :show="$errors->userDeletion->isNotEmpty()">
-  <form class="{{ $gap }} flex flex-col"
+  <form class="flex flex-col"
     method="post"
     action="{{ route('user.destroy') }}">
     @csrf
@@ -32,7 +27,7 @@
 
     <x-form.error :messages="$errors->userDeletion->get('password')" />
 
-    <div class="{{ $gap }} flex justify-end">
+    <div class="flex justify-end">
       <x-button.light x-on:click="$dispatch('close')">
         cancel
       </x-button.light>

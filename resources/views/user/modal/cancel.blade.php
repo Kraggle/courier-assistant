@@ -1,13 +1,8 @@
-@php
-  $space = 3;
-  $gap = ['gap-1', 'gap-2', 'gap-3', 'gap-4', 'gap-5', 'gap-6', 'gap-7'][$space];
-@endphp
-
 <x-modal class="p-4 md:p-6"
   name="cancel-subscription"
   maxWidth="md">
 
-  <form class="{{ $gap }} flex flex-col"
+  <form class="flex flex-col"
     method="post"
     action="{{ route('subscription.cancel') }}">
     @csrf
@@ -31,7 +26,7 @@
 
     </x-form.wrap>
 
-    <div class="{{ $gap }} flex justify-end">
+    <div class="flex justify-end">
       <x-button.light x-on:click="$dispatch('close')">
         cancel
       </x-button.light>

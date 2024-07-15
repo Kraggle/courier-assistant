@@ -23,7 +23,7 @@ class FilesController extends Controller {
      * @param string|null $name
      * @return string|false
      */
-    public function uploadFile(UploadedFile $file, $dir = 'images', $name = null): string|false {
+    public function uploadFile(UploadedFile $file, $dir = 'images', $name = null, $scale = true): string|false {
 
         if ($file->extension() == 'pdf') {
             $pdf = new Pdf($file);
@@ -37,10 +37,12 @@ class FilesController extends Controller {
         ])->join('.');
 
         // scale the image down to save storage space
-        $manager = new ImageManager(new Driver());
-        $img = $manager->read($file->path());
-        $img->scale(height: 1000);
-        $img->save();
+        if ($scale) {
+            $manager = new ImageManager(new Driver());
+            $img = $manager->read($file->path());
+            $img->scale(height: 1000);
+            $img->save();
+        }
 
         $path = $file->storeAs($dir, $name, 'gcs');
         $exists = Storage::disk('gcs')->exists($path);

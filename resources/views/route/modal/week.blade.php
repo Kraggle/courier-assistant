@@ -1,15 +1,10 @@
-@php
-  $space = 3;
-  $gap = ['gap-1', 'gap-2', 'gap-3', 'gap-4', 'gap-5', 'gap-6', 'gap-7'][$space];
-@endphp
-
 {{-- edit week modal --}}
 <x-modal class="py-4 md:py-6"
   name="edit-week"
   help-root>
 
   {{-- modal content --}}
-  <form class="{{ $gap }} flex flex-col"
+  <form class="flex flex-col"
     ref="form"
     method="POST"
     action="{{ route('route.week') }}">
@@ -95,7 +90,7 @@
     </table>
 
     {{-- submit --}}
-    <div class="{{ $gap }} flex justify-end px-4 md:px-6">
+    <div class="flex justify-end px-4 md:px-6">
       <x-button.light x-on:click="$dispatch('close')">
         cancel
       </x-button.light>

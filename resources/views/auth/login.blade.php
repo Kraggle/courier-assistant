@@ -1,11 +1,11 @@
 @define($gap = 'gap-4')
 
-<x-layout.app :center="true"
-  title="sign in">
+<x-layout.app title="sign in"
+  :center="true">
   <x-section.one class="self-center"
     maxWidth="md">
 
-    <form class="{{ $gap }} flex flex-col"
+    <form class="flex flex-col"
       method="POST"
       action="{{ route('login') }}">
       @csrf
@@ -17,8 +17,8 @@
 
       {{-- email --}}
       @define($key = 'email')
-      <x-form.wrap :key="$key"
-        value="email">
+      <x-form.wrap value="email"
+        :key="$key">
 
         <x-form.text class="block w-full"
           id="{{ $key }}"
@@ -32,8 +32,8 @@
 
       {{-- password --}}
       @define($key = 'password')
-      <x-form.wrap :key="$key"
-        value="password">
+      <x-form.wrap value="password"
+        :key="$key">
 
         <x-form.text class="block w-full"
           id="{{ $key }}"
@@ -44,7 +44,7 @@
 
       </x-form.wrap>
 
-      <div class="{{ $gap }} flex items-center justify-end">
+      <div class="flex items-center justify-end">
 
         @if (Route::has('password.request'))
           <a class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"

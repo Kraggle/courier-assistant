@@ -124,19 +124,6 @@
 
       </div>
 
-      {{-- Settings Dropdown --}}
-      {{-- <div class="ms-6 flex items-center gap-3">
-        <x-dropdown.language align="right"
-          width="32">
-          <button class="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none">
-            <x-icon class="far fa-language text-base"
-              data-tooltip-position="left"
-              title="{{ Str::title('language selection') }}" />
-          </button>
-        </x-dropdown.language>
-
-      </div> --}}
-
     </div>
   </div>
 
@@ -165,9 +152,34 @@
 
     </div>
 
+    {{-- <div class="my-2 border-t border-gray-200"></div>
+
+    <div class="space-y-1">
+      <x-nav.link :href="route('news.index')"
+        icon="fas fa-newspaper"
+        :active="request()->routeIs('news.index')">
+        News Articles
+      </x-nav.link>
+
+      <x-nav.link :href="route('tips.index')"
+        icon="fas fa-messages-question"
+        :active="request()->routeIs('tips.index')">
+        Tips & Tricks
+      </x-nav.link>
+
+      @if (K::user()->isAdmin())
+        <x-nav.link :href="route('post.creator')"
+          icon="fas fa-comment-plus"
+          :active="request()->routeIs('post.creator')">
+          Post Creator
+        </x-nav.link>
+      @endif
+    </div> --}}
+
     @auth
+      <div class="my-2 border-t border-gray-200"></div>
       {{-- Responsive Settings Options --}}
-      <div class="border-t border-gray-200 pb-1 pt-4">
+      <div class="space-y-1">
 
         <div class="flex gap-3 py-2 pe-12 pl-[calc((100vw_-_80rem)_/_2)]">
           <div class="w-2.5"></div>
@@ -177,9 +189,10 @@
           </div>
         </div>
 
-        <div class="mt-3 space-y-1">
+        <div class="space-y-1">
           <x-nav.link :href="route('user.show')"
-            icon="fas fa-user">
+            icon="fas fa-user"
+            :active="request()->routeIs('user.show')">
             profile
           </x-nav.link>
 

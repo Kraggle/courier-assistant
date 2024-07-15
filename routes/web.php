@@ -44,11 +44,13 @@ Route::controller(Controller::class)->group(function () {
 });
 
 Route::controller(PostController::class)->group(function () {
-    Route::get('/post/{type}/{slug}', 'post')->name('post');
-    Route::get('/post/{type}', 'posts')->name('posts');
+    Route::get('/news', 'newsIndex')->name('news.index');
+    Route::get('/news/{slug}', 'showNews')->name('news');
+    Route::get('/tips', 'tipsIndex')->name('tips.index');
+    Route::get('/tips/{slug}', 'showTips')->name('tips');
 });
 
-Route::middleware(['auth'])->group(function () { # just signed in
+Route::middleware(['auth'])->group(function () { # not subscribed
 
     Route::controller(SubscriptionController::class)->group(function () {
         Route::get('/subscription', 'show')->name('subscription');
@@ -69,9 +71,17 @@ Route::middleware(['auth'])->group(function () { # just signed in
     Route::get('/keep-alive', function () {
         return response()->json(['alive' => true]);
     })->name('keep.alive');
+
+    Route::controller(PostController::class)->group(function () {
+        Route::get('/post/creator', 'creator')->name('post.creator');
+        Route::get('/post/editor/{post}', 'editor')->name('post.editor');
+        Route::put('/post/create', 'create')->name('post.create');
+        Route::put('/post/{post}/update', 'update')->name('post.update');
+        Route::put('/media/upload', 'upload')->name('media.upload');
+    });
 });
 
-Route::middleware(['auth', Subscribed::class])->group(function () {
+Route::middleware(['auth', Subscribed::class])->group(function () { # subscribed
     Route::controller(WizardController::class)->group(function () {
         Route::get('/wizard', 'show')->name('wizard');
     });
@@ -86,7 +96,7 @@ Route::middleware(['auth', Subscribed::class])->group(function () {
     Route::put('/rate', [RateController::class, 'add'])->name('rate.add');
 });
 
-Route::middleware(['auth', Subscribed::class, Ready::class])->group(function () {
+Route::middleware(['auth', Subscribed::class, Ready::class])->group(function () { # setup complete
     Route::get('/', [Controller::class, 'dashboard'])->name('dashboard');
 
     Route::controller(VehicleController::class)->group(function () {

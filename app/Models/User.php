@@ -502,4 +502,22 @@ class User extends Authenticatable {
             $user->dsps()->detach();
         });
     }
+
+    /**
+     * See if the user is admin.
+     * 
+     * @return boolean 
+     */
+    public function isAdmin(): bool {
+        return $this->role === 'admin';
+    }
+
+    /**
+     * Get the users posts.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function posts(): HasMany {
+        return $this->hasMany(Post::class);
+    }
 }

@@ -1,13 +1,8 @@
-@php
-  $space = 3;
-  $gap = ['gap-1', 'gap-2', 'gap-3', 'gap-4', 'gap-5', 'gap-6', 'gap-7'][$space];
-@endphp
-
 {{-- the changes modal --}}
 <x-modal class="p-4 md:p-6"
   name="changes-modal">
 
-  <div class="{{ $gap }} flex flex-col">
+  <div class="flex flex-col">
     {{-- modal header --}}
     <x-modal.header title="none"
       :help="true" />
@@ -33,7 +28,7 @@
     </div>
 
     {{-- close --}}
-    <div class="{{ $gap }} flex justify-end">
+    <div class="flex justify-end">
       <x-button.dark x-on:click="$dispatch('close')">
         close
       </x-button.dark>

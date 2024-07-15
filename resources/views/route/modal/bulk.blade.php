@@ -1,13 +1,8 @@
-@php
-  $space = 3;
-  $gap = ['gap-1', 'gap-2', 'gap-3', 'gap-4', 'gap-5', 'gap-6', 'gap-7'][$space];
-@endphp
-
 {{-- the bulk modal --}}
 <x-modal class="p-4 md:p-6"
   name="bulk-route">
   {{-- modal content --}}
-  <form class="{{ $gap }} flex flex-col"
+  <form class="flex flex-col"
     ref="form"
     method="POST"
     enctype="multipart/form-data"
@@ -30,7 +25,7 @@
       </p>
     </div>
 
-    <div class="{{ $gap }} grid grid-cols-1 md:grid-cols-2">
+    <div class="grid grid-cols-1 md:grid-cols-2">
       {{-- file input --}}
       @define($key = 'file')
       <x-form.wrap value="CSV"
@@ -77,7 +72,7 @@
     </div>
 
     {{-- submit --}}
-    <div class="{{ $gap }} flex justify-end">
+    <div class="flex justify-end">
       <x-button.light x-on:click="$dispatch('close')">
         cancel
       </x-button.light>

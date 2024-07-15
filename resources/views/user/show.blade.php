@@ -3,7 +3,7 @@
 <x-layout.app title="profile">
 
   {{-- profile --}}
-  <x-section.one class="{{ $gap }} flex flex-col"
+  <x-section.one class="flex flex-col"
     maxWidth="2xl">
     <h2 class="text-lg font-medium capitalize text-gray-900">
       profile information
@@ -19,7 +19,7 @@
       @csrf
     </form>
 
-    <form class="{{ $gap }} flex flex-col"
+    <form class="flex flex-col"
       method="post"
       action="{{ route('user.update') }}">
       @csrf
@@ -53,7 +53,7 @@
           autocomplete="username" />
 
         @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !$user->hasVerifiedEmail())
-          <div class="{{ $gap }} flex flex-col">
+          <div class="flex flex-col">
             <p class="text-sm text-gray-800">
               Your email address is unverified.
 
@@ -67,14 +67,14 @@
 
       </x-form.wrap>
 
-      <div class="{{ $gap }} flex items-center justify-end">
+      <div class="flex items-center justify-end">
         <x-button.dark>save</x-button.dark>
       </div>
     </form>
   </x-section.one>
 
   {{-- update password --}}
-  <x-section.one class="{{ $gap }} flex flex-col"
+  <x-section.one class="flex flex-col"
     maxWidth="2xl">
     <h2 class="text-lg font-medium capitalize text-gray-900">
       update password
@@ -84,7 +84,7 @@
       Ensure your account is using a long, random password to stay secure.
     </p>
 
-    <form class="{{ $gap }} flex flex-col"
+    <form class="flex flex-col"
       method="post"
       action="{{ route('password.update') }}">
       @csrf
@@ -129,14 +129,14 @@
 
       </x-form.wrap>
 
-      <div class="{{ $gap }} flex items-center justify-end">
+      <div class="flex items-center justify-end">
         <x-button.dark>save</x-button.dark>
       </div>
     </form>
   </x-section.one>
 
   {{-- subscription --}}
-  <x-section.one class="{{ $gap }} flex flex-col"
+  <x-section.one class="flex flex-col"
     maxWidth="2xl">
     <h2 class="text-lg font-medium capitalize text-gray-900">
       subscription
@@ -151,7 +151,7 @@
           You are not currently subscribed to this app, your subscription ends on {{ K::displayDate($sub->ends_at, 'M jS') }}, but you can resume from here.
         </p>
 
-        <div class="{{ $gap }} flex items-center justify-end">
+        <div class="flex items-center justify-end">
           <x-button.dark x-data=""
             x-on:click.prevent="$dispatch('open-modal', 'resume-subscription')"
             id="resumeSubscription">
@@ -171,7 +171,7 @@
           </p>
         @endif
 
-        <div class="{{ $gap }} flex items-center justify-end">
+        <div class="flex items-center justify-end">
           <x-button.dark x-data=""
             x-on:click.prevent="$dispatch('open-modal', 'cancel-subscription')"
             id="cancelSubscription">
@@ -184,14 +184,14 @@
         You are not yet subscribed to this app. To subscribe, please click below.
       </p>
 
-      <div class="{{ $gap }} flex items-center justify-end">
+      <div class="flex items-center justify-end">
         <x-button.dark :href="route('subscription')">subscribe</x-button.dark>
       </div>
     @endif
   </x-section.one>
 
   {{-- delete --}}
-  <x-section.one class="{{ $gap }} flex flex-col"
+  <x-section.one class="flex flex-col"
     maxWidth="2xl">
     <h2 class="text-lg font-medium capitalize text-gray-900">
       delete account
@@ -201,7 +201,7 @@
       Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.
     </p>
 
-    <div class="{{ $gap }} flex items-center justify-end">
+    <div class="flex items-center justify-end">
       <x-button.danger x-data=""
         x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')">delete account</x-button.danger>
     </div>

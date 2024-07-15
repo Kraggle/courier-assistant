@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Laravel\Cashier\Cashier;
+use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -34,6 +35,10 @@ class AppServiceProvider extends ServiceProvider {
 
         Blade::extend(function ($value) {
             return preg_replace('/\@icon\((.+?)\)/', '<i class="<?php echo ${1}; ?>" aria-hidden="true"></i>', $value);
+        });
+
+        Blade::extend(function ($value) {
+            return str_replace('@noImage', Vite::asset('resources/images/no-image.svg'), $value);
         });
     }
 }

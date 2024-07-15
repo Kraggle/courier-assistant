@@ -4,7 +4,7 @@
   :center="true">
   <x-section.one class="self-center"
     maxWidth="lg">
-    <form class="{{ $gap }} flex flex-col"
+    <form class="flex flex-col"
       method="POST"
       action="{{ route('register') }}">
       @csrf
@@ -66,7 +66,7 @@
 
       </x-form.wrap>
 
-      <div class="{{ $gap }} flex items-center justify-end">
+      <div class="flex items-center justify-end">
         <a class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           href="{{ route('login') }}">
           Already registered?

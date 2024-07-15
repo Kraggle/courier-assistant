@@ -1,14 +1,9 @@
-@php
-  $space = 3;
-  $gap = ['gap-1', 'gap-2', 'gap-3', 'gap-4', 'gap-5', 'gap-6', 'gap-7'][$space];
-@endphp
-
 {{-- the add modal --}}
 <x-modal class="p-4 md:p-6"
   name="add-refuel"
   help-root>
   {{-- modal content --}}
-  <form class="{{ $gap }} flex flex-col"
+  <form class="flex flex-col"
     ref="form"
     method="POST"
     enctype="multipart/form-data"
@@ -24,7 +19,7 @@
       help-message>
       <div class="flex gap-2">
         <x-icon class="far fa-info-circle text-base text-blue-400" />
-        <div class="{{ $gap }} flex flex-col">
+        <div class="flex flex-col">
           <p class="text-xs text-gray-500">
             For this to work you have to completely fill your tank on each refuel, have the first reading from a full tank and complete this on each refuel.
           </p>
@@ -36,8 +31,8 @@
       </div>
     </div>
 
-    <div class="{{ $gap }} grid grid-cols-1 md:grid-cols-2">
-      <div class="{{ $gap }} flex flex-col">
+    <div class="grid grid-cols-1 md:grid-cols-2">
+      <div class="flex flex-col">
         {{-- date picker --}}
         @define($key = 'date')
         <x-form.wrap class="required"
@@ -115,7 +110,7 @@
       </x-form.wrap>
     </div>
 
-    <div class="{{ $gap }} flex justify-between">
+    <div class="flex justify-between">
       <x-button.danger x-data=""
         x-on:click.prevent="$dispatch('open-modal', 'destroy-refuel')"
         class="no-loader"
@@ -126,7 +121,7 @@
       <span></span>
 
       {{-- submit --}}
-      <div class="{{ $gap }} flex justify-end">
+      <div class="flex justify-end">
         <x-button.light x-on:click="$dispatch('close')">
           cancel
         </x-button.light>

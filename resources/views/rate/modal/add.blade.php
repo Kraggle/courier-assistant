@@ -1,15 +1,10 @@
-@php
-  $space = 3;
-  $gap = ['gap-1', 'gap-2', 'gap-3', 'gap-4', 'gap-5', 'gap-6', 'gap-7'][$space];
-@endphp
-
 {{-- add route modal --}}
 <x-modal class="p-4 md:p-6"
   name="add-rate"
   help-root>
 
   {{-- modal content --}}
-  <form class="{{ $gap }} flex flex-col"
+  <form class="flex flex-col"
     ref="form"
     method="POST"
     action="{{ route('rate.add') }}">
@@ -31,7 +26,7 @@
       </div>
     </div>
 
-    <div class="{{ $gap }} grid grid-cols-1 md:grid-cols-2">
+    <div class="grid grid-cols-1 md:grid-cols-2">
       {{-- type --}}
       @define($key = 'type')
       <x-form.wrap class="required"
@@ -91,7 +86,7 @@
 
     </div>
 
-    <div class="{{ $gap }} grid grid-cols-1 md:grid-cols-2">
+    <div class="grid grid-cols-1 md:grid-cols-2">
       {{-- date --}}
       @define($key = 'date')
       <x-form.wrap class="required"
@@ -128,7 +123,7 @@
       </x-form.wrap>
     </div>
 
-    <div class="{{ $gap }} flex justify-between">
+    <div class="flex justify-between">
       <x-button.danger x-data=""
         x-on:click.prevent="$dispatch('open-modal', 'destroy-rate')"
         class="no-loader"
@@ -139,7 +134,7 @@
       <span></span>
 
       {{-- submit --}}
-      <div class="{{ $gap }} flex justify-end">
+      <div class="flex justify-end">
         <x-button.light x-on:click="$dispatch('close')">
           cancel
         </x-button.light>
