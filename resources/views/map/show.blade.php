@@ -22,9 +22,7 @@
     id="markerSrc"
     src="{{ Vite::asset('resources/images/marker.png') }}" />
 
-  <button x-data=""
-    x-on:click="$dispatch('open-modal', 'add-info')"
-    class="infoModal hidden"
+  <button class="infoModal hidden"
     id="infoBtn"
     data-modal="{{ json_encode([
         'title.text' => 'add location',
@@ -37,11 +35,10 @@
         'note.value' => old('note', ''),
         'destroy.addclass' => 'hidden',
         'submit.text' => 'add',
-    ]) }}"></button>
+    ]) }}"
+    open-modal="add-info"></button>
 
-  <button x-data=""
-    x-on:click="$dispatch('open-modal', 'add-info')"
-    class="infoModal hidden"
+  <button class="infoModal hidden"
     id="editBtn"
     data-modal="{{ json_encode([
         'title.text' => 'edit location',
@@ -59,11 +56,11 @@
             ],
         ],
         'submit.text' => 'save',
-    ]) }}"></button>
+    ]) }}"
+    open-modal="add-info"></button>
 
-  <button x-data=""
-    x-on:click.prevent.stop="$dispatch('open-modal', 'changes-modal')"
-    class="changesBtn hidden"></button>
+  <button class="changesBtn hidden"
+    open-modal="changes-modal"></button>
 
   <div class="mx-auto flex w-full flex-1 flex-col sm:max-w-7xl md:px-8">
     <div class="min-h-[315px] w-full flex-1 overflow-hidden border border-gray-400 bg-white shadow-lg md:rounded-md"

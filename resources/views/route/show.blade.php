@@ -13,9 +13,7 @@
 
       <x-slot:buttons>
 
-        <x-button.dark x-data=""
-          x-on:click.prevent="$dispatch('open-modal', 'add-route')"
-          id="addRoute"
+        <x-button.dark id="addRoute"
           data-modal="{{ json_encode([
               'title.text' => Msg::add('route'),
               'form.action' => route('route.add'),
@@ -37,36 +35,36 @@
               'destroy.addclass' => 'hidden',
               'submit.text' => 'add',
           ]) }}"
+          open-modal="add-route"
           color="bg-violet-800 hover:bg-violet-700 focus:bg-violet-700 active:bg-violet-900">
           <span class="hidden sm:block">{{ Msg::add('route') }}</span>
           <span class="block sm:hidden">add</span>
         </x-button.dark>
 
-        <x-dropdown.wrap contentClasses="font-normal py-1 bg-white">
+        <x-dropdown.wrap>
           <x-slot:trigger>
             <x-button.light>
               <x-icon class="far fa-ellipsis-vertical text-xs" />
             </x-button.light>
           </x-slot>
 
-          <x-slot:content>
+          <x-slot:content
+            class="font-normal">
             {{-- bulk add --}}
-            <x-dropdown.link x-data=""
-              x-on:click.prevent="$dispatch('open-modal', 'bulk-route')"
-              class="cursor-pointer">
+            <x-dropdown.link class="cursor-pointer"
+              open-modal="bulk-route">
               bulk add
             </x-dropdown.link>
 
             {{-- export all --}}
-            <x-dropdown.link x-data=""
-              x-on:click.prevent="$dispatch('open-modal', 'export-modal')"
-              class="cursor-pointer"
+            <x-dropdown.link class="cursor-pointer"
               data-modal="{{ json_encode([
                   'title.text' => Msg::exportTitle('routes'),
                   'question.text' => Msg::exportQuestion('routes'),
                   'form.action' => route('route.export'),
                   'form.filename' => 'routes-' . $user->id . '.csv',
-              ]) }}">
+              ]) }}"
+              open-modal="export-modal">
               Export as CSV
             </x-dropdown.link>
           </x-slot>

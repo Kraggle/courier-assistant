@@ -83,9 +83,7 @@
   @endphp
 @endguest
 
-<nav x-data="menu"
-  x-init="$watch('show', toggle)"
-  class="border-b border-gray-200 bg-white">
+<nav class="border-b border-gray-200 bg-white">
 
   {{-- top bar --}}
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -95,7 +93,8 @@
       <div class="-ms-2 flex items-center gap-3">
 
         <button class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 transition duration-150 ease-in-out hover:bg-gray-100 hover:text-gray-500 focus:bg-gray-100 focus:text-gray-500 focus:outline-none"
-          @click="show = ! show">
+          id="navBtn">
+
           <svg class="h-6 w-6"
             stroke="currentColor"
             fill="none"
@@ -113,6 +112,7 @@
               stroke-width="2"
               d="M6 18L18 6M6 6l12 12" />
           </svg>
+
         </button>
 
         {{-- Logo --}}
@@ -129,7 +129,7 @@
 
   {{-- nav manu --}}
   <div class="absolute bottom-0 top-16 z-50 w-auto -translate-x-full overflow-y-auto bg-white shadow-lg transition-all duration-500 ease-in-out"
-    :class="{ 'translate-x-0': show, '-translate-x-full': !show }">
+    id="navMenu">
     <div class="space-y-1">
 
       @foreach ($links as $link)
@@ -152,9 +152,9 @@
 
     </div>
 
-    {{-- <div class="my-2 border-t border-gray-200"></div>
+    {{-- <div class="my-2 border-t border-gray-200"></div> --}}
 
-    <div class="space-y-1">
+    {{-- <div class="space-y-1">
       <x-nav.link :href="route('news.index')"
         icon="fas fa-newspaper"
         :active="request()->routeIs('news.index')">
@@ -213,25 +213,16 @@
   </div>
 
   {{-- page blank --}}
-  <div class="bg-opacity-15 fixed inset-0 top-16 z-40 bg-black opacity-0 transition-all"
-    @click="show = ! show"
-    :class="{ 'opacity-100 pointer-events-auto': show, 'opacity-0 pointer-events-none': !show }"></div>
+  <div class="bg-opacity-15 pointer-events-none fixed inset-0 top-16 z-40 bg-black opacity-0 transition-all"
+    id="navClose"></div>
 </nav>
 
 @pushOnce('scripts')
   <script type="module">
-    document.addEventListener('alpine:init', () => {
-      Alpine.data('menu', () => ({
-        show: false,
-
-        toggle(show) {
-          if (show) {
-            $('body').addClass('overflow-y-hidden');
-          } else {
-            $('body').removeClass('overflow-y-hidden');
-          }
-        }
-      }));
+    $('#navBtn, #navClose').on('click', () => {
+      $('#navMenu').toggleClass('translate-x-0 -translate-x-full');
+      $('#navClose').toggleClass('opacity-100 pointer-events-auto pointer-events-none opacity-0');
+      $('body').toggleClass('overflow-y-hidden');
     });
   </script>
 @endPushOnce

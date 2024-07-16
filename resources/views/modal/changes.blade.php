@@ -29,7 +29,7 @@
 
     {{-- close --}}
     <div class="flex justify-end">
-      <x-button.dark x-on:click="$dispatch('close')">
+      <x-button.dark close-modal>
         close
       </x-button.dark>
     </div>

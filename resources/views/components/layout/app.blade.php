@@ -4,26 +4,6 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 @php
-  $messages = [];
-  if (session()->has('status')) {
-      $messages['status'] = session()->get('status');
-  }
-  if (session()->has('error')) {
-      $messages['error'] = session()->get('error');
-  }
-  if (session()->has('success')) {
-      $messages['success'] = session()->get('success');
-  }
-  if (session()->has('info')) {
-      $messages['info'] = session()->get('info');
-  }
-  if (session()->has('warning')) {
-      $messages['warning'] = session()->get('warning');
-  }
-  if (session()->has('message')) {
-      $messages['message'] = session()->get('message');
-  }
-
   $title = ($title ? Str::title($title) . ' - ' : '') . config('app.name', 'Laravel');
 
   $center = $center ? 'sm:justify-center' : '';
@@ -81,16 +61,13 @@
         </header>
       @endif
 
-      @foreach ($messages as $type => $msg)
-        <x-notify.message :type="$type"
-          :message="$msg" />
-      @endforeach
-
       {{ $slot }}
     </main>
 
     <x-layout.footer />
   </div>
+
+  <x-notify.section></x-notify.section>
 
   <modal-wrap>
     {{-- @include('modal.keep-alive') --}}

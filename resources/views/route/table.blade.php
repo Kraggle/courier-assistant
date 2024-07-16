@@ -6,10 +6,9 @@
   @endphp
 
   {{-- the total row --}}
-  <x-table.tr x-data=""
-    x-on:click.prevent="$dispatch('open-modal', 'edit-week')"
-    class="cursor-pointer !border-t-2 !border-t-gray-500 !bg-green-100 font-semibold"
+  <x-table.tr class="cursor-pointer !border-t-2 !border-t-gray-500 !bg-green-100 font-semibold"
     id="editWeek{{ $weekNo }}"
+    open-modal="edit-week"
     :data-modal="json_encode([
         'title.text' => K::date($items->first()['date'])->week(),
         'week.data' => [
@@ -85,9 +84,7 @@
       <div class="flex items-center justify-end gap-4">
         @define($first = $routes->first())
         @unless ($first->user->weeksFuelRateIsSet($first->depot_id, $first->date))
-          <x-icon x-data=""
-            x-on:click.prevent.stop="$dispatch('open-modal', 'add-rate')"
-            class="far fa-chart-simple cursor-pointer text-teal-400"
+          <x-icon class="far fa-chart-simple cursor-pointer text-teal-400"
             id="addRate"
             data-modal="{{ json_encode([
                 'title.text' => Msg::add('rate'),
@@ -100,7 +97,8 @@
                 'submit.text' => 'add',
             ]) }}"
             data-tooltip-position="left"
-            title="Set weeks fuel rate?" />
+            title="Set weeks fuel rate?"
+            open-modal="add-rate" />
         @endunless
 
         <x-icon class="far fa-edit hidden cursor-pointer text-base text-orange-400 sm:block sm:text-xl"
@@ -117,11 +115,10 @@
 @endif
 
 @foreach ($routes as $r)
-  <x-table.tr x-data=""
-    x-on:click.prevent="$dispatch('open-modal', 'add-route')"
-    class="cursor-pointer"
+  <x-table.tr class="cursor-pointer"
     id="editRoute{{ $r->id }}"
     data-date="{{ $r->date->format('Y-m-d') }}"
+    open-modal="add-route"
     :data-modal="json_encode([
         'title.text' => Msg::edit('route'),
         'form.action' => route('route.edit', $r->id),
@@ -236,12 +233,11 @@
             }
           @endphp
 
-          <x-icon x-data=""
-            x-on:click.prevent.stop="$dispatch('open-modal', 'extra-route')"
-            class="far fa-square-ellipsis-vertical mt-[2px] cursor-pointer text-blue-400"
+          <x-icon class="far fa-square-ellipsis-vertical mt-[2px] cursor-pointer text-blue-400"
             data-modal="{{ json_encode($data) }}"
             data-tooltip-position="left"
-            title="Extra information!" />
+            title="Extra information!"
+            open-modal="extra-route" />
         @endif
 
         <x-icon class="far fa-edit cursor-pointer text-orange-400"

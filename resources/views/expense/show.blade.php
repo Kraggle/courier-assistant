@@ -8,9 +8,7 @@
       <x-slot:buttons>
 
         @define($eTest = null)
-        <x-button.dark x-data=""
-          x-on:click.prevent="$dispatch('open-modal', 'add-expense')"
-          id="addExpense"
+        <x-button.dark id="addExpense"
           data-modal="{{ json_encode([
               'title.text' => Msg::add('expense'),
               'form.action' => route('expense.add'),
@@ -32,6 +30,7 @@
               'submit.text' => 'add',
               'is-repeat.value' => 0,
           ]) }}"
+          open-modal="add-expense"
           color="bg-violet-800 hover:bg-violet-700 focus:bg-violet-700 active:bg-violet-900">
           <span class="hidden sm:block">{{ Msg::add('expense') }}</span>
           <span class="block sm:hidden">add</span>
@@ -52,22 +51,20 @@
             </x-dropdown.link>
 
             {{-- bulk add --}}
-            <x-dropdown.link x-data=""
-              x-on:click.prevent="$dispatch('open-modal', 'bulk-expense')"
-              class="cursor-pointer">
+            <x-dropdown.link class="cursor-pointer"
+              open-modal="bulk-expense">
               bulk add
             </x-dropdown.link>
 
             {{-- export all --}}
-            <x-dropdown.link x-data=""
-              x-on:click.prevent="$dispatch('open-modal', 'export-modal')"
-              class="cursor-pointer"
+            <x-dropdown.link class="cursor-pointer"
               data-modal="{{ json_encode([
                   'title.text' => Msg::exportTitle('expenses'),
                   'question.text' => Msg::exportQuestion('expenses'),
                   'form.action' => route('expense.export'),
                   'form.filename' => 'expenses-' . $user->id . '.csv',
-              ]) }}">
+              ]) }}"
+              open-modal="export-modal">
               Export as CSV
             </x-dropdown.link>
           </x-slot>
@@ -106,10 +103,9 @@
               $hide = 'choice-wrap.' . ($repeat ? 'removeclass' : 'addclass');
               $future = $e->isFuture() ? 'opacity-50' : '';
             @endphp
-            <x-table.tr x-data=""
-              x-on:click.prevent="$dispatch('open-modal', 'add-expense')"
-              class="cursor-pointer"
+            <x-table.tr class="cursor-pointer"
               id="editExpense{{ $e->id }}"
+              open-modal="add-expense"
               :data-modal="json_encode([
                   'title.text' => $repeat ? 'Edit repeat expense' : 'Edit expense',
                   'form.action' => route('expense.edit', $e->id),
@@ -166,16 +162,15 @@
               <x-table.td class="text-base sm:text-xl">
                 <div class="flex justify-end gap-4">
                   @if ($e->hasImage())
-                    <x-icon x-data=""
-                      x-on:click.prevent.stop="$dispatch('open-modal', 'show-receipt')"
-                      class="far fa-receipt cursor-pointer"
+                    <x-icon class="far fa-receipt cursor-pointer"
                       data-modal="{{ json_encode([
                           'image.src' => $e->getImageURL(),
                           'form.action' => route('expense.download'),
                           'path.value' => $e->image,
                       ]) }}"
                       data-tooltip-position="left"
-                      title="{{ Str::title('receipt') }}" />
+                      title="{{ Str::title('receipt') }}"
+                      open-modal="show-receipt" />
                   @endif
 
                   @if ($e->isFuture())

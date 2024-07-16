@@ -9,20 +9,19 @@
     <x-modal.header title="Media Manager" />
 
     @define($tab = request()->get('tab') ?? 0)
-    <div x-data="{ activeTab: {{ $tab }} }">
-      <x-tab.link-wrap class="mb-4 px-4 text-2xl font-medium text-gray-900 md:mb-5 md:px-6">
-        <x-slot:tabs>
-          <x-tab.button tab="0">
-            Library
-          </x-tab.button>
+    <x-tab.container :active="$tab">
 
-          <x-tab.button tab="1">
-            Upload
-          </x-tab.button>
-        </x-slot:tabs>
-      </x-tab.link-wrap>
+      <x-slot:tabs>
+        <x-tab.button tab="0">
+          Library
+        </x-tab.button>
 
-      <x-tab.content-wrap>
+        <x-tab.button tab="1">
+          Upload
+        </x-tab.button>
+      </x-slot:tabs>
+
+      <x-slot:content>
         <x-tab.content tab="0">
           <div class="min-h-72 flex flex-wrap justify-center gap-6 px-4 md:px-6">
             @for ($i = 0; $i < 20; $i++)
@@ -102,15 +101,15 @@
 
           </form>
         </x-tab.content>
-      </x-tab.content-wrap>
-    </div>
+      </x-slot>
+    </x-tab.container>
 
     <div class="flex justify-between px-4 md:px-6">
       <span></span>
 
       {{-- submit --}}
       <div class="flex justify-end">
-        <x-button.light x-on:click="$dispatch('close')">
+        <x-button.light close-modal>
           close
         </x-button.light>
       </div>

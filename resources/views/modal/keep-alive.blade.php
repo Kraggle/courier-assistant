@@ -1,7 +1,6 @@
 @auth
-  <div x-data=""
-    x-on:click="$dispatch('open-modal', 'keep-alive')"
-    class="hidden"
+  <div class="hidden"
+    open-modal="keep-alive"
     btn="aliveTrigger"></div>
 
   {{-- the keep alive modal --}}
@@ -38,8 +37,8 @@
           </x-button.light>
         </form>
 
-        <x-button.dark x-on:click="$dispatch('close')"
-          id="keepAlive">
+        <x-button.dark id="keepAlive"
+          close-modal>
           yes
         </x-button.dark>
       </div>

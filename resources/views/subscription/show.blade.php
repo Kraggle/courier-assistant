@@ -41,9 +41,8 @@
         </ul>
 
         <div class="flex">
-          <x-button.dark x-data=""
-            x-on:click.prevent="$dispatch('open-modal', 'stripe-pay')"
-            class="grow justify-center"
+          <x-button.dark class="grow justify-center"
+            open-modal="stripe-pay"
             color="bg-orange-600 text-2xl hover:bg-orange-500 focus:bg-orange-500 active:bg-orange-700"
             size="md">
             try it free
@@ -52,9 +51,6 @@
       </div>
 
     </div>
-
-    {{-- <div x-data=""
-      x-init="setTimeout(() => { $dispatch('open-modal', 'stripe-pay'), 1000 })"></div> --}}
 
     @push('modals')
       <x-modal class="relative"

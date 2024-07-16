@@ -1,6 +1,6 @@
 import './bootstrap';
 
-import Alpine from 'alpinejs';
+// import Alpine from 'alpinejs';
 import jQuery from 'jquery';
 import K, { timed } from './K.js'
 import dateDropper from './plugins/datedropper-javascript.js';
@@ -11,7 +11,7 @@ import Cookies from 'js-cookie';
 import DataTable from 'datatables.net-dt'
 import 'datatables.net-responsive-dt';
 
-window.Alpine = Alpine;
+// window.Alpine = Alpine;
 window.jQuery = jQuery;
 window.$ = jQuery;
 window.K = K;
@@ -95,7 +95,7 @@ window.refreshAll = refreshAll;
 
 $(() => {
 	refreshAll();
-	setTimeout(() => {
-		Alpine.start();
-	}, window.location.pathname == '/map' ? 1000 : 0);
+	// setTimeout(() => {
+	// 	Alpine.start();
+	// }, window.location.pathname == '/map' ? 1000 : 0);
 });

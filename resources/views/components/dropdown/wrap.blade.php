@@ -1,4 +1,4 @@
-@props(['align' => 'right', 'width' => '', 'contentClasses' => 'py-1 bg-white'])
+@props(['align' => 'right', 'width' => '', 'content-classes' => ''])
 
 @php
   switch ($align) {
@@ -38,27 +38,45 @@
   }
 @endphp
 
-<div x-data="{ open: false }"
-  class="relative"
-  @click.outside="open = false"
-  @close.stop="open = false">
-  <div class="inline-flex h-full"
-    @click="open = ! open">
+<drop-wrap class="relative">
+  <drop-btn class="inline-flex h-full">
     {{ $trigger }}
-  </div>
+  </drop-btn>
 
-  <div x-show="open"
-    x-transition:enter="transition ease-out duration-200"
-    x-transition:enter-start="opacity-0 scale-95"
-    x-transition:enter-end="opacity-100 scale-100"
-    x-transition:leave="transition ease-in duration-75"
-    x-transition:leave-start="opacity-100 scale-100"
-    x-transition:leave-end="opacity-0 scale-95"
-    class="{{ $width }} {{ $alignmentClasses }} absolute z-50 mt-2 rounded-md shadow-lg"
-    style="display: none;"
-    @click="open = false">
-    <div class="{{ $contentClasses }} rounded-md ring-1 ring-black ring-opacity-5">
+  <drop class="{{ $width }} {{ $alignmentClasses }} pointer-events-none absolute z-50 mt-2 block scale-95 rounded-md opacity-0 shadow-lg transition duration-200 ease-in-out">
+    <div {{ $content->attributes->twMerge('py-1 bg-white rounded-md ring-1 ring-black ring-opacity-5') }}>
       {{ $content }}
     </div>
-  </div>
-</div>
+  </drop>
+</drop-wrap>
+
+@pushOnce('scripts')
+  <script type="module">
+    const Dropdown = {
+      open() {
+        $(this).closest('drop-wrap').addClass('drop-open');
+        $(this).siblings('drop')
+          .removeClass('opacity-0 scale-95 pointer-events-none')
+          .addClass('opacity-100 scale-100 pointer-events-auto');
+      },
+
+      close() {
+        $('.drop-wrap').removeClass('drop-open');
+        $('drop')
+          .removeClass('opacity-100 scale-100 pointer-events-auto')
+          .addClass('opacity-0 scale-95 pointer-events-none');
+      }
+    };
+
+    $(() => {
+      $('drop-btn').on('click', Dropdown.open);
+
+      $('body').on('click', function(e) {
+        if ($('.drop-open').length && !$(e.target).closest('drop-wrap').length)
+          Dropdown.close();
+      });
+
+      $('drop a, drop button').on('click', Dropdown.close);
+    });
+  </script>
+@endPushOnce

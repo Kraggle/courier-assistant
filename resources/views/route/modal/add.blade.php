@@ -283,9 +283,8 @@
 
     {{-- submit --}}
     <div class="flex justify-between">
-      <x-button.danger x-data=""
-        x-on:click.prevent="$dispatch('open-modal', 'destroy-route')"
-        class="no-loader"
+      <x-button.danger class="no-loader"
+        open-modal="destroy-route"
         ref="destroy">
         delete
       </x-button.danger>
@@ -293,7 +292,7 @@
       <span></span>
 
       <div class="flex justify-end">
-        <x-button.light x-on:click="$dispatch('close')">
+        <x-button.light close-modal>
           cancel
         </x-button.light>
 

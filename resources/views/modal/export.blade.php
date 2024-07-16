@@ -14,7 +14,7 @@
 
     {{-- submit --}}
     <div class="flex justify-end">
-      <x-button.light x-on:click="$dispatch('close')">
+      <x-button.light close-modal>
         close
       </x-button.light>
 
@@ -25,8 +25,8 @@
         filename="">
         @csrf
 
-        <x-button.dark x-on:click="$dispatch('close')"
-          id="exportBtn"
+        <x-button.dark id="exportBtn"
+          close-modal
           color="no-loader bg-green-700 hover:bg-green-600 focus:bg-green-600 active:bg-green-800">
           export
         </x-button.dark>

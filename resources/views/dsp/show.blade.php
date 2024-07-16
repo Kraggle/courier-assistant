@@ -13,9 +13,7 @@
 
       <x-slot:buttons>
 
-        <x-button.dark x-data=""
-          x-on:click.prevent="$dispatch('open-modal', 'add-dsp')"
-          id="addDSP"
+        <x-button.dark id="addDSP"
           data-modal="{{ json_encode([
               'title.text' => 'Select your DSP',
               'form.action' => route('dsp.attach'),
@@ -25,6 +23,7 @@
               'destroy.addclass' => 'hidden',
               'submit.text' => 'select',
           ]) }}"
+          open-modal="add-dsp"
           color="bg-violet-800 hover:bg-violet-700 focus:bg-violet-700 active:bg-violet-900">
           <span class="hidden sm:block">{{ Msg::add('DSP') }}</span>
           <span class="block sm:hidden">add</span>
@@ -48,10 +47,9 @@
         <tbody>
 
           @foreach ($dsps as $dsp)
-            <x-table.tr x-data=""
-              x-on:click.prevent="$dispatch('open-modal', 'add-dsp')"
-              class="cursor-pointer"
+            <x-table.tr class="cursor-pointer"
               id="editDSP{{ $dsp->id }}"
+              open-modal="add-dsp"
               :data-modal="json_encode([
                   'title.text' => Msg::edit('DSP connection'),
                   'form.action' => route('dsp.edit', $dsp->id),

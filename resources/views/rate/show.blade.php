@@ -14,9 +14,7 @@
 
       <x-slot:buttons>
 
-        <x-button.dark x-data=""
-          x-on:click.prevent="$dispatch('open-modal', 'add-rate')"
-          id="addRate"
+        <x-button.dark id="addRate"
           data-modal="{{ json_encode([
               'title.text' => Msg::add('rate'),
               'form.action' => route('rate.add'),
@@ -27,6 +25,7 @@
               'destroy.addclass' => 'hidden',
               'submit.text' => 'add',
           ]) }}"
+          open-modal="add-rate"
           color="bg-violet-800 hover:bg-violet-700 focus:bg-violet-700 active:bg-violet-900">
           <span class="hidden sm:block">{{ Msg::add('rate') }}</span>
           <span class="block sm:hidden">add</span>
@@ -41,22 +40,20 @@
 
           <x-slot:content>
             {{-- bulk add --}}
-            <x-dropdown.link x-data=""
-              x-on:click.prevent="$dispatch('open-modal', 'bulk-rates')"
-              class="cursor-pointer">
+            <x-dropdown.link class="cursor-pointer"
+              open-modal="bulk-rates">
               bulk add
             </x-dropdown.link>
 
             {{-- export all --}}
-            <x-dropdown.link x-data=""
-              x-on:click.prevent="$dispatch('open-modal', 'export-modal')"
-              class="cursor-pointer"
+            <x-dropdown.link class="cursor-pointer"
               data-modal="{{ json_encode([
                   'title.text' => Msg::exportTitle('rates'),
                   'question.text' => Msg::exportQuestion('rates'),
                   'form.action' => route('rate.export'),
                   'form.filename' => 'rates-' . $user->id . '.csv',
-              ]) }}">
+              ]) }}"
+              open-modal="export-modal">
               Export as CSV
             </x-dropdown.link>
           </x-slot>
@@ -80,10 +77,9 @@
         <tbody>
 
           @foreach ($rates as $rate)
-            <x-table.tr x-data=""
-              x-on:click.prevent="$dispatch('open-modal', 'add-rate')"
-              class="cursor-pointer"
+            <x-table.tr class="cursor-pointer"
               id="editRate{{ $rate->id }}"
+              open-modal="add-rate"
               :data-modal="json_encode([
                   'title.text' => Msg::edit('rate'),
                   'form.action' => route('rate.edit', $rate->id),
@@ -145,15 +141,14 @@
 
                     @endphp
 
-                    <x-icon x-data=""
-                      x-on:click.prevent.stop="$dispatch('open-modal', 'changes-modal')"
-                      class="far fa-rotate cursor-pointer text-green-600"
+                    <x-icon class="far fa-rotate cursor-pointer text-green-600"
                       data-modal="{{ json_encode([
                           'title.text' => 'changes',
                           'tbody.changes' => $logs,
                       ]) }}"
                       data-tooltip-position="left"
-                      title="{{ Str::title('changes') }}" />
+                      title="{{ Str::title('changes') }}"
+                      open-modal="changes-modal" />
                   @endif
 
                   <x-icon class="far fa-edit cursor-pointer text-orange-400"

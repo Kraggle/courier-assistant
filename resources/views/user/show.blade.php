@@ -152,9 +152,8 @@
         </p>
 
         <div class="flex items-center justify-end">
-          <x-button.dark x-data=""
-            x-on:click.prevent="$dispatch('open-modal', 'resume-subscription')"
-            id="resumeSubscription">
+          <x-button.dark id="resumeSubscription"
+            open-modal="resume-subscription">
             resume
           </x-button.dark>
         </div>
@@ -172,9 +171,8 @@
         @endif
 
         <div class="flex items-center justify-end">
-          <x-button.dark x-data=""
-            x-on:click.prevent="$dispatch('open-modal', 'cancel-subscription')"
-            id="cancelSubscription">
+          <x-button.dark id="cancelSubscription"
+            open-modal="cancel-subscription">
             cancel
           </x-button.dark>
         </div>
@@ -202,8 +200,7 @@
     </p>
 
     <div class="flex items-center justify-end">
-      <x-button.danger x-data=""
-        x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')">delete account</x-button.danger>
+      <x-button.danger open-modal="confirm-user-deletion">delete account</x-button.danger>
     </div>
   </x-section.one>
 

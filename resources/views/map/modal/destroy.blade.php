@@ -28,7 +28,7 @@
 
     {{-- submit --}}
     <div class="flex justify-end">
-      <x-button.light x-on:click="$dispatch('close')">
+      <x-button.light close-modal>
         no
       </x-button.light>
 

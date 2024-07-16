@@ -29,7 +29,7 @@
 
       </form>
 
-      <x-button.light x-on:click="$dispatch('close')">
+      <x-button.light close-modal>
         close
       </x-button.light>
     </div>

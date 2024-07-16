@@ -170,11 +170,10 @@
 
       <div class="col-span-3"
         image-root>
-        <x-form.wrap x-data=""
-          x-on:click.prevent="$dispatch('open-modal', 'media-picker')"
-          class="cursor-pointer"
+        <x-form.wrap class="cursor-pointer"
           id="mediaPicker"
-          value="Banner">
+          value="Banner"
+          open-modal="media-picker">
           <input name="banner"
             type="hidden">
           <img class="h-80 w-full rounded-md border border-gray-300"

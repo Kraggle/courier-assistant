@@ -20,24 +20,43 @@
   }
 @endphp
 
-<div x-data="{ show: true }"
-  x-show="show"
-  x-transition:leave="transition ease-in duration-200"
-  x-transition:leave-start="opacity-100 scale-100"
-  x-transition:leave-end="opacity-0 scale-50"
-  x-init="setTimeout(() => show = false, 5000)"
-  class="mx-auto w-full max-w-7xl md:px-8">
+<notify-wrap class="block w-full">
 
-  <div {!! $attributes->merge(['class' => "flex gap-4 justify-between overflow-hidden {$class} border shadow-md md:rounded-md {$py} {$px}"]) !!}>
+  <notify {!! $attributes->twMerge(['class' => "opacity-100 scale-100 translate-y-0 transition ease-out duration-400 flex gap-4 justify-between overflow-hidden {$class} border shadow-md rounded-full {$py} {$px} pointer-events-auto"]) !!}>
 
     <div class="flex items-center gap-4">
       <x-icon class="{{ $icon }}" />
       <p>{{ $message }}</p>
     </div>
 
-    <button @click="show = !show">
+    <button>
       <x-icon class="fas fa-times text-gray-900" />
     </button>
 
-  </div>
-</div>
+  </notify>
+</notify-wrap>
+
+@pushOnce('scripts')
+  <script type="module">
+    const Notify = {
+      close() {
+        $(this)
+          .removeClass('opacity-100 scale-100 translate-y-0')
+          .addClass('opacity-0 scale-80 -translate-y-24');
+        setTimeout(() => {
+          $(this).closest('notify-wrap').remove();
+        }, 400)
+      }
+    };
+
+    $(() => {
+      setTimeout(() => {
+        $('notify').each(Notify.close);
+      }, 5000)
+
+      $('notify button').click(function() {
+        $(this).closest('notify').each(Notify.close);
+      });
+    });
+  </script>
+@endPushOnce

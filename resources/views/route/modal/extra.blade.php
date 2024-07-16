@@ -20,7 +20,7 @@
     </x-form.section>
 
     <div class="flex justify-end">
-      <x-button.light x-on:click="$dispatch('close')">
+      <x-button.light close-modal>
         close
       </x-button.light>
     </div>

@@ -4,7 +4,7 @@
     "name": "K"
   },
   "resources/css/app.css": {
-    "file": "assets/app-CYSYbaeT.css",
+    "file": "assets/app-gK2c8AhI.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -77,7 +77,7 @@
     "src": "resources/images/stripe-powered.svg"
   },
   "resources/js/app.js": {
-    "file": "assets/app-CE2H0tD8.js",
+    "file": "assets/app-DPF8zPa6.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -89,7 +89,7 @@
     ]
   },
   "resources/js/editor.js": {
-    "file": "assets/editor-BxviE-V_.js",
+    "file": "assets/editor-BiPuwChu.js",
     "name": "editor",
     "src": "resources/js/editor.js",
     "isEntry": true
