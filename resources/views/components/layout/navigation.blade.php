@@ -152,29 +152,35 @@
 
     </div>
 
-    {{-- <div class="my-2 border-t border-gray-200"></div> --}}
+    @if (K::user()->isAdmin() || K::hasPosts())
+      <div class="my-2 border-t border-gray-200"></div>
 
-    {{-- <div class="space-y-1">
-      <x-nav.link :href="route('news.index')"
-        icon="fas fa-newspaper"
-        :active="request()->routeIs('news.index')">
-        News Articles
-      </x-nav.link>
+      <div class="space-y-1">
+        @if (K::hasPosts('news'))
+          <x-nav.link :href="route('news.index')"
+            icon="fas fa-newspaper"
+            :active="request()->routeIs('news.index')">
+            News Articles
+          </x-nav.link>
+        @endif
 
-      <x-nav.link :href="route('tips.index')"
-        icon="fas fa-messages-question"
-        :active="request()->routeIs('tips.index')">
-        Tips & Tricks
-      </x-nav.link>
+        @if (K::hasPosts('tips'))
+          <x-nav.link :href="route('tips.index')"
+            icon="fas fa-messages-question"
+            :active="request()->routeIs('tips.index')">
+            Tips & Tricks
+          </x-nav.link>
+        @endif
 
-      @if (K::user()->isAdmin())
-        <x-nav.link :href="route('post.creator')"
-          icon="fas fa-comment-plus"
-          :active="request()->routeIs('post.creator')">
-          Post Creator
-        </x-nav.link>
-      @endif
-    </div> --}}
+        @if (K::user()->isAdmin())
+          <x-nav.link :href="route('post.creator')"
+            icon="fas fa-comment-plus"
+            :active="request()->routeIs('post.creator')">
+            Post Creator
+          </x-nav.link>
+        @endif
+      </div>
+    @endif
 
     @auth
       <div class="my-2 border-t border-gray-200"></div>

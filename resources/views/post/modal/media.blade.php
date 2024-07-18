@@ -24,12 +24,14 @@
       <x-slot:content>
         <x-tab.content tab="0">
           <div class="min-h-72 flex flex-wrap justify-center gap-6 px-4 md:px-6">
-            @for ($i = 0; $i < 20; $i++)
-              <div class="cursor-pointer rounded-md border border-gray-300">
-                <img class="h-36 w-auto"
-                  src="@noImage" />
-              </div>
-            @endfor
+            @foreach (K::media() as $media)
+              <media-selector data-path="{{ $media->path }}"
+                data-src="{{ $media->url }}"
+                ref="selector">
+                <img class="h-36 w-auto cursor-pointer rounded-md border border-gray-300 transition-all [.active_&]:ring-2 [.active_&]:ring-indigo-500 [.active_&]:ring-offset-2"
+                  src="{{ $media->url }}" />
+              </media-selector>
+            @endForeach
           </div>
         </x-tab.content>
 
@@ -109,6 +111,21 @@
 
       {{-- submit --}}
       <div class="flex justify-end">
+
+        <x-button.dark class="bg-green-600 hover:bg-green-500 focus:bg-green-700"
+          copy-url
+          ref="copy"
+          close-modal>
+          copy
+        </x-button.dark>
+
+        <x-button.dark class="bg-blue-600 hover:bg-blue-500 focus:bg-blue-700"
+          select-img
+          ref="select"
+          close-modal>
+          select
+        </x-button.dark>
+
         <x-button.light close-modal>
           close
         </x-button.light>
@@ -172,6 +189,30 @@
           contentType: false,
           processData: false,
         });
+      });
+
+      $('tab-content').on('click', 'media-selector:not(.active)', function() {
+        const data = $(this).data();
+        $('media-selector').removeClass('active');
+        $(this).addClass('active');
+        $('[copy-url]').removeClass('hidden').data('src', data.src);
+        $('[select-img][input-name]').removeClass('hidden').data(data);
+      });
+
+      $('[copy-url]').on('click', function() {
+        const src = $(this).data('src');
+        navigator.clipboard.writeText(src).then(() => {
+          Notify.message('Copied URL to clipboard', 'info');
+        }, () => {
+          Notify.message('Failed to copy URL to clipboard', 'error');
+        });
+      });
+
+      $('[select-img]').on('click', function() {
+        const data = $(this).data(),
+          $el = $(`input[name=${$(this).attr('input-name')}]`);
+        $el.val(data.path);
+        $el.siblings('img').attr('src', data.src).addClass('object-cover');
       });
     });
   </script>

@@ -3,11 +3,14 @@
 namespace App\Helpers;
 
 use DateTime;
+use App\Models\Post;
 use App\Models\User;
 use NumberFormatter;
+use App\Models\Media;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Vite;
 
 class K {
@@ -623,5 +626,29 @@ class K {
 
     public static function class($value) {
         return get_class($value);
+    }
+
+    /**
+     * Get the posts.
+     * 
+     * @param string|null $type
+     * @param bool $live
+     */
+    public static function posts(string $type = null, bool $live = true) {
+        return Post::where('type', $type ? '=' : '!=', $type)->where('is_live', $live == null ? '!=' : '=', $live)->orderBy('created_at', 'desc')->get();
+    }
+
+    /**
+     * See if there are any posts by type.
+     * 
+     * @param string $type
+     * @return bool
+     */
+    public static function hasPosts(string $type = null): bool {
+        return self::posts($type)->count() != 0;
+    }
+
+    public static function media() {
+        return Media::orderBy('created_at', 'desc')->get();
     }
 }

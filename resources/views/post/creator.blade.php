@@ -173,7 +173,13 @@
         <x-form.wrap class="cursor-pointer"
           id="mediaPicker"
           value="Banner"
-          open-modal="media-picker">
+          open-modal="media-picker"
+          :data-modal="json_encode([
+              'selector.removeclass' => 'active',
+              'copy.addclass' => 'hidden',
+              'select.addclass' => 'hidden',
+              'select.input-name' => 'banner',
+          ])">
           <input name="banner"
             type="hidden">
           <img class="h-80 w-full rounded-md border border-gray-300"
@@ -183,6 +189,17 @@
 
       {{-- submit --}}
       <div class="col-span-3 flex justify-end">
+        <x-form.wrap value=" ">
+          <x-button.light open-modal="media-picker"
+            :data-modal="json_encode([
+                'selector.removeclass' => 'active',
+                'copy.addclass' => 'hidden',
+                'select.addclass' => 'hidden',
+                'select.input-name' => null,
+            ])"
+            size="md">Media Manager</x-button.light>
+        </x-form.wrap>
+
         <x-form.wrap value=" ">
           <x-button.dark size="md">Save</x-button.dark>
         </x-form.wrap>

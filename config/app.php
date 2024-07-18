@@ -188,6 +188,7 @@ return [
         'K' => App\Helpers\K::class,
         'Lists' => App\Helpers\Lists::class,
         'Msg' => App\Helpers\Msg::class,
+        // 'Posts' => App\Helpers\Posts::class,
     ])->toArray(),
 
 ];

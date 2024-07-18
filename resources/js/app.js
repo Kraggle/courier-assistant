@@ -93,9 +93,74 @@ const refreshAll = function() {
 };
 window.refreshAll = refreshAll;
 
+const Notify = {
+	type: {
+		success: {
+			class: 'bg-green-100 border-green-400 text-gray-800',
+			icon: 'far fa-check-circle text-green-700'
+		},
+		error: {
+			class: 'bg-red-100 border-red-400 text-gray-800',
+			icon: 'far fa-exclamation-triangle text-red-700'
+		},
+		info: {
+			class: 'bg-blue-100 border-blue-400 text-gray-800',
+			icon: 'far fa-info-circle text-blue-700'
+		},
+	},
+
+	init() {
+		this.type.message = this.type.success;
+		this.type.warning = this.type.error;
+		this.type.status = this.type.info;
+
+		this.$root = $('notify-box');
+		this.$blank = $('blank-notify notify-wrap', this.$root);
+		this.$slot = $('notify-slot', this.$root);
+
+		this.$root.on('click', 'button', function() {
+			$(this).closest('notify').each(Notify.close);
+		});
+
+		K.each(this.$root.data('messages'), (type, message) => {
+			this.message(message, type);
+		});
+	},
+
+	close() {
+		$(this).closest('notify-wrap').height(0);
+		$(this).removeClass('opacity-100 scale-100 translate-y-0')
+			.addClass('opacity-0 scale-80 -translate-y-24');
+		setTimeout(() => {
+			$(this).closest('notify-wrap').remove();
+		}, 1000)
+	},
+
+	message(message, type = 'info', timeout = 5000) {
+		if (!(type in this.type))
+			return;
+
+		const el = this.$blank.clone();
+		$('[icon]', el).addClass(this.type[type].icon);
+		$('notify', el).addClass(this.type[type].class);
+		$('message', el).text(message);
+
+		this.$slot.append(el);
+		const height = el.height();
+		el.height(0);
+
+		el.addClass('duration-500').height(height + 16);
+		$('notify', el).removeClass('opacity-0 scale-80 -translate-y-24')
+			.addClass('opacity-100 scale-100 translate-y-0');
+
+		setTimeout(() => {
+			this.close.call($('notify', el));
+		}, timeout);
+	}
+};
+window.Notify = Notify;
+
 $(() => {
+	Notify.init();
 	refreshAll();
-	// setTimeout(() => {
-	// 	Alpine.start();
-	// }, window.location.pathname == '/map' ? 1000 : 0);
 });

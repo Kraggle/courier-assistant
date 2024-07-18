@@ -40,5 +40,9 @@ class AppServiceProvider extends ServiceProvider {
         Blade::extend(function ($value) {
             return str_replace('@noImage', Vite::asset('resources/images/no-image.svg'), $value);
         });
+
+        Blade::if('isAdmin', function () {
+            return auth()->check() && auth()->user()->role == 'admin';
+        });
     }
 }

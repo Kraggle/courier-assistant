@@ -22,7 +22,7 @@
 
 <notify-wrap class="block w-full">
 
-  <notify {!! $attributes->twMerge(['class' => "opacity-100 scale-100 translate-y-0 transition ease-out duration-400 flex gap-4 justify-between overflow-hidden {$class} border shadow-md rounded-full {$py} {$px} pointer-events-auto"]) !!}>
+  <notify {!! $attributes->twMerge(['class' => "mb-4 opacity-100 scale-100 translate-y-0 transition ease-out duration-400 flex gap-4 justify-between overflow-hidden {$class} border shadow-md rounded-full {$py} {$px} pointer-events-auto"]) !!}>
 
     <div class="flex items-center gap-4">
       <x-icon class="{{ $icon }}" />

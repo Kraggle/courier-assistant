@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Helpers\K;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -36,6 +37,7 @@ class Post extends Model {
     protected $appends = [
         'thumbs_up',
         'thumbs_down',
+        'banner_url'
     ];
 
     /**
@@ -121,5 +123,23 @@ class Post extends Model {
     public function hasCategory(string|Category $category): bool {
         $category = $category instanceof Category ? $category->name : $category;
         return $this->categories->where('name', $category)->first() != null;
+    }
+
+    /**
+     * Check if the image exists.
+     * 
+     * @return bool
+     */
+    public function exists() {
+        return Storage::disk('gcs')->exists($this->banner);
+    }
+
+    /**
+     * Get the url for the image.
+     */
+    protected function bannerUrl(): Attribute {
+        return new Attribute(
+            get: fn () => $this->exists() ? Storage::url($this->banner) : ''
+        );
     }
 }

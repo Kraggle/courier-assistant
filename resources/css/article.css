@@ -6,6 +6,9 @@
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
+.cm-editor * {
+  gap: 0;
+}
 
 .content-article {
   --max-width: 690px;
