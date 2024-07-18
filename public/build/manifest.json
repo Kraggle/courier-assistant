@@ -4,17 +4,25 @@
     "name": "K"
   },
   "resources/css/app.css": {
-    "file": "assets/app-C2J0fb27.css",
+    "file": "assets/app-vfHrzOHK.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
-  "resources/images/bg-white.png": {
-    "file": "assets/bg-white-DPZ11Ve_.png",
-    "src": "resources/images/bg-white.png"
+  "resources/images/bg-1098.png": {
+    "file": "assets/bg-1098-DrLG-IyC.png",
+    "src": "resources/images/bg-1098.png"
   },
-  "resources/images/bg.png": {
-    "file": "assets/bg-DrLG-IyC.png",
-    "src": "resources/images/bg.png"
+  "resources/images/bg-250.png": {
+    "file": "assets/bg-250-DoQnVLD-.png",
+    "src": "resources/images/bg-250.png"
+  },
+  "resources/images/bg-white-1098.png": {
+    "file": "assets/bg-white-1098-DPZ11Ve_.png",
+    "src": "resources/images/bg-white-1098.png"
+  },
+  "resources/images/bg-white-250.png": {
+    "file": "assets/bg-white-250-CrB85HLO.png",
+    "src": "resources/images/bg-white-250.png"
   },
   "resources/images/flags/bg.svg": {
     "file": "assets/bg-36KQGGCT.svg",
