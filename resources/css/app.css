@@ -31,13 +31,13 @@ input[type="number"] {
 }
 
 .bg-pattern {
-    background-image: url("../images/bg-250.png");
+    background-image: url("/resources/images/bg-1098.png");
     background-repeat: repeat;
     background-size: 250px 250px;
 }
 
 .bg-pattern-light {
-    background-image: url("../images/bg-white-250.png");
+    background-image: url("/resources/images/bg-white-1098.png");
     background-repeat: repeat;
     background-size: 250px 250px;
 }
