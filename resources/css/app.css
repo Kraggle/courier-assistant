@@ -30,18 +30,6 @@ input[type="number"] {
     border-color: rgb(167, 139, 250);
 }
 
-.bg-pattern {
-    background-image: url("/resources/images/bg-1098.png");
-    background-repeat: repeat;
-    background-size: 250px 250px;
-}
-
-.bg-pattern-light {
-    background-image: url("/resources/images/bg-white-1098.png");
-    background-repeat: repeat;
-    background-size: 250px 250px;
-}
-
 select {
     background-position: right center;
 }

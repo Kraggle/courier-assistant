@@ -46,6 +46,20 @@
 </head>
 
 <body class="bg-gray-100 font-sans text-lg antialiased">
+  <style>
+    .bg-pattern {
+      background-image: url("{{ Vite::asset('resources/images/bg-1098.png') }}");
+      background-repeat: repeat;
+      background-size: 250px 250px;
+    }
+
+    .bg-pattern-light {
+      background-image: url("{{ Vite::asset('resources/images/bg-1098.png') }}");
+      background-repeat: repeat;
+      background-size: 250px 250px;
+    }
+  </style>
+
   <div class="bg-pattern flex min-h-screen flex-col gap-6 md:gap-8">
     <x-layout.navigation />
 
