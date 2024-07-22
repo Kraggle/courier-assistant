@@ -684,7 +684,7 @@ class K {
         for ($i = 1; $i <= 10; $i++) {
             if (in_array($i, $skip)) continue;
             $n = $i < 10 ? "0$i" : $i;
-            $banners->push(Vite::asset("/resources/images/banner-$n.jpg"));
+            $banners->push(Vite::asset("resources/images/banner-$n.jpg"));
         }
         return $banners->random();
     }
