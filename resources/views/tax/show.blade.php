@@ -5,7 +5,7 @@
 @endphp
 
 <x-layout.app title="tax view">
-  <x-section.one px="">
+  <x-section.one class="px-0 md:px-0">
     @define($tab = $year ?? 0)
     <x-tab.container :active="$tab">
       <x-slot:tabs>
@@ -30,8 +30,7 @@
             value="Claim Mileage?"
             :key="$key">
 
-            <x-form.toggle class="block w-full"
-              id="{{ $key }}"
+            <x-form.toggle id="{{ $key }}"
               name="{{ $key }}"
               ref="{{ $key }}"
               :checked="$tax->claim_miles" />

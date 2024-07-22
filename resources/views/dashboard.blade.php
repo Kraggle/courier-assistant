@@ -10,11 +10,12 @@
 
 <x-layout.app title="dashboard">
 
-  <x-section.two grid="grid-cols-1 lg:grid-cols-[auto_1fr]">
+  <x-section.two class="grid-cols-1 lg:grid-cols-[auto_1fr]">
     <x-slot:one
       class="flex justify-center gap-3 sm:gap-6">
       {{-- add route --}}
-      <x-button.icon id="addRoute"
+      <x-button.icon class="bg-orange-600 hover:bg-orange-700 focus:bg-orange-700 active:bg-orange-700"
+        id="addRoute"
         data-modal="{{ json_encode([
             'title.text' => Msg::add('route'),
             'form.action' => route('route.add'),
@@ -37,13 +38,13 @@
             'submit.text' => 'add',
         ]) }}"
         open-modal="add-route"
-        color="bg-orange-600 hover:bg-orange-700 focus:bg-orange-700 active:bg-orange-700"
         icon="fa-thin fa-compass">
         <span class="block">{{ Msg::add('route') }}</span>
       </x-button.icon>
 
       {{-- add refuel --}}
-      <x-button.icon id="addRefuel"
+      <x-button.icon class="bg-lime-600 hover:bg-lime-700 focus:bg-lime-700 active:bg-lime-700"
+        id="addRefuel"
         data-modal="{{ json_encode([
             'title.text' => Msg::add('refuel'),
             'form.action' => route('refuel.add', $vehicle->id ?? 1),
@@ -57,13 +58,13 @@
             'submit.text' => 'add',
         ]) }}"
         open-modal="add-refuel"
-        color="bg-lime-600 hover:bg-lime-700 focus:bg-lime-700 active:bg-lime-700"
         icon="fa-thin fa-gas-pump">
         <span class="block">{{ Msg::add('refuel') }}</span>
       </x-button.icon>
 
       {{-- add rate --}}
-      <x-button.icon id="addRate"
+      <x-button.icon class="bg-teal-600 hover:bg-teal-700 focus:bg-teal-700 active:bg-teal-700"
+        id="addRate"
         data-modal="{{ json_encode([
             'title.text' => Msg::add('rate'),
             'form.action' => route('rate.add'),
@@ -75,13 +76,13 @@
             'submit.text' => 'add',
         ]) }}"
         open-modal="add-rate"
-        color="bg-teal-600 hover:bg-teal-700 focus:bg-teal-700 active:bg-teal-700"
         icon="fa-thin fa-chart-simple">
         <span class="block">{{ Msg::add('rate') }}</span>
       </x-button.icon>
 
       {{-- add expense --}}
-      <x-button.icon id="addExpense"
+      <x-button.icon class="bg-blue-600 hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-700"
+        id="addExpense"
         data-modal="{{ json_encode([
             'title.text' => Msg::add('expense'),
             'form.action' => route('expense.add'),
@@ -101,7 +102,6 @@
             'submit.text' => 'add',
         ]) }}"
         open-modal="add-expense"
-        color="bg-blue-600 hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-700"
         icon="fa-thin fa-file-invoice">
         <span class="block">{{ Msg::add('expense') }}</span>
       </x-button.icon>
@@ -161,7 +161,7 @@
 
   </x-section.two>
 
-  <x-section.one px="">
+  <x-section.one class="px-0 md:px-0">
 
     @define($tab = request()->get('tab') ?? 0)
     <x-tab.container :active="$tab">

@@ -40,8 +40,7 @@
           :key="$key"
           help="The date of the refuel. This will be used to both sort the refuels and to find the most accurate cost per mile on your routes.">
 
-          <x-form.date class="block w-full"
-            id="{{ $key }}"
+          <x-form.date id="{{ $key }}"
             name="{{ $key }}"
             ref="{{ $key }}" />
 
@@ -54,8 +53,7 @@
           :key="$key"
           help="The reading from your odometer when you fill the tank. You have to completely fill the tank to get an accurate reading of how many miles since the last refill it cost to fill up.">
 
-          <x-form.text class="block w-full"
-            id="{{ $key }}"
+          <x-form.text id="{{ $key }}"
             name="{{ $key }}"
             type="number"
             ref="{{ $key }}"
@@ -70,8 +68,7 @@
           :key="$key"
           help="The amount the refuel cost. This has help to show the exact cost per mile since the last refuel.">
 
-          <x-form.text-prefix class="block w-full"
-            id="{{ $key }}"
+          <x-form.text-prefix id="{{ $key }}"
             name="{{ $key }}"
             type="number"
             ref="{{ $key }}"
@@ -103,8 +100,7 @@
         :key="$key"
         help="Add a photo of your receipt. This will be kept available to you for tax purposes.">
 
-        <x-form.image class="block w-full"
-          id="{{ $key }}"
+        <x-form.image id="{{ $key }}"
           name="{{ $key }}" />
 
       </x-form.wrap>

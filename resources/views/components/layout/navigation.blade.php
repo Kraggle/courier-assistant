@@ -157,17 +157,17 @@
 
       <div class="space-y-1">
         @if (K::hasPosts('news'))
-          <x-nav.link :href="route('news.index')"
+          <x-nav.link :href="route('news')"
             icon="fas fa-newspaper"
-            :active="request()->routeIs('news.index')">
+            :active="request()->routeIs('news')">
             News Articles
           </x-nav.link>
         @endif
 
         @if (K::hasPosts('tips'))
-          <x-nav.link :href="route('tips.index')"
+          <x-nav.link :href="route('tips')"
             icon="fas fa-messages-question"
-            :active="request()->routeIs('tips.index')">
+            :active="request()->routeIs('tips')">
             Tips & Tricks
           </x-nav.link>
         @endif

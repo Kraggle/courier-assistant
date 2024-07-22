@@ -57,8 +57,7 @@
           :key="$key"
           help="The date that you started working for this DSP. As you can add many, you will only be able to change anything on the latest one you have selected.">
 
-          <x-form.date class="block w-full"
-            id="{{ $key }}"
+          <x-form.date id="{{ $key }}"
             name="{{ $key }}" />
 
         </x-form.wrap>
@@ -92,8 +91,7 @@
           :key="$key"
           help="The name of your Delivery Service Provider. Please be accurate with this as anyone else searching for your DSP will want to find it easily. Also if there is any profanity found the DSP will be removed and you will loose any data added.">
 
-          <x-form.text class="block w-full"
-            id="{{ $key }}"
+          <x-form.text id="{{ $key }}"
             name="{{ $key }}" />
 
         </x-form.wrap>
@@ -104,8 +102,7 @@
           :key="$key"
           help="Amazons identifier for your Delivery Service Provider, you can ask your OSM for this if you don't know it. It's another way for other drivers to find the correct DSP.">
 
-          <x-form.text class="block w-full"
-            id="{{ $key }}"
+          <x-form.text id="{{ $key }}"
             name="{{ $key }}"
             placeholder="e.g. CLBT, LWTS, ROKL, GAMD" />
 
@@ -241,8 +238,7 @@
             :key="$key"
             help="The location of your depot, for instance this could be Chester, Liverpool, Warrington etc...">
 
-            <x-form.text class="block w-full"
-              id="{{ $key }}"
+            <x-form.text id="{{ $key }}"
               name="{{ $key }}"
               placeholder="e.g. Chester, Liverpool..." />
 
@@ -254,8 +250,7 @@
             :key="$key"
             help="Amazons identifier for your depot, you can ask your OSM for this if you don't know it. It's another way for other drivers to find the correct depot.">
 
-            <x-form.text class="block w-full"
-              id="{{ $key }}"
+            <x-form.text id="{{ $key }}"
               name="{{ $key }}"
               placeholder="e.g. DCE1, DXM4..." />
 
@@ -339,8 +334,7 @@
             :key="$key"
             help="The date that the rate is started from, just set your first day if you do not know that actual date it started.">
 
-            <x-form.date class="block w-full"
-              id="{{ $key }}"
+            <x-form.date id="{{ $key }}"
               name="{{ $key }}" />
 
           </x-form.wrap>
@@ -351,8 +345,7 @@
             :key="$key"
             help="The rate of the type you are adding.">
 
-            <x-form.text-prefix class="block w-full"
-              id="{{ $key }}"
+            <x-form.text-prefix id="{{ $key }}"
               name="{{ $key }}"
               type="number"
               step="0.0001">

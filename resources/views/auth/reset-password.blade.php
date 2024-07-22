@@ -22,8 +22,7 @@
       <x-form.wrap value="email"
         :key="$key">
 
-        <x-form.text class="block w-full"
-          id="{{ $key }}"
+        <x-form.text id="{{ $key }}"
           name="{{ $key }}"
           type="email"
           :value="old($key, $request->email)"
@@ -37,8 +36,7 @@
       <x-form.wrap value="new password"
         :key="$key">
 
-        <x-form.text class="block w-full"
-          id="{{ $key }}"
+        <x-form.text id="{{ $key }}"
           name="{{ $key }}"
           type="password"
           autocomplete="new-password" />
@@ -50,8 +48,7 @@
       <x-form.wrap value="confirm password"
         :key="$key">
 
-        <x-form.text class="block w-full"
-          id="{{ $key }}"
+        <x-form.text id="{{ $key }}"
           name="{{ $key }}"
           type="password"
           autocomplete="new-password" />

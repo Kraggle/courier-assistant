@@ -6,7 +6,7 @@
 
 <x-layout.app title="pay rates">
 
-  <x-section.one px="0">
+  <x-section.one class="px-0 md:px-0">
     <x-section.title class="px-4 md:px-6">
       <x-slot:title>
         {{ "$dsp->name " . 'pay rates' }}
@@ -14,7 +14,8 @@
 
       <x-slot:buttons>
 
-        <x-button.dark id="addRate"
+        <x-button.dark class="bg-violet-800 hover:bg-violet-700 focus:bg-violet-700 active:bg-violet-900"
+          id="addRate"
           data-modal="{{ json_encode([
               'title.text' => Msg::add('rate'),
               'form.action' => route('rate.add'),
@@ -25,8 +26,7 @@
               'destroy.addclass' => 'hidden',
               'submit.text' => 'add',
           ]) }}"
-          open-modal="add-rate"
-          color="bg-violet-800 hover:bg-violet-700 focus:bg-violet-700 active:bg-violet-900">
+          open-modal="add-rate">
           <span class="hidden sm:block">{{ Msg::add('rate') }}</span>
           <span class="block sm:hidden">add</span>
         </x-button.dark>

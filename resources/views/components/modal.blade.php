@@ -1,4 +1,4 @@
-@props(['show' => false, 'maxWidth' => '2xl', 'overflow' => 'overflow-y-auto'])
+@props(['show' => false, 'maxWidth' => '2xl'])
 
 @php
   $mw =
@@ -23,7 +23,7 @@
     <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
   </blank>
 
-  <modal {!! $attributes->merge(['class' => $mw . ' translate-y-48 opacity-0 scale-50 transform rounded-lg bg-white shadow-xl transition-all mx-auto w-full max-h-[calc(100%-2rem)] ' . $overflow]) !!}>
+  <modal {!! $attributes->twMerge(['class' => $mw . ' translate-y-48 opacity-0 scale-50 transform rounded-lg bg-white shadow-xl transition-all mx-auto w-full max-h-[calc(100%-2rem)] overflow-y-auto']) !!}>
     {{ $slot }}
   </modal>
 

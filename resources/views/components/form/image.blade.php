@@ -13,7 +13,7 @@
 
   {{-- the input to use --}}
 
-  <div class="grid grid-cols-2">
+  <div class="grid grid-cols-2 gap-0">
     <div class="{{ $btn_class }}">
 
       <input class="absolute inset-0 cursor-pointer opacity-0"
@@ -43,7 +43,7 @@
 @pushOnce('scripts')
   <script type="module">
     $(() => {
-      $('[image-root]').on('change', 'input', function() {
+      $('[image-root]').on('change', 'input[type=file]', function() {
         const file = this.files[0];
         if (!file) return;
 

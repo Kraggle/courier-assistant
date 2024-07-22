@@ -8,7 +8,7 @@
   $tags = $tags ?? false;
 @endphp
 
-<select {!! $attributes->merge(['id' => $id, 'class' => 'select-input']) !!}
+<select {!! $attributes->twMerge(['id' => $id, 'class' => 'select-input']) !!}
   multiple="multiple">
   {{ $options ?? $slot }}
 </select>
@@ -81,7 +81,7 @@
 @pushOnce('scripts')
   <script type="module">
     $(() => {
-      $('.required select').on('change', function() {
+      $('.required select[multiple]').on('change', function() {
         $(this).closest('.required')[$(this).val() ? 'addClass' : 'removeClass']('selected');
       });
     });

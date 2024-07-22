@@ -44,15 +44,14 @@
       </x-form.wrap>
 
       <x-button.dark x-on:click.prevent="$dispatch('open-modal', 'create-dsp')"
-        class="no-loader mt-2.5"
+        class="no-loader mt-2.5 bg-violet-700 hover:bg-violet-600 focus:bg-violet-600 active:bg-violet-800"
         id="createDSP"
         data-modal="{{ json_encode([
             'name.value' => old('name', ''),
             'identifier.value' => old('identifier', ''),
             'in_hand.value' => old('in_hand', 2),
             'pay_day.value' => old('pay_day', 4),
-        ]) }}"
-        color="bg-violet-700 hover:bg-violet-600 focus:bg-violet-600 active:bg-violet-800">
+        ]) }}">
         create dsp
       </x-button.dark>
     </div>
@@ -63,8 +62,7 @@
       :key="$key"
       help="The date that you started working for this DSP. As you can add many, you will only be able to change anything on the latest one you have selected.">
 
-      <x-form.date class="block w-full"
-        id="{{ $key }}"
+      <x-form.date id="{{ $key }}"
         name="{{ $key }}"
         ref="{{ $key }}" />
 

@@ -60,7 +60,7 @@
     </header>
 
     <main class="flex w-full flex-1 flex-col items-center sm:justify-center">
-      <div {!! $attributes->merge(['class' => "$maxWidth $padding transform rounded-lg bg-white shadow-xl transition-all justify w-[calc(100%_-_2rem)]"]) !!}>
+      <div {!! $attributes->twMerge(['class' => "$maxWidth $padding transform rounded-lg bg-white shadow-xl transition-all justify w-[calc(100%_-_2rem)]"]) !!}>
         {{ $slot }}
       </div>
     </main>

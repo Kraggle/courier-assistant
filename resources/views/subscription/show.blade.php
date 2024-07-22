@@ -6,9 +6,8 @@
 
 <x-layout.app title="subscribe"
   :center="true">
-  <x-section.one maxWidth="xl"
-    px=""
-    py="">
+  <x-section.one class="p-0 md:p-0"
+    maxWidth="xl">
 
     <div class="flex flex-col gap-4 text-center text-lg">
 
@@ -42,8 +41,8 @@
 
         <div class="flex">
           <x-button.dark class="grow justify-center"
+            class="bg-orange-600 text-2xl hover:bg-orange-500 focus:bg-orange-500 active:bg-orange-700"
             open-modal="stripe-pay"
-            color="bg-orange-600 text-2xl hover:bg-orange-500 focus:bg-orange-500 active:bg-orange-700"
             size="md">
             try it free
           </x-button.dark>
@@ -53,11 +52,10 @@
     </div>
 
     @push('modals')
-      <x-modal class="relative"
+      <x-modal class="relative overflow-auto"
         name="stripe-pay"
         maxWidth="sm"
-        help-root
-        overflow="">
+        help-root>
 
         <img class="absolute bottom-0 left-3 z-50 w-28 translate-y-1/2 rounded-md bg-white"
           src="{{ Vite::asset('resources/images/stripe-powered.svg') }}"
@@ -72,8 +70,8 @@
           <div id="payment-element"></div>
 
           <div class="align-center flex justify-end">
-            <x-button.dark id="payment-button"
-              color="bg-violet-800 text-2xl hover:bg-violet-700 focus:bg-violet-700 active:bg-violet-900 no-loader relative">
+            <x-button.dark class="no-loader relative bg-violet-800 text-2xl hover:bg-violet-700 focus:bg-violet-700 active:bg-violet-900"
+              id="payment-button">
               <span class="text opacity-100">subscribe</span>
               <div class="loader absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0"
                 role="status">

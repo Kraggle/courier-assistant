@@ -1,4 +1,4 @@
-@props(['py' => 'py-3 md:py-5', 'px' => 'px-4 md:px-6', 'maxWidth' => '7xl'])
+@props(['maxWidth' => '7xl'])
 
 @php
   $maxWidth = [
@@ -17,7 +17,7 @@
 @endphp
 
 <div class="{{ $maxWidth }} mx-auto w-full md:px-8">
-  <div {!! $attributes->merge(['class' => "overflow-hidden bg-white shadow-sm md:rounded-md {$py} {$px} w-full"]) !!}>
+  <div {!! $attributes->twMerge(['class' => 'overflow-hidden bg-white shadow-sm md:rounded-md py-3 md:py-5 px-4 md:px-6 w-full']) !!}>
     {{ $slot }}
   </div>
 </div>

@@ -1,6 +1,6 @@
 @props(['align' => 'left', 'width' => '32', 'contentClasses' => 'py-1 bg-white'])
 
-<div {{ $attributes->merge(['class' => '']) }}>
+<div {{ $attributes->twMerge(['class' => '']) }}>
   <x-dropdown.wrap :align="$align"
     :width="$width"
     :contentClasses="$contentClasses">

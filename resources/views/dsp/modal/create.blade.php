@@ -22,8 +22,7 @@
         :key="$key"
         help="The name of your Delivery Service Provider. Please be accurate with this as anyone else searching for your DSP will want to find it easily. Also if there is any profanity found the DSP will be removed and you will loose any data added.">
 
-        <x-form.text class="block w-full"
-          id="{{ $key }}"
+        <x-form.text id="{{ $key }}"
           name="{{ $key }}"
           ref="{{ $key }}" />
 
@@ -35,8 +34,7 @@
         :key="$key"
         help="Amazons identifier for your Delivery Service Provider, you can ask your OSM for this if you don't know it. It's another way for other drivers to find the correct DSP.">
 
-        <x-form.text class="block w-full"
-          id="{{ $key }}"
+        <x-form.text id="{{ $key }}"
           name="{{ $key }}"
           ref="{{ $key }}"
           placeholder="e.g. CLBT, LWTS, ROKL, GAMD" />
@@ -51,8 +49,7 @@
         :key="$key"
         help="How many weeks after you have worked before you are paid, this is usually 2 week, but your DSP may be different.">
 
-        <x-form.text class="block w-full"
-          id="{{ $key }}"
+        <x-form.text id="{{ $key }}"
           name="{{ $key }}"
           type="number"
           ref="{{ $key }}" />

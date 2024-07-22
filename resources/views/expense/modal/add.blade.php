@@ -53,8 +53,7 @@
             :key="$key"
             help="The date of the expense.">
 
-            <x-form.date class="block w-full"
-              id="{{ $key }}_expense"
+            <x-form.date id="{{ $key }}_expense"
               name="{{ $key }}"
               ref="{{ $key }}" />
 
@@ -67,8 +66,7 @@
             :key="$key"
             help="The date to end the recurring expense.">
 
-            <x-form.date class="block w-full"
-              id="{{ $key }}"
+            <x-form.date id="{{ $key }}"
               name="{{ $key }}"
               ref="{{ $key }}" />
 
@@ -109,8 +107,7 @@
           :key="$key"
           help="What the expense was, only helpful for your records.">
 
-          <x-form.text class="block w-full"
-            id="{{ $key }}"
+          <x-form.text id="{{ $key }}"
             name="{{ $key }}"
             ref="{{ $key }}"
             placeholder="What was this for?" />
@@ -124,8 +121,7 @@
           :key="$key"
           help="The cost of the expense. Will help with expense calculation for taxes.">
 
-          <x-form.text-prefix class="block w-full"
-            id="{{ $key }}"
+          <x-form.text-prefix id="{{ $key }}"
             name="{{ $key }}"
             type="number"
             ref="{{ $key }}"
@@ -172,8 +168,7 @@
               :key="$key"
               :help="''">
 
-              <x-form.text class="block w-full"
-                id="{{ $key }}"
+              <x-form.text id="{{ $key }}"
                 name="{{ $key }}"
                 type="number"
                 ref="{{ $key }}"
@@ -240,8 +235,7 @@
           :key="$key"
           help="Add a photo of your receipt. This will be kept available to you for tax purposes.">
 
-          <x-form.image class="block w-full"
-            id="{{ $key }}"
+          <x-form.image id="{{ $key }}"
             name="{{ $key }}" />
 
         </x-form.wrap>

@@ -1,7 +1,7 @@
 @define($refuels = $vehicle->refuels)
 
 <x-layout.app title="refuels">
-  <x-section.one px="">
+  <x-section.one class="px-0 md:px-0">
 
     @define($tab = $vehicle->id ?? 0)
     <x-tab.container :active="$tab">
@@ -20,7 +20,8 @@
       </x-slot>
 
       <x-slot:button>
-        <x-button.dark id="addRefuel"
+        <x-button.dark class="bg-violet-800 hover:bg-violet-700 focus:bg-violet-700 active:bg-violet-900"
+          id="addRefuel"
           data-modal="{{ json_encode([
               'title.text' => Msg::add('refuel'),
               'form.action' => route('refuel.add', $vehicle->id),
@@ -33,8 +34,7 @@
               'destroy.addclass' => 'hidden',
               'submit.text' => 'add',
           ]) }}"
-          open-modal="add-refuel"
-          color="bg-violet-800 hover:bg-violet-700 focus:bg-violet-700 active:bg-violet-900">
+          open-modal="add-refuel">
           <span class="hidden sm:block">{{ Msg::add('refuel') }}</span>
           <span class="block sm:hidden">add</span>
         </x-button.dark>

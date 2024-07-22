@@ -20,8 +20,7 @@
       <x-form.wrap value="email"
         :key="$key">
 
-        <x-form.text class="block w-full"
-          id="{{ $key }}"
+        <x-form.text id="{{ $key }}"
           name="{{ $key }}"
           type="email"
           :value="old($key, env('TEST_EMAIL', ''))"
@@ -35,8 +34,7 @@
       <x-form.wrap value="password"
         :key="$key">
 
-        <x-form.text class="block w-full"
-          id="{{ $key }}"
+        <x-form.text id="{{ $key }}"
           name="{{ $key }}"
           type="password"
           :value="env('TEST_PASSWORD', '')"

@@ -4,12 +4,10 @@
   $gap = $attributes->has('gap') ? $attributes->get('gap') : 'gap-4 md:gap-6';
 @endphp
 
-<div {!! $attributes->merge(['class' => 'relative']) !!}>
+<div {!! $attributes->twMerge(['class' => 'relative']) !!}>
   @if ($label)
     <div class="relative h-[0.75rem]">
-      <x-form.label class="absolute left-2 px-1 before:absolute before:left-0 before:right-0 before:top-1/2 before:z-[-1] before:h-[5px] before:-translate-y-1/2 before:bg-white before:content-['']"
-        text="text-base"
-        weight="font-semibold"
+      <x-form.label class="absolute left-2 px-1 text-base font-semibold before:absolute before:left-0 before:right-0 before:top-1/2 before:z-[-1] before:h-[5px] before:-translate-y-1/2 before:bg-white before:content-['']"
         :value="$label" />
     </div>
   @endif

@@ -758,6 +758,18 @@ const K = {
 			return "fifth";
 		}
 		return "";
+	},
+
+	/**
+	 * Convert a string to a slug.
+	 * 
+	 * @param {string} string The string to convert.
+	 */
+	toSlug(string) {
+		return string.toLowerCase()
+			.replace(/ /g, '-')
+			.replace(/[^\w-]+/g, '')
+			.replace(/-+/g, '-');
 	}
 };
 

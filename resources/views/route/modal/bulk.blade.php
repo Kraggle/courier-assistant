@@ -32,8 +32,7 @@
         :key="$key"
         left="left-[5.75rem]">
 
-        <x-form.file class="block w-full"
-          id="{{ $key }}"
+        <x-form.file id="{{ $key }}"
           name="{{ $key }}"
           ref="file"
           accept="text/csv" />
@@ -45,7 +44,8 @@
       <x-form.wrap value="depot"
         :key="$key">
 
-        <x-form.select name="{{ $key }}"
+        <x-form.select id="{{ $key }}"
+          name="{{ $key }}"
           ref="{{ $key }}"
           placeholder="Please select...">
 

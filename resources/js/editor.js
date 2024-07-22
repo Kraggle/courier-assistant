@@ -2,6 +2,7 @@ import { basicSetup, EditorView } from 'codemirror';
 import { EditorState, Compartment } from '@codemirror/state';
 import { html } from '@codemirror/lang-html';
 import { barf } from 'thememirror';
+import K from './K.js'
 
 let language = new Compartment, tabSize = new Compartment
 
@@ -34,6 +35,19 @@ view.dispatch({
 
 $(() => {
 	// console.log(CodeMirror);
+
+	const $title = $('#title'),
+		$slug = $('#slug');
+
+	$title.on('input', function() {
+		if ($slug.hasClass('user-slug')) return;
+
+		$slug.val(K.toSlug(($(this).val() || '').toString()));
+	});
+
+	$slug.on('keyup', function() {
+		$(this).addClass('user-slug');
+	});
 });
 
 // document.addEventListener("trix-before-initialize", () => {

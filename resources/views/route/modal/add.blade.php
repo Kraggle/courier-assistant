@@ -84,8 +84,7 @@
       :key="$key"
       help="The date you worked the route.">
 
-      <x-form.date class="block w-full"
-        id="{{ $key }}"
+      <x-form.date id="{{ $key }}"
         name="{{ $key }}"
         ref="{{ $key }}"
         :value="old($key)" />
@@ -100,8 +99,7 @@
         :key="$key"
         help="The time you were there to load your vehicle.">
 
-        <x-form.time class="block w-full"
-          id="{{ $key }}"
+        <x-form.time id="{{ $key }}"
           name="{{ $key }}"
           ref="{{ $key }}"
           placeholder="Select your start time..."
@@ -115,8 +113,7 @@
         :key="$key"
         help="Set this as the time you do or should arrive back at the depot. This makes it more accurate for hourly rates.">
 
-        <x-form.time class="block w-full"
-          id="{{ $key }}"
+        <x-form.time id="{{ $key }}"
           name="{{ $key }}"
           ref="{{ $key }}"
           :value="old($key)"
@@ -189,8 +186,7 @@
         :key="$key"
         help="Once you receive your invoice enter the mileage amazon have paid you for the route. This shows an accurate total for earnings when coupled with the fuel rate for the week.">
 
-        <x-form.text class="block w-full"
-          id="{{ $key }}"
+        <x-form.text id="{{ $key }}"
           name="{{ $key }}"
           type="number"
           ref="{{ $key }}"
@@ -205,8 +201,7 @@
         :key="$key"
         help="Add any bonuses or subtractions to this input, it will calculate correctly for the total for the route.">
 
-        <x-form.text-prefix class="block w-full"
-          id="{{ $key }}"
+        <x-form.text-prefix id="{{ $key }}"
           name="{{ $key }}"
           type="number"
           ref="{{ $key }}"
@@ -225,8 +220,7 @@
         :key="$key"
         help="You you claim VAT from amazon mark this as Yes! It will calculate the extra pay for you.">
 
-        <x-form.toggle class="block w-full"
-          id="{{ $key }}"
+        <x-form.toggle id="{{ $key }}"
           name="{{ $key }}"
           ref="{{ $key }}"
           :value="old($key)" />
@@ -241,8 +235,7 @@
         :key="$key"
         help="Will give you a better result for your stops per hour. This is subtracted from the total time of your route before dividing by stops.">
 
-        <x-form.text class="block w-full"
-          id="{{ $key }}"
+        <x-form.text id="{{ $key }}"
           name="{{ $key }}"
           type="number"
           ref="{{ $key }}"
@@ -256,8 +249,7 @@
         :key="$key"
         help="This is totally optional, but it will show you your stops/locations per hour and give you an overall average.">
 
-        <x-form.text class="block w-full"
-          id="{{ $key }}"
+        <x-form.text id="{{ $key }}"
           name="{{ $key }}"
           type="number"
           ref="{{ $key }}"
@@ -273,8 +265,7 @@
       :key="$key"
       help="You may want to remind yourself of something about this route. You can write that here.">
 
-      <x-form.text class="block w-full"
-        id="{{ $key }}"
+      <x-form.text id="{{ $key }}"
         name="{{ $key }}"
         ref="{{ $key }}"
         :value="old($key)" />

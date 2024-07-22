@@ -21,8 +21,7 @@
       <x-form.wrap value="password"
         :key="$key">
 
-        <x-form.text class="block w-full"
-          id="{{ $key }}"
+        <x-form.text id="{{ $key }}"
           name="{{ $key }}"
           type="password"
           autocomplete="current-password" />

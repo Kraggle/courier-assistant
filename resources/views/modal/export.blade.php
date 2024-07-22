@@ -25,9 +25,9 @@
         filename="">
         @csrf
 
-        <x-button.dark id="exportBtn"
-          close-modal
-          color="no-loader bg-green-700 hover:bg-green-600 focus:bg-green-600 active:bg-green-800">
+        <x-button.dark class="no-loader bg-green-700 hover:bg-green-600 focus:bg-green-600 active:bg-green-800"
+          id="exportBtn"
+          close-modal>
           export
         </x-button.dark>
 

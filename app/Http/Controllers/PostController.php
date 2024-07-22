@@ -15,30 +15,52 @@ class PostController extends FilesController {
     /**
      * Display a listing of the news.
      * 
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function newsIndex() {
-        return view('post.index', ['type' => 'news']);
-    }
-
-    /**
-     * Display a news post.
-     * 
-     * @param string  $slug
-     * 
-     * @return \Illuminate\Http\Response
-     */
-    public function showNews(string $slug) {
-        return view('post.show', ['type' => 'news', 'slug' => $slug]);
+    public function news(Request $request) {
+        return view('post.index', [
+            'type' => 'news',
+            'search' => $request->input('search', null),
+            'page' => $request->input('page', 1),
+        ]);
     }
 
     /**
      * Display a listing of the tips.
      * 
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function tipsIndex() {
-        return view('post.index', ['type' => 'tips']);
+    public function tips(Request $request) {
+        return view('post.index', [
+            'type' => 'tips',
+            'search' => $request->input('search', null),
+            'page' => $request->input('page', 1),
+        ]);
+    }
+
+    /**
+     * Get a listing of posts.
+     * 
+     * @param Request $request
+     * @return string
+     */
+    public function get(Request $request) {
+        $type = $request->input('type', null);
+        $search = $request->input('search', null);
+        $and = $request->input('and', true);
+        $live = $request->input('live', true);
+        $page = $request->input('page', 1);
+        $limit = $request->input('limit', 10);
+
+        $posts = K::posts($type, $search, $and, $live, $page, $limit);
+        $count = K::posts($type, $search, $and, $live, $page, 0)->count();
+
+        return view('post.posts', [
+            'posts' => $posts,
+            'count' => $count
+        ])->render();
     }
 
     /**
@@ -48,8 +70,9 @@ class PostController extends FilesController {
      * 
      * @return \Illuminate\Http\Response
      */
-    public function showPost(string $slug) {
-        return view('post.show', ['type' => 'tips', 'slug' => $slug]);
+    public function post(string $slug) {
+        $post = Post::where('slug', $slug)->first();
+        return view('post.show', ['type' => $post->type, 'post' => $post]);
     }
 
     /**
@@ -102,7 +125,7 @@ class PostController extends FilesController {
             'slug' => ['required', 'string', 'unique:posts'],
             'title' => ['required', 'string'],
             'type' => ['required', 'string'],
-            'banner' => 'string',
+            'banner' => 'nullable|string',
             'categories' => 'array',
             'tags' => 'array',
             'content' => 'string',
@@ -131,7 +154,7 @@ class PostController extends FilesController {
             'slug' => ['required', 'string'],
             'title' => ['required', 'string'],
             'type' => ['required', 'string'],
-            'banner' => 'string',
+            'banner' => 'nullable|string',
             'categories' => 'array',
             'tags' => 'array',
             'content' => 'string',

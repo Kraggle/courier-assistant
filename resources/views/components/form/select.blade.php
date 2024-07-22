@@ -7,7 +7,7 @@
   $placeholder = $placeholder ?? false;
 @endphp
 
-<select {!! $attributes->merge(['id' => $id, 'class' => 'select-input']) !!}>
+<select {!! $attributes->twMerge(['id' => $id, 'class' => 'select-input']) !!}>
   {{ $options ?? $slot }}
 </select>
 
@@ -77,7 +77,7 @@
 @pushOnce('scripts')
   <script type="module">
     $(() => {
-      $('.required select').on('change', function() {
+      $('.required select:not([multiple])').on('change', function() {
         $(this).closest('.required')[$(this).val() ? 'addClass' : 'removeClass']('selected');
       });
     });

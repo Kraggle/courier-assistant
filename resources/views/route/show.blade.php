@@ -5,7 +5,7 @@
 @endphp
 
 <x-layout.app title="routes">
-  <x-section.one px="">
+  <x-section.one class="px-0 md:px-0">
     <x-section.title class="px-4 md:px-6">
       <x-slot:title>
         routes
@@ -13,7 +13,8 @@
 
       <x-slot:buttons>
 
-        <x-button.dark id="addRoute"
+        <x-button.dark class="bg-violet-800 hover:bg-violet-700 focus:bg-violet-700 active:bg-violet-900"
+          id="addRoute"
           data-modal="{{ json_encode([
               'title.text' => Msg::add('route'),
               'form.action' => route('route.add'),
@@ -35,8 +36,7 @@
               'destroy.addclass' => 'hidden',
               'submit.text' => 'add',
           ]) }}"
-          open-modal="add-route"
-          color="bg-violet-800 hover:bg-violet-700 focus:bg-violet-700 active:bg-violet-900">
+          open-modal="add-route">
           <span class="hidden sm:block">{{ Msg::add('route') }}</span>
           <span class="block sm:hidden">add</span>
         </x-button.dark>
@@ -102,10 +102,11 @@
       @if (!$user->hasRoutes())
         <div class="px-6 pt-6 text-center">{{ Msg::noResults('routes') }}</div>
       @else
-        <x-loader class="hidden pb-6 pt-12"
+        <x-loader class="pb-6 pt-12"
           id="spinner"
+          style="display: none;"
           size="4"
-          color="gray-500" />
+          color="bg-gray-500" />
       @endif
     </div>
   </x-section.one>
@@ -140,7 +141,7 @@
           if (!$('tr:last-child', $el).isInViewport()) return;
           if (loading) return;
           loading = true;
-          $spinner.removeClass('hidden');
+          $spinner.show();
 
           const date = $el.find('tr:last-of-type').data('date');
 
@@ -153,7 +154,7 @@
             },
             success: function(data) {
               $el.append(data);
-              $spinner.addClass('hidden');
+              $spinner.hide();
               refreshAll();
               loading = false;
             }

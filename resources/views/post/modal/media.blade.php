@@ -58,7 +58,6 @@
               :key="$key">
 
               <x-form.text class="w-full"
-                type="number"
                 :id="$key"
                 :name="$key"
                 placeholder="" />
@@ -70,7 +69,6 @@
               :key="$key">
 
               <x-form.text class="w-full"
-                type="number"
                 :id="$key"
                 :name="$key"
                 placeholder="" />
@@ -138,7 +136,7 @@
 @pushOnce('scripts')
   <script type="module">
     $(() => {
-      $('[image-root]').on('change', 'input', function() {
+      $('[image-root]').on('change', 'input[type=file]', function() {
         const file = this.files[0];
         if (!file) return;
 

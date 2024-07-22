@@ -33,8 +33,7 @@
         value="Title"
         :key="$key">
 
-        <x-form.text class="block w-full"
-          :id="$key"
+        <x-form.text :id="$key"
           :name="$key"
           :value="old($key, $post->title ?? '')"
           :ref="$key" />
@@ -47,8 +46,7 @@
         value="Slug"
         :key="$key">
 
-        <x-form.text class="block w-full"
-          :id="$key"
+        <x-form.text :id="$key"
           :name="$key"
           :value="old($key, $post->slug ?? '')"
           :ref="$key" />
@@ -60,8 +58,7 @@
       <x-form.wrap value="Post type"
         :key="$key">
 
-        <x-form.select class="block w-full"
-          id="{{ $key }}"
+        <x-form.select id="{{ $key }}"
           name="{{ $key }}"
           value="{{ 'tips' }}"
           ref="{{ $key }}"
@@ -86,8 +83,7 @@
         <x-form.wrap value="Categories"
           :key="$key">
 
-          <x-form.multiselect class="block w-full"
-            id="{{ $key }}"
+          <x-form.multiselect id="{{ $key }}"
             name="{{ $key }}[]"
             value="{{ 'tips' }}"
             ref="{{ $key }}"
@@ -122,8 +118,7 @@
         <x-form.wrap value="Tags"
           :key="$key">
 
-          <x-form.multiselect class="block w-full"
-            id="{{ $key }}"
+          <x-form.multiselect id="{{ $key }}"
             name="{{ $key }}[]"
             value="{{ 'tips' }}"
             ref="{{ $key }}"
@@ -158,8 +153,7 @@
         <x-form.wrap value="Publish"
           :key="$key">
 
-          <x-form.toggle class="block w-full"
-            id="{{ $key }}"
+          <x-form.toggle id="{{ $key }}"
             name="{{ $key }}"
             ref="{{ $key }}"
             :checked="old($key, $post->is_live ?? 0)" />
@@ -168,8 +162,7 @@
 
       </div>
 
-      <div class="col-span-3"
-        image-root>
+      <div class="col-span-3">
         <x-form.wrap class="cursor-pointer"
           id="mediaPicker"
           value="Banner"
@@ -187,8 +180,20 @@
         </x-form.wrap>
       </div>
 
-      {{-- submit --}}
-      <div class="col-span-3 flex justify-end">
+      <div>
+        @if ($editmode)
+          <x-form.wrap value=" ">
+            <x-button.dark class=""
+              :href="route('post', $post->slug)"
+              size="md"
+              target="_blank">
+              Preview
+            </x-button.dark>
+          </x-form.wrap>
+        @endif
+      </div>
+
+      <div class="col-span-2 flex justify-end">
         <x-form.wrap value=" ">
           <x-button.light open-modal="media-picker"
             :data-modal="json_encode([
@@ -225,7 +230,3 @@
 
   @include('post.modal.media')
 </x-layout.app>
-
-@push('scripts')
-  <script type="module"></script>
-@endpush

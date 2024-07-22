@@ -1,1 +1,1 @@
-<i {{ $attributes->merge(['class' => '', 'aria-hidden' => 'true']) }}></i>
+<i {{ $attributes->twMerge(['class' => '', 'aria-hidden' => 'true']) }}></i>

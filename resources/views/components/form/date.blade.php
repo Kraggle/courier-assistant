@@ -13,7 +13,7 @@
   data-dd-opt-default-date="{{ $date }}"
   type="date"
   tabindex="0"
-  {!! $attributes->merge(['class' => 'date-input border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'])->except(['id', 'date', 'name']) !!} />
+  {!! $attributes->twMerge(['class' => 'w-full block date-input border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'])->except(['id', 'date', 'name']) !!} />
 
 <style>
   :root {

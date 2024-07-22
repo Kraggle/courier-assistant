@@ -27,6 +27,7 @@ class RouteController extends FilesController {
      * @return string
      */
     public function get(Request $request) {
+        /* TODO:: make sure this works with a gap of more than 4 weeks */
         $user = K::user();
 
         $date = K::date($request->date);

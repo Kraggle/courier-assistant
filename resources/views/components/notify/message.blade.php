@@ -1,4 +1,4 @@
-@props(['py' => 'py-2 md:py-3', 'px' => 'px-3 md:px-4', 'type' => 'status', 'message'])
+@props(['type' => 'status', 'message'])
 
 @php
   switch ($type) {
@@ -20,9 +20,9 @@
   }
 @endphp
 
-<notify-wrap class="block w-full">
+<notify-wrap>
 
-  <notify {!! $attributes->twMerge(['class' => "mb-4 opacity-100 scale-100 translate-y-0 transition ease-out duration-400 flex gap-4 justify-between overflow-hidden {$class} border shadow-md rounded-full {$py} {$px} pointer-events-auto"]) !!}>
+  <notify {!! $attributes->twMerge(['class' => "mb-4 opacity-100 scale-100 translate-y-0 transition ease-out duration-400 flex gap-4 justify-between overflow-hidden {$class} border shadow-md rounded-full py-2 md:py-3 px-3 md:px-4 pointer-events-auto"]) !!}>
 
     <div class="flex items-center gap-4">
       <x-icon class="{{ $icon }}" />

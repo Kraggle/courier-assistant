@@ -5,7 +5,7 @@
 
 <x-layout.app title="Your DSPs">
 
-  <x-section.one px="0">
+  <x-section.one class="px-0 md:px-0">
     <x-section.title class="px-4 md:px-6">
       <x-slot:title>
         Delivery Service Providers
@@ -13,7 +13,8 @@
 
       <x-slot:buttons>
 
-        <x-button.dark id="addDSP"
+        <x-button.dark class="bg-violet-800 hover:bg-violet-700 focus:bg-violet-700 active:bg-violet-900"
+          id="addDSP"
           data-modal="{{ json_encode([
               'title.text' => 'Select your DSP',
               'form.action' => route('dsp.attach'),
@@ -23,8 +24,7 @@
               'destroy.addclass' => 'hidden',
               'submit.text' => 'select',
           ]) }}"
-          open-modal="add-dsp"
-          color="bg-violet-800 hover:bg-violet-700 focus:bg-violet-700 active:bg-violet-900">
+          open-modal="add-dsp">
           <span class="hidden sm:block">{{ Msg::add('DSP') }}</span>
           <span class="block sm:hidden">add</span>
         </x-button.dark>

@@ -14,8 +14,7 @@
       <x-form.wrap value="location"
         :key="$key">
 
-        <x-form.text class="block w-full"
-          id="{{ $key }}"
+        <x-form.text id="{{ $key }}"
           name="{{ $key }}"
           ref="{{ $key }}"
           placeholder="e.g. Chester, Liverpool..." />
@@ -27,8 +26,7 @@
       <x-form.wrap value="identifier"
         :key="$key">
 
-        <x-form.text class="block w-full"
-          id="{{ $key }}"
+        <x-form.text id="{{ $key }}"
           name="{{ $key }}"
           ref="{{ $key }}"
           placeholder="e.g. DCE1, DXM4..." />

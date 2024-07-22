@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\User;
 use NumberFormatter;
 use App\Models\Media;
+use HighSolutions\LaravelSearchy\Facades\Searchy;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\UploadedFile;
@@ -48,19 +49,14 @@ class K {
 
         foreach ($values as $value) {
             if (in_array(gettype($value), ['array', 'object', 'boolean', 'NULL']))
-                error_log(json_encode($value, JSON_PRETTY_PRINT));
+                error_log(htmlspecialchars(json_encode($value, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG)));
             else
                 error_log($value);
         }
     }
 
     public static function print(...$values) {
-        foreach ($values as $value) {
-            if (in_array(gettype($value), ['array', 'object', 'boolean', 'NULL']))
-                error_log(json_encode($value, JSON_PRETTY_PRINT));
-            else
-                error_log($value);
-        }
+        self::log(...$values);
     }
 
     public static function makeId($length = 10) {
@@ -631,11 +627,34 @@ class K {
     /**
      * Get the posts.
      * 
-     * @param string|null $type
-     * @param bool $live
+     * @param string|null $type The type of posts to get. Default is null for all types.
+     * @param string|null $search The search query. Default is null for no search.
+     * @param bool $and Wether to perform an AND or OR search. Default is true for AND.
+     * @param bool $live Show only live posts. Default is true for live posts.
+     * @param int|null $page The page number for pagination. Default is null for no pagination.
+     * @param int|null $limit The number of posts to return per page. Default is 10
+     * @return Collection of posts.
      */
-    public static function posts(string $type = null, bool $live = true) {
-        return Post::where('type', $type ? '=' : '!=', $type)->where('is_live', $live == null ? '!=' : '=', $live)->orderBy('created_at', 'desc')->get();
+    public static function posts(string $type = null, string $search = null, bool $and = true, bool $live = true, int $page = null, int $limit = 10) {
+        $posts = Post::where('type', $type ? '=' : '!=', $type)->where('is_live', !$live ? '!=' : '=', $live)->orderBy('created_at', 'desc')->get();
+
+        if ($search) {
+            $terms = explode(' ', $search);
+            $posts = $posts->filter(function ($post) use ($terms, $and) {
+                $x = 0;
+                foreach ($terms as $term)
+                    if (Str::contains($post->search_index, $term, true))
+                        $x++;
+                if (($and && $x == count($terms)) || (!$and && $x > 0))
+                    return true;
+                return false;
+            });
+        }
+
+        if ($page && $limit)
+            return $posts->forPage($page, $limit);
+
+        return $posts;
     }
 
     /**
@@ -650,5 +669,23 @@ class K {
 
     public static function media() {
         return Media::orderBy('created_at', 'desc')->get();
+    }
+
+    /**
+     * Get a random banner url.
+     * 
+     * @param array|int $skip A list of banner numbers to skip. Default empty array for no skipping.
+     * @return string The random banner url
+     */
+    public static function randomBanner(array|int $skip = []) {
+        if (gettype($skip) != 'array')
+            $skip = [$skip];
+        $banners = collect();
+        for ($i = 1; $i <= 10; $i++) {
+            if (in_array($i, $skip)) continue;
+            $n = $i < 10 ? "0$i" : $i;
+            $banners->push(Vite::asset("/resources/images/banner-$n.jpg"));
+        }
+        return $banners->random();
     }
 }

@@ -1,5 +1,5 @@
 <x-layout.app title="expenses">
-  <x-section.one px="">
+  <x-section.one class="px-0 md:px-0">
     <x-section.title class="px-4 md:px-6">
       <x-slot:title>
         expenses
@@ -8,7 +8,8 @@
       <x-slot:buttons>
 
         @define($eTest = null)
-        <x-button.dark id="addExpense"
+        <x-button.dark class="bg-violet-800 hover:bg-violet-700 focus:bg-violet-700 active:bg-violet-900"
+          id="addExpense"
           data-modal="{{ json_encode([
               'title.text' => Msg::add('expense'),
               'form.action' => route('expense.add'),
@@ -30,8 +31,7 @@
               'submit.text' => 'add',
               'is-repeat.value' => 0,
           ]) }}"
-          open-modal="add-expense"
-          color="bg-violet-800 hover:bg-violet-700 focus:bg-violet-700 active:bg-violet-900">
+          open-modal="add-expense">
           <span class="hidden sm:block">{{ Msg::add('expense') }}</span>
           <span class="block sm:hidden">add</span>
         </x-button.dark>
@@ -202,7 +202,7 @@
         <x-loader class="hidden pb-6 pt-12"
           id="spinner"
           size="4"
-          color="gray-500" />
+          color="bg-gray-500" />
       @endif
     </div>
   </x-section.one>

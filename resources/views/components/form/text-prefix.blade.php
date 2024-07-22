@@ -1,12 +1,13 @@
 @props(['disabled' => false])
 
-<div class="relative">
+<div {!! $attributes->twMerge(['class' => 'w-full border border-gray-300 focus-within:border-indigo-500 focus-within:ring-indigo-500 rounded-md shadow-sm grid grid-cols-[auto_1fr] focus-within:ring-1 bg-white gap-0'])->only('class') !!}>
 
-  <div class="absolute top-1/2 -translate-y-1/2 pl-2">
+  <div class="self-center pl-2">
     {{ $slot }}
   </div>
 
-  <input tabindex="0"
-    {{ $disabled ? 'disabled' : '' }}
-    {!! $attributes->merge(['class' => 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm pl-7']) !!}>
+  <input class="w-full border-0 bg-transparent focus:ring-0"
+    tabindex="0"
+    {!! $attributes->except('class') !!}
+    {{ $disabled ? 'disabled' : '' }}>
 </div>

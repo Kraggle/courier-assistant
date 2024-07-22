@@ -46,8 +46,7 @@
       :key="$key"
       help="The address of the location.">
 
-      <x-form.textarea class="block w-full"
-        id="{{ $key }}"
+      <x-form.textarea id="{{ $key }}"
         name="{{ $key }}"
         ref="{{ $key }}"
         placeholder="20 High St, Supertown, AB12 3DE" />
@@ -60,8 +59,7 @@
       :key="$key"
       help="The note you want to display at this location.">
 
-      <x-form.textarea class="block w-full"
-        id="{{ $key }}"
+      <x-form.textarea id="{{ $key }}"
         name="{{ $key }}"
         ref="{{ $key }}"
         placeholder="The note you want to either save for future reference or share with other users" />

@@ -44,10 +44,10 @@ Route::controller(Controller::class)->group(function () {
 });
 
 Route::controller(PostController::class)->group(function () {
-    Route::get('/news', 'newsIndex')->name('news.index');
-    Route::get('/news/{slug}', 'showNews')->name('news');
-    Route::get('/tips', 'tipsIndex')->name('tips.index');
-    Route::get('/tips/{slug}', 'showTips')->name('tips');
+    Route::get('/news', 'news')->name('news');
+    Route::get('/tips', 'tips')->name('tips');
+    Route::get('/post/{slug}', 'post')->name('post');
+    Route::post('/posts', 'get')->name('posts');
 });
 
 Route::middleware(['auth'])->group(function () { # not subscribed
@@ -73,10 +73,10 @@ Route::middleware(['auth'])->group(function () { # not subscribed
     })->name('keep.alive');
 
     Route::controller(PostController::class)->group(function () {
-        Route::get('/post/creator', 'creator')->name('post.creator');
-        Route::get('/post/editor/{post}', 'editor')->name('post.editor');
-        Route::put('/post/create', 'create')->name('post.create');
-        Route::put('/post/{post}/update', 'update')->name('post.update');
+        Route::get('/article/creator', 'creator')->name('post.creator');
+        Route::get('/article/editor/{post}', 'editor')->name('post.editor');
+        Route::put('/article/create', 'create')->name('post.create');
+        Route::put('/article/{post}/update', 'update')->name('post.update');
         Route::put('/media/upload', 'upload')->name('media.upload');
     });
 });

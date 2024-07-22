@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-use App\Helpers\K;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Helpers\K;
 
 class Post extends Model {
     use HasFactory;
@@ -37,7 +39,7 @@ class Post extends Model {
     protected $appends = [
         'thumbs_up',
         'thumbs_down',
-        'banner_url'
+        'search_index',
     ];
 
     /**
@@ -130,16 +132,27 @@ class Post extends Model {
      * 
      * @return bool
      */
-    public function exists() {
-        return Storage::disk('gcs')->exists($this->banner);
+    public function bannerExists() {
+        return $this->banner ? Storage::disk('gcs')->exists($this->banner) : false;
     }
 
     /**
      * Get the url for the image.
      */
-    protected function bannerUrl(): Attribute {
+    public function bannerUrl(array|int $skip = []): string {
+        return $this->bannerExists() ? Storage::url($this->banner) : K::randomBanner($skip);
+    }
+
+    /**
+     * Get the search index for the post.
+     */
+    protected function searchIndex(): Attribute {
         return new Attribute(
-            get: fn () => $this->exists() ? Storage::url($this->banner) : ''
+            get: fn () => implode(' ', [
+                $this->title,
+                $this->tags->implode('name', ' '),
+                $this->categories->implode('name', ' '),
+            ])
         );
     }
 }

@@ -94,8 +94,7 @@
         :key="$key"
         help="The date the new rate is starting from.">
 
-        <x-form.date class="block w-full"
-          id="{{ $key }}"
+        <x-form.date id="{{ $key }}"
           name="{{ $key }}"
           ref="{{ $key }}" />
 
@@ -108,8 +107,7 @@
         :key="$key"
         help="The rate of the type you are adding.">
 
-        <x-form.text-prefix class="block w-full"
-          id="{{ $key }}"
+        <x-form.text-prefix id="{{ $key }}"
           name="{{ $key }}"
           type="number"
           ref="{{ $key }}"

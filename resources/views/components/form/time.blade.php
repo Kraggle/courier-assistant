@@ -6,7 +6,7 @@
 <input id="{{ $id }}"
   type="text"
   tabindex="0"
-  {!! $attributes->merge(['class' => 'time-input border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'])->except(['id', 'time']) !!}>
+  {!! $attributes->twMerge(['class' => 'w-full block time-input border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'])->except(['id', 'time']) !!}>
 
 <style>
   :root {

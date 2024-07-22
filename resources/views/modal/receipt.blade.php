@@ -23,7 +23,7 @@
           type="hidden"
           ref="path" />
 
-        <x-button.dark color="no-loader bg-green-700 hover:bg-green-600 focus:bg-green-600 active:bg-green-800">
+        <x-button.dark class="no-loader bg-green-700 hover:bg-green-600 focus:bg-green-600 active:bg-green-800">
           download
         </x-button.dark>
 

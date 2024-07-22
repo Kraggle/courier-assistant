@@ -1,4 +1,4 @@
-@props(['py' => 'py-3 md:py-5', 'px' => 'px-4 md:px-6', 'maxWidth' => '7xl', 'grid' => 'grid-cols-1 md:grid-cols-2'])
+@props(['maxWidth' => '7xl'])
 
 @php
   $maxWidth = [
@@ -16,11 +16,11 @@
   ][$maxWidth];
 @endphp
 
-<div class="{{ $maxWidth }} {{ $grid }} mx-auto grid w-full gap-6 md:gap-8 md:px-8">
-  <div {!! $one->attributes->merge(['class' => "overflow-hidden bg-white shadow-sm md:rounded-md {$py} {$px} w-full"]) !!}>
+<div class="{{ $maxWidth }} mx-auto grid w-full grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 md:px-8">
+  <div {!! $one->attributes->twMerge(['class' => 'overflow-hidden bg-white shadow-sm md:rounded-md py-3 md:py-5 px-4 md:px-6 w-full']) !!}>
     {{ $one }}
   </div>
-  <div {!! $two->attributes->merge(['class' => "overflow-hidden bg-white shadow-sm md:rounded-md {$py} {$px} w-full"]) !!}>
+  <div {!! $two->attributes->twMerge(['class' => 'overflow-hidden bg-white shadow-sm md:rounded-md py-3 md:py-5 px-4 md:px-6 w-full']) !!}>
     {{ $two }}
   </div>
 </div>

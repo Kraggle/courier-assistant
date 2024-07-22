@@ -44,8 +44,7 @@
             @define($key = 'invoice_mileage')
             <x-form.wrap :key="$key">
 
-              <x-form.text class="block w-full"
-                name="{{ $key }}[]"
+              <x-form.text name="{{ $key }}[]"
                 type="number"
                 ref="{{ $key }}"
                 :value="old($key)" />
@@ -57,8 +56,7 @@
             {{-- bonus --}}
             <x-form.wrap :key="$key">
 
-              <x-form.text-prefix class="block w-full"
-                name="{{ $key }}[]"
+              <x-form.text-prefix name="{{ $key }}[]"
                 type="number"
                 ref="{{ $key }}"
                 :value="old($key)"
