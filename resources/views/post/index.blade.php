@@ -31,7 +31,7 @@
       size="6"
       color="bg-gray-300"></x-loader>
 
-    <div class="grid grid-cols-2 gap-6"
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2"
       id="postWrap"></div>
 
     <div class="flex justify-between pt-6 text-gray-700"
