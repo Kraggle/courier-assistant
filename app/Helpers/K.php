@@ -688,4 +688,28 @@ class K {
         }
         return $banners->random();
     }
+
+    public static function buttonSize(string $size = 'sm'): string {
+        return [
+            'sm' => 'px-5 py-3 sm:px-4 sm:py-2 text-xs',
+            'md' => 'px-6 py-4 sm:px-5 sm:py-3 text-sm',
+            'lg' => 'px-7 py-5 sm:px-6 sm:py-4 text-base',
+        ][$size] ?? $size;
+    }
+
+    public static function maxWidth(string $width = '7xl'): string {
+        return [
+            'sm' => 'sm:max-w-sm',
+            'md' => 'sm:max-w-md',
+            'lg' => 'sm:max-w-lg',
+            'xl' => 'sm:max-w-xl',
+            '2xl' => 'sm:max-w-2xl',
+            '3xl' => 'sm:max-w-3xl',
+            '4xl' => 'sm:max-w-4xl',
+            '5xl' => 'sm:max-w-5xl',
+            '6xl' => 'sm:max-w-6xl',
+            '7xl' => 'sm:max-w-7xl',
+            'full' => 'sm:max-w-full',
+        ][$width] ?? $width;
+    }
 }

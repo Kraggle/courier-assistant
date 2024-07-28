@@ -127,17 +127,46 @@
 
         $last = $user->route();
 
-        $fuel_rate = $user->lastRefuel()->fuel_rate ?? 0.22;
+        $last_refuel = $user->lastRefuel();
+        $fuel_rate = $last_refuel->fuel_rate ?? 0.22;
         $total_pay = isset($use['routes']) ? $use['routes']->sum('total_pay') : 0;
         $last_rate = $last && $last->hasRate('fuel') ? $last->rate('fuel')->amount : 0.22;
         $next_date = isset($use['pay']) ? $use['pay'] : '';
       @endphp
 
-      <x-section.detail title="Latest fuel rate"
-        :value="K::formatCurrency($fuel_rate, true)"
-        icon="fas fa-gauge-low text-yellow-500"
-        none="No refuels!"
-        :active="$user->hasRefuels()" />
+      @if ($last_refuel)
+        <x-section.detail class="cursor-pointer"
+          id="editRefuel"
+          title="Latest fuel rate"
+          open-modal="add-refuel"
+          :data-modal="json_encode([
+              'title.text' => Msg::edit('refuel'),
+              'form.action' => route('refuel.edit', $last_refuel->id),
+              'date.value' => old('date', $last_refuel->date->format('Y-m-d')),
+              'mileage.value' => old('mileage', $last_refuel->mileage),
+              'cost.value' => old('cost', $last_refuel->cost),
+              'first.checked' => old('first', K::isTrue($last_refuel->first)),
+              'image-wrap.set-inputs' => old('image-wrap', ''),
+              'image-wrap.set-img' => $last_refuel->getImageURL() ?? Vite::asset('resources/images/no-image.svg'),
+              'destroy.removeclass' => 'hidden',
+              'destroy.data' => [
+                  'modal' => [
+                      'form.action' => route('refuel.destroy', $last_refuel->id),
+                  ],
+              ],
+              'submit.text' => 'save',
+          ])"
+          :value="K::formatCurrency($fuel_rate, true)"
+          icon="fas fa-gauge-low text-yellow-500"
+          none="No refuels!"
+          :active="$user->hasRefuels()" />
+      @else
+        <x-section.detail title="Latest fuel rate"
+          :value="K::formatCurrency($fuel_rate, true)"
+          icon="fas fa-gauge-low text-yellow-500"
+          none="No refuels!"
+          :active="$user->hasRefuels()" />
+      @endif
 
       <x-section.detail title="Next pay amount"
         :value="K::formatCurrency($total_pay)"
