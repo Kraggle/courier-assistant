@@ -7,6 +7,7 @@ use App\Models\Tag;
 use App\Models\Post;
 use App\Models\Media;
 use App\Models\Category;
+use Google\Rpc\Context\AttributeContext\Response;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -214,5 +215,33 @@ class PostController extends FilesController {
         }
 
         return response()->json(['error' => 'No media uploaded.']);
+    }
+
+    /**
+     * Get the media listings.
+     * 
+     * @return string
+     */
+    public function getmedia() {
+        return view('post.modal.library')->render();
+    }
+
+    /**
+     * Delete a media file.
+     * 
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteMedia(Request $request) {
+        $media = Media::where('id', $request->input('id', null))->first();
+        if ($media) {
+            if ($media->exists())
+                $this->deleteFile($media->path);
+
+            $media->delete();
+            return response()->json(['success' => 'Media deleted successfully.']);
+        }
+
+        return response()->json(['error' => 'Something went wrong, please try again later.']);
     }
 }

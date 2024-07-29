@@ -24,6 +24,8 @@
         const tab = $(this).attr('tab');
         K.addURLParam('tab', tab);
         setActiveTab($(this).closest('tab-wrap'), tab);
+
+        $(this).trigger('tab-change');
       });
 
       $('tab-wrap[active]').each(function() {

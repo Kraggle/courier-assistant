@@ -1,7 +1,5 @@
 @props(['on' => 'Yes', 'off' => 'No', 'checked' => false])
 
-@log($checked)
-
 <div {!! $attributes->only('class')->merge(['class' => 'checkwrap border relative rounded-md border-gray-300 shadow-sm']) !!}>
   <input class="pointer-events-none w-full opacity-0"
     type="text"

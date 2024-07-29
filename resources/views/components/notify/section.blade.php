@@ -20,7 +20,7 @@
   }
 @endphp
 
-<notify-box class="pointer-events-none fixed left-0 right-0 top-0"
+<notify-box class="pointer-events-none fixed left-0 right-0 top-0 z-[100]"
   data-messages="{{ json_encode($messages) }}">
   <blank-notify class="hidden">
     <notify-wrap class="block w-full transition-all">

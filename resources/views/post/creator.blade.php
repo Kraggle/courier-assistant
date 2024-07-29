@@ -169,6 +169,7 @@
           open-modal="media-picker"
           :data-modal="json_encode([
               'selector.removeclass' => 'active',
+              'delete.addclass' => 'hidden',
               'copy.addclass' => 'hidden',
               'select.addclass' => 'hidden',
               'select.input-name' => 'banner',
@@ -198,6 +199,7 @@
           <x-button.light open-modal="media-picker"
             :data-modal="json_encode([
                 'selector.removeclass' => 'active',
+                'delete.addclass' => 'hidden',
                 'copy.addclass' => 'hidden',
                 'select.addclass' => 'hidden',
                 'select.input-name' => null,

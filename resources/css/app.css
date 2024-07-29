@@ -1,35 +1,8 @@
 @import "select2.css";
 @import "dataTables.css";
 @import "article.css";
+@import "styles.css";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-* {
-    gap: 0.75rem;
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    /* display: none; <- Crashes Chrome on hover */
-    -webkit-appearance: none;
-    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
-}
-
-input[type="number"] {
-    -moz-appearance: textfield; /* Firefox */
-}
-
-.required label:after {
-    content: " *";
-}
-
-.required:not(.selected) .select2 .select2-selection--single,
-.required input:placeholder-shown {
-    border-color: rgb(167, 139, 250);
-}
-
-select {
-    background-position: right center;
-}

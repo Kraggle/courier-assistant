@@ -78,6 +78,8 @@ Route::middleware(['auth'])->group(function () { # not subscribed
         Route::put('/article/create', 'create')->name('post.create');
         Route::put('/article/{post}/update', 'update')->name('post.update');
         Route::put('/media/upload', 'upload')->name('media.upload');
+        Route::post('/media/get', 'getMedia')->name('media.get');
+        Route::delete('/media/delete', 'deleteMedia')->name('media.delete');
     });
 });
 

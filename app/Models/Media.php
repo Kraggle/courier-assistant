@@ -13,11 +13,13 @@ class Media extends Model {
 
     protected $fillable = [
         'path',
-        'caption'
+        'caption',
+        'tag'
     ];
 
     protected $appends = [
-        'url'
+        'url',
+        'type'
     ];
 
     /**
@@ -35,6 +37,15 @@ class Media extends Model {
     protected function url(): Attribute {
         return new Attribute(
             get: fn () => $this->exists() ? Storage::url($this->path) : Vite::asset('resources/images/no-image.svg'),
+        );
+    }
+
+    /**
+     * Get the file type of the image.
+     */
+    protected function type(): Attribute {
+        return new Attribute(
+            get: fn () => $this->exists() ? preg_replace('/^.*\./', "", $this->path) : 'unknown',
         );
     }
 }

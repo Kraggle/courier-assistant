@@ -93,6 +93,24 @@ const refreshAll = function() {
 };
 window.refreshAll = refreshAll;
 
+window.addTooltip = function(el) {
+	const content = el.find('tooltip'),
+		data = el.data();
+	if (!content.html()) return;
+
+	let t;
+	if (t = data.tippy) {
+		t.setContent(content[0]);
+	} else {
+		t = tippy(el[0], {
+			content: content[0],
+			touch: false,
+			placement: data.tooltipPosition || 'bottom'
+		});
+		el.data('tippy', t);
+	}
+}
+
 const Notify = {
 	type: {
 		success: {

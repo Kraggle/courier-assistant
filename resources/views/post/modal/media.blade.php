@@ -23,15 +23,14 @@
 
       <x-slot:content>
         <x-tab.content tab="0">
-          <div class="min-h-72 flex flex-wrap justify-center gap-6 px-4 md:px-6">
-            @foreach (K::media() as $media)
-              <media-selector data-path="{{ $media->path }}"
-                data-src="{{ $media->url }}"
-                ref="selector">
-                <img class="h-36 w-auto cursor-pointer rounded-md border border-gray-300 transition-all [.active_&]:ring-2 [.active_&]:ring-indigo-500 [.active_&]:ring-offset-2"
-                  src="{{ $media->url }}" />
-              </media-selector>
-            @endForeach
+          <x-loader class="my-24"
+            id="loader"
+            size="6"
+            color="bg-gray-300"></x-loader>
+
+          <div class="flex flex-wrap justify-center gap-6 px-4 md:px-6"
+            id="imagePicker">
+
           </div>
         </x-tab.content>
 
@@ -44,8 +43,6 @@
             method="POST"
             enctype="multipart/form-data"
             action="{{ route('media.upload') }}">
-            @csrf
-            @method('put')
 
             <img class="col-span-4 max-h-96 max-w-full justify-self-center rounded-md border border-gray-300"
               id="uploadSrc"
@@ -110,6 +107,12 @@
       {{-- submit --}}
       <div class="flex justify-end">
 
+        <x-button.dark class="bg-red-600 hover:bg-red-500 focus:bg-red-700"
+          delete-media
+          ref="delete">
+          delete
+        </x-button.dark>
+
         <x-button.dark class="bg-green-600 hover:bg-green-500 focus:bg-green-700"
           copy-url
           ref="copy"
@@ -133,7 +136,7 @@
   </div>
 </x-modal>
 
-@pushOnce('scripts')
+@push('scripts')
   <script type="module">
     $(() => {
       $('[image-root]').on('change', 'input[type=file]', function() {
@@ -159,18 +162,14 @@
           other.removeAttr('name');
         }
       });
-    });
-  </script>
-@endPushOnce
 
-@push('scripts')
-  <script type="module">
-    $(() => {
       const $img = $('#uploadSrc');
       $('#uploadForm').on('submit', function(e) {
         e.preventDefault();
 
         let formData = new FormData(this);
+        formData.append('_method', 'put');
+        formData.append('_token', '{{ csrf_token() }}');
 
         $.ajax({
           url: $(this).attr('action'),
@@ -180,7 +179,10 @@
             if (data.success) {
               $img.attr('src', $img.data('noImage'));
               $('input', this).val('');
-              $('[tab=0]').trigger('click');
+              $('[tab=0]').trigger('click').trigger('tab-change');
+              Notify.message(data.success, 'success');
+            } else if (data.error) {
+              Notify.message(data.error, 'error');
             }
           },
           cache: false,
@@ -194,6 +196,7 @@
         $('media-selector').removeClass('active');
         $(this).addClass('active');
         $('[copy-url]').removeClass('hidden').data('src', data.src);
+        $('[delete-media]').removeClass('hidden').data('id', data.id);
         $('[select-img][input-name]').removeClass('hidden').data(data);
       });
 
@@ -212,6 +215,60 @@
         $el.val(data.path);
         $el.siblings('img').attr('src', data.src).addClass('object-cover');
       });
+
+      $('[delete-media]').on('click', function() {
+        const data = $(this).data();
+
+        $.ajax({
+          url: '{{ route('media.delete') }}',
+          type: 'POST',
+          data: {
+            _method: 'DELETE',
+            _token: "{{ csrf_token() }}",
+            id: data.id,
+          },
+          success: data => {
+            if (data.success) {
+              Notify.message(data.success, 'success');
+              refreshImages();
+            } else if (data.error) {
+              Notify.message(data.error, 'error');
+            }
+          }
+        });
+      });
+
+      $('a[tab=0]').on('tab-change', refreshImages);
+      refreshImages();
     });
+
+    function refreshImages() {
+      $('#imagePicker').html('');
+      $('#loader').show();
+
+      $.ajax({
+        url: "{{ route('media.get') }}",
+        method: "POST",
+        data: {
+          _token: "{{ csrf_token() }}"
+        },
+        success: function(data) {
+          $('#imagePicker').html(data);
+          $('#loader').hide();
+
+          $('#imagePicker img').each(function() {
+            const $img = $(this),
+              $p = $img.parent();
+            $img.on('load', function() {
+              $('[place=size]', $p).text(`${this.naturalWidth}x${this.naturalHeight}`);
+              addTooltip($p);
+            });
+          });
+
+          refreshAll();
+        }
+      });
+
+    }
   </script>
 @endpush
