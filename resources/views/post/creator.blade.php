@@ -213,7 +213,8 @@
       </div>
     </x-section.one>
 
-    <x-section.two maxWidth="full">
+    <x-section.two class="2xl:grid-cols-[1fr_48rem]"
+      maxWidth="full">
 
       <x-slot:one
         class="max-h-[calc(100vh_-_280px)] !p-0">

@@ -182,3 +182,7 @@ $(() => {
 	Notify.init();
 	refreshAll();
 });
+
+window.addEventListener('popstate', function(e) {
+	console.log(e);
+});

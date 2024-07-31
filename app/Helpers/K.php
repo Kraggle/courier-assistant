@@ -7,7 +7,6 @@ use App\Models\Post;
 use App\Models\User;
 use NumberFormatter;
 use App\Models\Media;
-use HighSolutions\LaravelSearchy\Facades\Searchy;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\UploadedFile;
