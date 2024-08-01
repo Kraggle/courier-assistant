@@ -10,13 +10,12 @@ class Lists {
 	 */
 	public static function expenseTypes(string $type = null) {
 		$c = collect([
-			'work' => 'Cost of equipment used at work',
-			'vehicle' => 'Vehicle and travel expenses',
-			'maintenance' => 'Repairs and maintenance for vehicles',
-			'office' => 'Office costs (phones and stationery)',
-			'interest' => 'Interest on loans',
-			'charges' => 'Bank, credit card and other financial charges',
-			'professional' => 'Accountancy, legal and other professional costs'
+			'work' => 'Other allowable business expenses',
+			'vehicle' => 'Car, van and travel expenses',
+			'maintenance' => 'Repairs and maintenance',
+			'office' => 'Telephone, fax, stationery and other office costs',
+			'interest' => 'Interest and bank and credit card etc. financial charges',
+			'professional' => 'Accountancy, legal and other professional fees'
 		]);
 		if ($type) return $c[$type];
 		return $c;

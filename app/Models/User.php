@@ -81,7 +81,7 @@ class User extends Authenticatable {
     }
 
     /**
-     * Get the users routes
+     * Get the users latest route
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */

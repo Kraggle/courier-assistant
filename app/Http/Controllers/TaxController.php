@@ -33,13 +33,12 @@ class TaxController extends Controller {
      * @param \App\Models\Tax $tax,
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function edit(Request $request, Tax $tax) {
+    public function edit(Tax $tax) {
         $tax->update([
-            'claim_miles' => K::isTrue($request->claim_miles ?? 0),
             'force_update' => 1
         ]);
 
-        return back()->with('success', Msg::edited('tax'));
+        return back()->with('success', 'Your tax has been regenerated.');
     }
 
     /**
@@ -86,43 +85,26 @@ class TaxController extends Controller {
         if (!($tax->force_update || $updated_at > $updated))
             return $tax;
 
-        $mileage = 0;
-        $fuel_pay = 0;
-        $fuel_spend = 0;
-        $time = 0;
-        $count = 0;
-        $total = 0;
-        $actual = 0;
-        $bonus = 0;
-        $miles = 0;
+        K::log('updating');
 
-        $routes = Route::cursor()->where('user_id', $user->id)->where('date', '>=', $start)->where('date', '<=', $end);
-        foreach ($routes as $r) {
-            $mileage += $r->mileage ?? 0;
-            $fuel_pay += $r->fuel_pay ?? 0;
-            $fuel_spend += $r->fuel_spend ?? 0;
-            $time += $r->time ?? 0;
-            $count += 1;
-            $total += $r->total_pay ?? 0;
-            // $actual += $r->actual_pay ?? 0;
-            $bonus += $r->bonus ?? 0;
-            $miles += $r->miles ?? 0;
-        }
+        $routes = $user->routesByDate($start, $end)->lazy();
+        $mileage = $routes->sum('mileage');
+        $fuel_pay = $routes->sum('fuel_pay');
+        $fuel_spend = $routes->sum('fuel_spend');
+        $time = $routes->sum('time');
+        $count = $routes->count();
+        $total = $routes->sum('total_pay');
+        $bonus = $routes->sum('bonus');
+        $miles = $routes->sum('miles');
 
         $claimable = $mileage > 10000 ? 10000 * 0.45 + ($mileage - 10000) * 0.25 : $mileage * 0.45;
         $hours = floor($time / 3600);
         $minutes = ($time % 3600) / 60;
 
         $expenses = $user->expensesByDate($start, $end)->lazy();
-        $expense_sum = $expenses->sum('cost');
+        $expense_sum =  $fuel_pay + $expenses->sum('cost');
 
-        if ($tax->claim_miles) {
-            $total_expense = $claimable + $expenses->where('type', '<>', 'maintenance')->sum('cost');
-        } else {
-            $total_expense = $fuel_spend + $expense_sum;
-        }
-
-        $actual = $total - $expense_sum - $fuel_spend;
+        $actual = $total - $expense_sum;
 
         $tax->update([
             'properties->miles->driven' => $miles,
@@ -143,13 +125,11 @@ class TaxController extends Controller {
             'properties->income->actual->hour' => K::getHourly($actual, $hours, $minutes),
             'properties->income->bonus' => $bonus,
             'properties->expense->work' => $expenses->where('type', 'work')->sum('cost'),
-            'properties->expense->vehicle' => $expenses->where('type', 'vehicle')->sum('cost'),
-            'properties->expense->maintenance' =>  $expenses->where('type', 'maintenance')->sum('cost'),
+            'properties->expense->vehicle' => $expenses->whereIn('type', ['vehicle', 'maintenance'])->sum('cost') + $fuel_pay,
             'properties->expense->office' => $expenses->where('type', 'office')->sum('cost'),
             'properties->expense->interest' => $expenses->where('type', 'interest')->sum('cost'),
-            'properties->expense->charges' => $expenses->where('type', 'charges')->sum('cost'),
             'properties->expense->professional' => $expenses->where('type', 'professional')->sum('cost'),
-            'properties->expense->total' => $total_expense,
+            'properties->expense->total' => $expense_sum,
             'force_update' => 0
         ]);
 

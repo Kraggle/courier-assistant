@@ -24,29 +24,8 @@
           @csrf
           @method('put')
 
-          @define($key = 'claim_miles')
-          {{-- vat --}}
-          <x-form.wrap class="relative -top-4 text-base"
-            value="Claim Mileage?"
-            :key="$key">
-
-            <x-form.toggle id="{{ $key }}"
-              name="{{ $key }}"
-              ref="{{ $key }}"
-              :checked="$tax->claim_miles" />
-
-          </x-form.wrap>
+          <x-button.dark class="bg-green-700 hover:bg-green-600 focus:bg-green-600 active:bg-green-800">Regenerate</x-button.dark>
         </form>
-        <script type="module">
-          $(() => {
-            $('#claimForm [type=checkbox]').on('change', function(e) {
-              loading();
-              setTimeout(() => {
-                $('#claimForm').trigger('submit');
-              }, 50);
-            });
-          });
-        </script>
       </x-slot>
 
       <x-slot:content>
@@ -69,29 +48,31 @@
               </x-form.wrap>
 
               {{-- claim value --}}
-              <x-form.wrap value="Claimable as Expense">
+              {{-- <x-form.wrap value="Claimable as Expense">
                 <x-form.text class="block w-full text-center text-base font-bold md:text-xl"
                   value="{{ K::formatCurrency($tax->properties->miles->claimable) }}"
                   readonly />
-              </x-form.wrap>
+              </x-form.wrap> --}}
 
             </x-form.section>
 
             {{-- fuel --}}
             <x-form.section label="fuel">
-              {{-- reimbursed --}}
-              <x-form.wrap value="Paid for Fuel">
-                <x-form.text class="block w-full text-center text-base font-bold md:text-xl"
-                  value="{{ K::formatCurrency($tax->properties->fuel->paid) }}"
-                  readonly />
-              </x-form.wrap>
+              <div class="grid grid-cols-2">
+                {{-- reimbursed --}}
+                <x-form.wrap value="Paid for Fuel">
+                  <x-form.text class="block w-full text-center text-base font-bold md:text-xl"
+                    value="{{ K::formatCurrency($tax->properties->fuel->paid) }}"
+                    readonly />
+                </x-form.wrap>
 
-              {{-- spend --}}
-              <x-form.wrap value="Spent on Fuel">
-                <x-form.text class="block w-full text-center text-base font-bold md:text-xl"
-                  value="{{ K::formatCurrency($tax->properties->fuel->spent) }}"
-                  readonly />
-              </x-form.wrap>
+                {{-- spend --}}
+                <x-form.wrap value="Spent on Fuel">
+                  <x-form.text class="block w-full text-center text-base font-bold md:text-xl"
+                    value="{{ K::formatCurrency($tax->properties->fuel->spent) }}"
+                    readonly />
+                </x-form.wrap>
+              </div>
 
               {{-- earned --}}
               <x-form.wrap value="Earned on Fuel">
@@ -128,11 +109,11 @@
               </x-form.wrap>
 
               {{-- work hours --}}
-              <x-form.wrap value="Time Spent Driving">
+              {{-- <x-form.wrap value="Time Spent Driving">
                 <x-form.text class="block w-full text-center text-base font-bold md:text-xl"
                   value="{{ K::secondsToHuman($tax->properties->work->total) }}"
                   readonly />
-              </x-form.wrap>
+              </x-form.wrap> --}}
 
             </x-form.section>
 
@@ -198,37 +179,30 @@
 
             {{-- expenses --}}
             <x-form.section label="expenses">
-              <div class="grid grid-cols-3">
-                {{-- work --}}
-                <x-form.wrap value="work">
-                  <x-form.text class="block w-full text-center text-base font-bold md:text-xl"
-                    value="{{ K::formatCurrency($tax->properties->expense->work) }}"
-                    readonly />
-                </x-form.wrap>
-
-                {{-- vehicle --}}
-                <x-form.wrap value="vehicle">
+              <div class="grid grid-cols-2">
+                {{-- vehicle & travel --}}
+                <x-form.wrap value="vehicle & travel">
                   <x-form.text class="block w-full text-center text-base font-bold md:text-xl"
                     value="{{ K::formatCurrency($tax->properties->expense->vehicle) }}"
                     readonly />
                 </x-form.wrap>
 
                 {{-- maintenance --}}
-                <x-form.wrap value="maintenance">
+                {{-- <x-form.wrap value="maintenance">
                   <x-form.text class="block w-full text-center text-base font-bold md:text-xl"
                     value="{{ K::formatCurrency($tax->properties->expense->maintenance) }}"
+                    readonly />
+                </x-form.wrap> --}}
+
+                {{-- accountancy --}}
+                <x-form.wrap value="accountancy">
+                  <x-form.text class="block w-full text-center text-base font-bold md:text-xl"
+                    value="{{ K::formatCurrency($tax->properties->expense->professional) }}"
                     readonly />
                 </x-form.wrap>
               </div>
 
-              <div class="grid grid-cols-3">
-                {{-- office --}}
-                <x-form.wrap value="office">
-                  <x-form.text class="block w-full text-center text-base font-bold md:text-xl"
-                    value="{{ K::formatCurrency($tax->properties->expense->office) }}"
-                    readonly />
-                </x-form.wrap>
-
+              <div class="grid grid-cols-2">
                 {{-- interest --}}
                 <x-form.wrap value="interest">
                   <x-form.text class="block w-full text-center text-base font-bold md:text-xl"
@@ -236,19 +210,19 @@
                     readonly />
                 </x-form.wrap>
 
-                {{-- charges --}}
-                <x-form.wrap value="charges">
+                {{-- office --}}
+                <x-form.wrap value="office">
                   <x-form.text class="block w-full text-center text-base font-bold md:text-xl"
-                    value="{{ K::formatCurrency($tax->properties->expense->charges) }}"
+                    value="{{ K::formatCurrency($tax->properties->expense->office) }}"
                     readonly />
                 </x-form.wrap>
               </div>
 
               <div class="grid grid-cols-3">
-                {{-- professional --}}
-                <x-form.wrap value="professional">
+                {{-- other --}}
+                <x-form.wrap value="other">
                   <x-form.text class="block w-full text-center text-base font-bold md:text-xl"
-                    value="{{ K::formatCurrency($tax->properties->expense->professional) }}"
+                    value="{{ K::formatCurrency($tax->properties->expense->work) }}"
                     readonly />
                 </x-form.wrap>
 

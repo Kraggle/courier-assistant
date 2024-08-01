@@ -86,13 +86,15 @@
         data-modal="{{ json_encode([
             'title.text' => Msg::add('expense'),
             'form.action' => route('expense.add'),
+            'form.mode' => 'add',
+            'choice-wrap.addclass' => 'hidden',
+            'choice.value' => 'this',
             'date.value' => old('date', now()->format('Y-m-d')),
-            'date_to.value' => old('date_to', now()->add(1, 'year')->format('Y-m-d')),
             'type.value' => old('type', '-1'),
+            'date_to.value' => old('date_to', now()->add(1, 'year')->format('Y-m-d')),
             'repeat.value' => old('repeat', 'never'),
             'every.value' => old('every', 'week'),
             'every_x.value' => old('every_x', '1'),
-            'day.value' => old('day', now()->format('l')),
             'month.value' => old('month', 'day'),
             'describe.value' => old('describe', ''),
             'cost.value' => old('cost', null),
@@ -100,6 +102,7 @@
             'image-wrap.set-img' => Vite::asset('resources/images/no-image.svg'),
             'destroy.addclass' => 'hidden',
             'submit.text' => 'add',
+            'is-repeat.value' => 0,
         ]) }}"
         open-modal="add-expense"
         icon="fa-thin fa-file-invoice">
