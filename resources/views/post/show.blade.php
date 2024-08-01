@@ -26,3 +26,5 @@
 
   </x-section.one>
 </x-layout.app>
+
+@include('post.modal.image')
