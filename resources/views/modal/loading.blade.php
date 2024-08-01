@@ -8,4 +8,25 @@
 
     <div class="absolute -bottom-20 w-full text-center text-2xl font-bold capitalize tracking-widest text-gray-400 sm:text-3xl">loading...</div>
   </div>
+
+  <script type="module">
+    const loading = () => {
+      $('#pageDoor').toggleClass('-translate-x-full');
+    };
+    window.loading = loading;
+
+    $(() => {
+
+      $('form [type="submit"]:not(.no-loader)').on('click', loading);
+      $('body').on('click', 'a[href][href!=""]:not(.no-loader)', function(e) {
+        e.preventDefault();
+        loading();
+        setTimeout(() => (window.location.href = $(this).attr('href')), 950);
+      });
+    });
+
+    $(window).on('load', function() {
+      loading();
+    });
+  </script>
 </div>
