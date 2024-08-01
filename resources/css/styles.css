@@ -31,3 +31,9 @@ select {
 modal-box.pointer-events-none * {
   pointer-events: none !important;
 }
+
+.dd__dialog,
+.dd__body,
+.dd__header {
+  gap: 0;
+}
