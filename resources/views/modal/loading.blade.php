@@ -10,14 +10,12 @@
   </div>
 
   <script type="module">
-    $(() => {
-      const $door = $('#pageDoor'),
-        loading = off => {
-          $door[off ? 'addClass' : 'toggleClass']('-translate-x-full');
-          // console.log('loading...');
-        };
+    const loading = () => {
+      $('#pageDoor').toggleClass('-translate-x-full');
+    };
+    window.loading = loading;
 
-      window.loading = loading;
+    $(() => {
 
       $('form [type="submit"]:not(.no-loader)').on('click', loading);
       $('body').on('click', 'a[href][href!=""]:not(.no-loader)', function(e) {
@@ -25,8 +23,10 @@
         loading();
         setTimeout(() => (window.location.href = $(this).attr('href')), 950);
       });
+    });
 
-      loading(true);
+    $(window).on('load', function() {
+      loading();
     });
   </script>
 </div>
