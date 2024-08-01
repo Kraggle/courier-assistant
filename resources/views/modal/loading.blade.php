@@ -12,8 +12,9 @@
   <script type="module">
     $(() => {
       const $door = $('#pageDoor'),
-        loading = () => {
-          $door.toggleClass('-translate-x-full');
+        loading = off => {
+          $door[off ? 'addClass' : 'toggleClass']('-translate-x-full');
+          // console.log('loading...');
         };
 
       window.loading = loading;
@@ -25,7 +26,7 @@
         setTimeout(() => (window.location.href = $(this).attr('href')), 950);
       });
 
-      loading();
+      loading(true);
     });
   </script>
 </div>

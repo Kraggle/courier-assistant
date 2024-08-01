@@ -58,7 +58,6 @@
     });
 
     $blank.on('click', function() {
-      console.log($padder.data('start'))
       $padder.animate($padder.data('start'), 500, () => {
         $wrap.removeClass('!pointer-events-auto');
         $blank.removeClass('!opacity-100');
