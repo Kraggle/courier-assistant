@@ -144,6 +144,8 @@
             ],
         ],
         'submit.text' => 'save',
+        'more-btn.text' => 'Show More',
+        'more.addclass' => 'hidden',
     ])">
 
     @define($time = K::formatTime($r->start_time) . ' - ' . ($r->end_time ? K::formatTime($r->end_time) : '??'))

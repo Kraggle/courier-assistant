@@ -28,10 +28,12 @@ class Lists {
 	 */
 	public static function routeTypes(string $type = null) {
 		$c = collect([
-			'md' => 'Standard Van',
-			'lg' => 'Large Van',
-			'mfn-md' => 'Standard Van Collection',
-			'mfn-lg' => 'Large Van Collection',
+			'md' => 'Standard Route',
+			'lg' => 'Large Route',
+			'mfn-md' => 'Standard Collection',
+			'mfn-lg' => 'Large Collection',
+			'same-md' => 'Standard Collection with Sameday',
+			'same-lg' => 'Large Collection with Sameday',
 			'poc' => 'On Site Manager',
 		]);
 		if ($type) return $c[$type];
@@ -46,10 +48,12 @@ class Lists {
 	public static function rateTypes(string $type = null) {
 		$c = collect([
 			'fuel' => 'Invoice fuel rate (per mile)',
-			'md' => 'Standard van (per day)',
-			'lg' => 'Large van (per day)',
-			'mfn-md' => 'Standard van collection (per day)',
-			'mfn-lg' => 'Large van collection (per day)',
+			'md' => 'Standard route (per day)',
+			'lg' => 'Large route (per day)',
+			'mfn-md' => 'Standard collection (per day)',
+			'mfn-lg' => 'Large collection (per day)',
+			'same-md' => 'Standard collection with sameday (per day)',
+			'same-lg' => 'Large collection with sameday (per day)',
 			'poc' => 'On site manager (per day)',
 		]);
 		if ($type) return $c[$type];

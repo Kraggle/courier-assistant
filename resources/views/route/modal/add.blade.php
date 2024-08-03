@@ -77,53 +77,55 @@
 
     </div>
 
-    {{-- date --}}
-    @define($key = 'date')
-    <x-form.wrap class="required"
-      value="date"
-      :key="$key"
-      help="The date you worked the route.">
-
-      <x-form.date id="{{ $key }}"
-        name="{{ $key }}"
-        ref="{{ $key }}"
-        :value="old($key)" />
-
-    </x-form.wrap>
-
-    <div class="grid grid-cols-1 md:grid-cols-2">
-      {{-- time start --}}
-      @define($key = 'start_time')
-      <x-form.wrap class="required"
-        value="start time"
+    <div class="grid grid-cols-3">
+      {{-- date --}}
+      @define($key = 'date')
+      <x-form.wrap class="required col-span-3 md:col-span-1"
+        value="date"
         :key="$key"
-        help="The time you were there to load your vehicle.">
+        help="The date you worked the route.">
 
-        <x-form.time id="{{ $key }}"
+        <x-form.date id="{{ $key }}"
           name="{{ $key }}"
           ref="{{ $key }}"
-          placeholder="Select your start time..."
           :value="old($key)" />
 
       </x-form.wrap>
 
-      {{-- time end --}}
-      @define($key = 'end_time')
-      <x-form.wrap value="end time"
-        :key="$key"
-        help="Set this as the time you do or should arrive back at the depot. This makes it more accurate for hourly rates.">
+      <div class="col-span-3 grid grid-cols-2 md:col-span-2">
+        {{-- time start --}}
+        @define($key = 'start_time')
+        <x-form.wrap class="required"
+          value="start time"
+          :key="$key"
+          help="The time you were there to load your vehicle.">
 
-        <x-form.time id="{{ $key }}"
-          name="{{ $key }}"
-          ref="{{ $key }}"
-          :value="old($key)"
-          placeholder="Leave until route ended!" />
+          <x-form.time id="{{ $key }}"
+            name="{{ $key }}"
+            ref="{{ $key }}"
+            placeholder="Select your start time..."
+            :value="old($key)" />
 
-      </x-form.wrap>
+        </x-form.wrap>
 
+        {{-- time end --}}
+        @define($key = 'end_time')
+        <x-form.wrap value="end time"
+          :key="$key"
+          help="Set this as the time you do or should arrive back at the depot. This makes it more accurate for hourly rates.">
+
+          <x-form.time id="{{ $key }}"
+            name="{{ $key }}"
+            ref="{{ $key }}"
+            :value="old($key)"
+            placeholder="Leave until route ended!" />
+
+        </x-form.wrap>
+
+      </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2">
+    <div class="grid grid-cols-2">
       {{-- mileage start --}}
       @define($key = 'start_mileage')
       <x-form.wrap class="required"
@@ -179,48 +181,97 @@
       </x-form.wrap>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3">
-      {{-- invoice mileage --}}
-      @define($key = 'invoice_mileage')
-      <x-form.wrap value="invoiced miles"
+    <div class="flex flex-col"
+      ref="more"
+      hide="more">
+      <div class="grid grid-cols-2 md:grid-cols-3">
+        {{-- invoice mileage --}}
+        @define($key = 'invoice_mileage')
+        <x-form.wrap class="col-span-2 md:col-span-1"
+          value="invoiced miles"
+          :key="$key"
+          help="Once you receive your invoice enter the mileage amazon have paid you for the route. This shows an accurate total for earnings when coupled with the fuel rate for the week.">
+
+          <x-form.text id="{{ $key }}"
+            name="{{ $key }}"
+            type="number"
+            ref="{{ $key }}"
+            :value="old($key)"
+            placeholder="Get this from your invoice!" />
+
+        </x-form.wrap>
+
+        @define($key = 'bonus')
+        {{-- bonus --}}
+        <x-form.wrap value="bonus"
+          :key="$key"
+          help="Add any bonuses or subtractions to this input, it will calculate correctly for the total for the route.">
+
+          <x-form.text-prefix id="{{ $key }}"
+            name="{{ $key }}"
+            type="number"
+            ref="{{ $key }}"
+            :value="old($key)"
+            step="0.01">
+
+            <x-icon class="fas fa-sterling-sign text-gray-400" />
+
+          </x-form.text-prefix>
+
+        </x-form.wrap>
+
+        @define($key = 'vat')
+        {{-- vat --}}
+        <x-form.wrap value="Claiming VAT?"
+          :key="$key"
+          help="You you claim VAT from amazon mark this as Yes! It will calculate the extra pay for you.">
+
+          <x-form.toggle id="{{ $key }}"
+            name="{{ $key }}"
+            ref="{{ $key }}"
+            :value="old($key)" />
+
+        </x-form.wrap>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2">
+        {{-- ttfs --}}
+        @define($key = 'ttfs')
+        <x-form.wrap value="Minutes to First Stop"
+          :key="$key"
+          help="Will give you a better result for your stops per hour. This is subtracted from the total time of your route before dividing by stops.">
+
+          <x-form.text id="{{ $key }}"
+            name="{{ $key }}"
+            type="number"
+            ref="{{ $key }}"
+            :value="old($key)" />
+
+        </x-form.wrap>
+
+        {{-- stops --}}
+        @define($key = 'stops')
+        <x-form.wrap value="Total Stops or Locations"
+          :key="$key"
+          help="This is totally optional, but it will show you your stops/locations per hour and give you an overall average.">
+
+          <x-form.text id="{{ $key }}"
+            name="{{ $key }}"
+            type="number"
+            ref="{{ $key }}"
+            :value="old($key)"
+            placeholder="Used to determine stops per hour!" />
+
+        </x-form.wrap>
+      </div>
+
+      {{-- note --}}
+      @define($key = 'note')
+      <x-form.wrap value="note"
         :key="$key"
-        help="Once you receive your invoice enter the mileage amazon have paid you for the route. This shows an accurate total for earnings when coupled with the fuel rate for the week.">
+        help="You may want to remind yourself of something about this route. You can write that here.">
 
         <x-form.text id="{{ $key }}"
-          name="{{ $key }}"
-          type="number"
-          ref="{{ $key }}"
-          :value="old($key)"
-          placeholder="Get this from your invoice!" />
-
-      </x-form.wrap>
-
-      @define($key = 'bonus')
-      {{-- bonus --}}
-      <x-form.wrap value="bonus"
-        :key="$key"
-        help="Add any bonuses or subtractions to this input, it will calculate correctly for the total for the route.">
-
-        <x-form.text-prefix id="{{ $key }}"
-          name="{{ $key }}"
-          type="number"
-          ref="{{ $key }}"
-          :value="old($key)"
-          step="0.01">
-
-          <x-icon class="fas fa-sterling-sign text-gray-400" />
-
-        </x-form.text-prefix>
-
-      </x-form.wrap>
-
-      @define($key = 'vat')
-      {{-- vat --}}
-      <x-form.wrap value="Claiming VAT?"
-        :key="$key"
-        help="You you claim VAT from amazon mark this as Yes! It will calculate the extra pay for you.">
-
-        <x-form.toggle id="{{ $key }}"
           name="{{ $key }}"
           ref="{{ $key }}"
           :value="old($key)" />
@@ -228,49 +279,12 @@
       </x-form.wrap>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2">
-      {{-- ttfs --}}
-      @define($key = 'ttfs')
-      <x-form.wrap value="Minutes to First Stop"
-        :key="$key"
-        help="Will give you a better result for your stops per hour. This is subtracted from the total time of your route before dividing by stops.">
-
-        <x-form.text id="{{ $key }}"
-          name="{{ $key }}"
-          type="number"
-          ref="{{ $key }}"
-          :value="old($key)" />
-
-      </x-form.wrap>
-
-      {{-- stops --}}
-      @define($key = 'stops')
-      <x-form.wrap value="Total Stops or Locations"
-        :key="$key"
-        help="This is totally optional, but it will show you your stops/locations per hour and give you an overall average.">
-
-        <x-form.text id="{{ $key }}"
-          name="{{ $key }}"
-          type="number"
-          ref="{{ $key }}"
-          :value="old($key)"
-          placeholder="Used to determine stops per hour!" />
-
-      </x-form.wrap>
+    <div class="flex justify-center">
+      <x-button.light class="border-0 shadow-none"
+        ref="more-btn"
+        hide-id="more"
+        size="sm">Show More</x-button.light>
     </div>
-
-    {{-- note --}}
-    @define($key = 'note')
-    <x-form.wrap value="note"
-      :key="$key"
-      help="You may want to remind yourself of something about this route. You can write that here.">
-
-      <x-form.text id="{{ $key }}"
-        name="{{ $key }}"
-        ref="{{ $key }}"
-        :value="old($key)" />
-
-    </x-form.wrap>
 
     {{-- submit --}}
     <div class="flex justify-between">

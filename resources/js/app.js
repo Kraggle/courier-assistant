@@ -181,4 +181,17 @@ window.Notify = Notify;
 $(() => {
 	Notify.init();
 	refreshAll();
+
+	$('[hide-id]').on('click', function(e) {
+		e.preventDefault();
+
+		const $el = $(`[hide=${$(this).attr('hide-id')}]`);
+		if ($el.hasClass('hidden')) {
+			$el.removeClass('hidden');
+			$(this).text('hide more')
+		} else {
+			$el.addClass('hidden');
+			$(this).text('show more')
+		}
+	});
 });

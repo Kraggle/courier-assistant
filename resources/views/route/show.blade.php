@@ -35,6 +35,8 @@
               'note.value' => old('note', ''),
               'destroy.addclass' => 'hidden',
               'submit.text' => 'add',
+              'more-btn.text' => 'Show More',
+              'more.addclass' => 'hidden',
           ]) }}"
           open-modal="add-route">
           <span class="hidden sm:block">{{ Msg::add('route') }}</span>
