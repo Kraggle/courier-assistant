@@ -85,7 +85,7 @@
 
   <modal-wrap>
     {{-- @include('modal.keep-alive') --}}
-    @include('modal.loading')
+    {{-- @include('modal.loading') --}}
     @stack('modals')
   </modal-wrap>
 

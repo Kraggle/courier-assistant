@@ -36,10 +36,10 @@
 
   </div>
 
-  <script type="module">
-    {{-- $(() => {
+  {{-- <script type="module">
+    $(() => {
       $('#exportBtn').on('click', e => {
-        loading();
+        //loading();
         cookieWatch();
       });
 
@@ -48,11 +48,11 @@
           const di = Cookies.get('download-initiated');
           if (di == $('#exportForm').attr('filename')) {
             clearInterval(cookieInterval);
-            loading();
+            //loading();
             Cookies.remove('download-initiated');
           }
         }, 500);
       }
-    }); --}}
-  </script>
+    });
+  </script> --}}
 </x-modal>
