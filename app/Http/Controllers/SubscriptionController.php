@@ -81,7 +81,6 @@ class SubscriptionController extends Controller {
      */
     public function keys() {
         return response()->json([
-            'cs' => K::user()->createSetupIntent()->client_secret,
             'pk' => config('cashier.key'),
             'url' => route('subscription.success'),
             'str' => [

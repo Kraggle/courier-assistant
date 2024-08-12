@@ -1,34 +1,45 @@
 @php
   $list = ['Rooftop accurate address finder with navigation links.', 'Shared geolocational information displayed on map.', 'Accurately track and view your daily and weekly earnings.', 'All your data displayed in a readable format.', 'Store all your refuels and calculate the costs.', 'Perform accurate calculations for predicted income.', 'Store and calculate all of your expenses.', 'Get an overview of everything calculated for your taxes.'];
 
-  $trial = K::user()->hadTrial();
+  $user = K::user();
+  $trial = $user->hadTrial();
+  $failed = $user->hasIncompletePayment('default');
 @endphp
 
 <x-layout.app title="subscribe"
   :center="true">
+  <input id="cs"
+    type="hidden"
+    value="{{ $user->createSetupIntent()->client_secret }}">
+
   <x-section.one class="p-0 md:p-0"
     maxWidth="xl">
 
     <div class="flex flex-col gap-4 text-center text-lg">
 
       <h1 class="text-tracking bg-violet-700 px-4 pb-3 pt-3 font-serif text-4xl font-black text-white md:px-6 md:pt-5">
-        @if ($trial)
-          7 Day FREE Trial
-        @else
+        @if ($failed)
+          Payment failed
+        @elseif ($trial)
           Subscription
+        @else
+          7 Day FREE Trial
         @endif
       </h1>
 
       <div class="flex flex-col gap-4 px-4 pb-3 md:px-6 md:pb-5">
         <p class="text-gray-700">
-          @if ($trial)
-            You pay nothing for the first 7 days. Then only...
-          @else
+          @if ($trial || $failed)
             You pay only...
+          @else
+            You pay nothing for the first 7 days. Then only...
           @endif
         </p>
 
-        <div class="flex flex-col"><span class="text-6xl font-extrabold text-orange-600">£4.99</span><span class="-mt-1 text-lg font-normal text-gray-400">per month</span></div>
+        <div class="flex flex-col">
+          <span class="text-6xl font-extrabold text-orange-600">£4.99</span>
+          <span class="-mt-1 text-lg font-normal text-gray-400">per month</span>
+        </div>
 
         <ul class="flex flex-col gap-2 text-left text-base">
           @foreach ($list as $item)
@@ -39,29 +50,29 @@
           @endforeach
         </ul>
 
-        <div class="flex">
-          <x-button.dark class="grow justify-center"
-            class="bg-orange-600 text-2xl hover:bg-orange-500 focus:bg-orange-500 active:bg-orange-700"
-            open-modal="stripe-pay"
-            size="md">
+        <x-button.dark class="w-full"
+          class="bg-orange-600 text-2xl hover:bg-orange-500 focus:bg-orange-500 active:bg-orange-700"
+          open-modal="stripe-pay"
+          size="md">
+          @if ($failed)
+            Update payment method
+          @elseif ($trial)
+            pay now
+          @else
             try it free
-          </x-button.dark>
-        </div>
+          @endif
+        </x-button.dark>
       </div>
 
     </div>
 
     @push('modals')
-      <x-modal class="relative overflow-auto"
+      <x-modal class=""
         name="stripe-pay"
-        maxWidth="sm"
+        maxWidth="md"
         help-root>
 
-        <img class="absolute bottom-0 left-3 z-50 w-28 translate-y-1/2 rounded-md bg-white"
-          src="{{ Vite::asset('resources/images/stripe-powered.svg') }}"
-          alt="stripe">
-
-        <form class="flex max-h-[calc(100vh_-_80px)] flex-col gap-4 overflow-y-auto overflow-x-hidden p-4 md:p-6"
+        <form class="flex flex-col gap-4 overflow-y-auto overflow-x-hidden p-4 md:p-6"
           id="payment-form"
           method="POST">
           @csrf
@@ -69,7 +80,12 @@
 
           <div id="payment-element"></div>
 
-          <div class="align-center flex justify-end">
+          <div class="flex items-end justify-between">
+
+            <img class="w-28"
+              src="{{ Vite::asset('resources/images/stripe-powered.svg') }}"
+              alt="stripe">
+
             <x-button.dark class="no-loader relative bg-violet-800 text-2xl hover:bg-violet-700 focus:bg-violet-700 active:bg-violet-900"
               id="payment-button">
               <span class="text opacity-100">subscribe</span>

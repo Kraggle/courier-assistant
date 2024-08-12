@@ -1,6 +1,8 @@
 import { loadStripe as Stripe } from '@stripe/stripe-js';
 
 (async () => {
+
+
 	const data = await fetch('/subscription', {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
@@ -36,7 +38,7 @@ import { loadStripe as Stripe } from '@stripe/stripe-js';
 			}
 		}
 	},
-		elements = stripe.elements({ clientSecret: data.cs, appearance }),
+		elements = stripe.elements({ clientSecret: $('#cs').val(), appearance }),
 		paymentElement = elements.create('payment', { layout: 'tabs' });
 	paymentElement.mount('#payment-element');
 
