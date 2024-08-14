@@ -59,6 +59,7 @@ Route::middleware(['auth'])->group(function () { # not subscribed
         Route::patch('/subscription', 'resume')->name('subscription.resume');
         Route::delete('/subscription', 'cancel')->name('subscription.cancel');
         Route::get('/coupon', 'coupon')->name('coupon');
+        Route::get('/billing', 'billing')->name('billing');
     });
 
     Route::controller(UserController::class)->group(function () {

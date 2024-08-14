@@ -1,4 +1,4 @@
-@define($gap = 'gap-3'; $user = K::user();)
+@define($user = K::user())
 
 <x-layout.app title="profile">
 
@@ -138,8 +138,8 @@
     </h2>
 
     {{-- check if subscribed --}}
-    @define($sub = $user->subscription('default'))
     @if ($user->subscribed())
+      @define($sub = $user->subscription('default'))
       @if ($sub->onGracePeriod())
         {{-- cancelled --}}
         <p class="text-sm text-gray-600">
@@ -156,7 +156,7 @@
         @if ($sub->onTrial())
           {{-- on trial --}}
           <p class="text-sm text-gray-600">
-            You are currently on your trial period! This ends in K::date($sub->trial_ends_at)->diffInDays(now()) days.
+            You are currently on your trial period! This ends in {{ K::date($sub->trial_ends_at)->diffInDays(now()) }} days.
           </p>
         @else
           {{-- subscribed --}}
@@ -166,6 +166,12 @@
         @endif
 
         <div class="flex items-center justify-end">
+          <x-button.dark class="w-full"
+            class="bg-orange-600 hover:bg-orange-500 focus:bg-orange-500 active:bg-orange-700"
+            :href="route('billing')">
+            billing
+          </x-button.dark>
+
           <x-button.dark id="cancelSubscription"
             open-modal="cancel-subscription">
             cancel

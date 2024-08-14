@@ -1,16 +1,15 @@
 @php
   $list = ['Rooftop accurate address finder with navigation links.', 'Shared geolocational information displayed on map.', 'Accurately track and view your daily and weekly earnings.', 'All your data displayed in a readable format.', 'Store all your refuels and calculate the costs.', 'Perform accurate calculations for predicted income.', 'Store and calculate all of your expenses.', 'Get an overview of everything calculated for your taxes.'];
 
-  $user = K::user();
   $trial = $user->hadTrial();
-  $failed = $user->hasIncompletePayment('default');
+  $due = $sub && ($sub->pastDue() || $sub->hasIncompletePayment());
 @endphp
 
 <x-layout.app title="subscribe"
   :center="true">
   <input id="cs"
     type="hidden"
-    value="{{ $user->createSetupIntent()->client_secret }}">
+    value="{{ $cs }}">
 
   <x-section.one class="p-0 md:p-0"
     maxWidth="xl">
@@ -18,9 +17,7 @@
     <div class="flex flex-col gap-4 text-center text-lg">
 
       <h1 class="text-tracking bg-violet-700 px-4 pb-3 pt-3 font-serif text-4xl font-black text-white md:px-6 md:pt-5">
-        @if ($failed)
-          Payment failed
-        @elseif ($trial)
+        @if ($due || $trial)
           Subscription
         @else
           7 Day FREE Trial
@@ -29,7 +26,7 @@
 
       <div class="flex flex-col gap-4 px-4 pb-3 md:px-6 md:pb-5">
         <p class="text-gray-700">
-          @if ($trial || $failed)
+          @if ($trial || $due)
             You pay only...
           @else
             You pay nothing for the first 7 days. Then only...
@@ -50,18 +47,25 @@
           @endforeach
         </ul>
 
-        <x-button.dark class="w-full"
-          class="bg-orange-600 text-2xl hover:bg-orange-500 focus:bg-orange-500 active:bg-orange-700"
-          open-modal="stripe-pay"
-          size="md">
-          @if ($failed)
-            Update payment method
-          @elseif ($trial)
-            pay now
-          @else
-            try it free
-          @endif
-        </x-button.dark>
+        @if ($due)
+          <x-button.dark class="w-full"
+            class="bg-orange-600 text-xl hover:bg-orange-500 focus:bg-orange-500 active:bg-orange-700"
+            size="md"
+            :href="route('billing')">
+            Please confirm your payment
+          </x-button.dark>
+        @else
+          <x-button.dark class="w-full"
+            class="bg-orange-600 text-2xl hover:bg-orange-500 focus:bg-orange-500 active:bg-orange-700"
+            size="md"
+            open-modal="stripe-pay">
+            @if ($trial)
+              pay now
+            @else
+              try it free
+            @endif
+          </x-button.dark>
+        @endif
       </div>
 
     </div>
@@ -86,7 +90,7 @@
               src="{{ Vite::asset('resources/images/stripe-powered.svg') }}"
               alt="stripe">
 
-            <x-button.dark class="no-loader relative bg-violet-800 text-2xl hover:bg-violet-700 focus:bg-violet-700 active:bg-violet-900"
+            <x-button.dark class="no-loader relative bg-violet-800 text-xl hover:bg-violet-700 focus:bg-violet-700 active:bg-violet-900"
               id="payment-button">
               <span class="text opacity-100">subscribe</span>
               <div class="loader absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0"

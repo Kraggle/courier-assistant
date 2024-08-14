@@ -17,7 +17,21 @@ class SubscriptionController extends Controller {
         if ($user->subscribed())
             return redirect()->route('dashboard');
 
-        return view('subscription.show');
+        // get intent for stripe even if the customer does not exist
+        try {
+            $intent = $user->createSetupIntent();
+        } catch (\Exception $e) {
+            $user->stripe_id = null;
+            $user->save();
+
+            $intent = $user->createSetupIntent();
+        }
+
+        return view('subscription.show', [
+            'user' => $user,
+            'cs' => $intent->client_secret,
+            'sub' => $user->subscription(),
+        ]);
     }
 
     /**
@@ -51,14 +65,7 @@ class SubscriptionController extends Controller {
             ]);
         }
 
-        try {
-            $sub->create($request->get('token'));
-        } catch (\Laravel\Cashier\Exceptions\IncompletePayment $exception) {
-            return redirect()->route(
-                'cashier.payment',
-                [$exception->payment->id, 'redirect' => route('dashboard')]
-            );
-        }
+        $sub->create($user->paymentMethods()->first()->id);
 
         return redirect('/')->with('success', 'Your subscription has been created successfully.');
     }
@@ -121,5 +128,14 @@ class SubscriptionController extends Controller {
 
         $request->user()->subscription('default')->resume();
         return back()->with('info', 'Your subscription has been resumed successfully.');
+    }
+
+    /**
+     * Redirect to the billing page.
+     * 
+     * @param Request $request
+     */
+    public function billing(Request $request) {
+        return $request->user()->redirectToBillingPortal(route('dashboard'));
     }
 }

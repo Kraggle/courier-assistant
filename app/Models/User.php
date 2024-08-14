@@ -30,6 +30,7 @@ class User extends Authenticatable {
         'dsp_id',
         'options->depot_id',
         'options->had_trial',
+        'stripe_id',
     ];
 
     /**
@@ -495,10 +496,10 @@ class User extends Authenticatable {
 
         self::deleting(function ($user) {
             $user->subscription('default')->cancelNow();
-            $user->routes()->each(fn ($item) => $item->delete());
-            $user->vehicles()->each(fn ($item) => $item->delete());
-            $user->expenses()->each(fn ($item) => $item->delete());
-            $user->taxes()->each(fn ($item) => $item->delete());
+            $user->routes()->each(fn($item) => $item->delete());
+            $user->vehicles()->each(fn($item) => $item->delete());
+            $user->expenses()->each(fn($item) => $item->delete());
+            $user->taxes()->each(fn($item) => $item->delete());
             $user->dsps()->detach();
         });
     }
