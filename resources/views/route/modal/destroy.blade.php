@@ -22,10 +22,11 @@
         no
       </x-button.light>
 
-      <x-button.dark class=""
-        ref="submit">
-        yes
-      </x-button.dark>
+      <x-button.loader>
+        <x-slot:text
+          ref="submit">yes</x-slot>
+        <x-slot:loader></x-slot>
+      </x-button.loader>
     </div>
 
   </form>

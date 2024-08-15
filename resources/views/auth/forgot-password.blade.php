@@ -40,9 +40,10 @@
           Back to login?
         </a>
 
-        <x-button.dark>
-          Email Password Reset Link
-        </x-button.dark>
+        <x-button.loader>
+          <x-slot:text>Email Password Reset Link</x-slot>
+          <x-slot:loader></x-slot>
+        </x-button.loader>
       </div>
     </form>
 

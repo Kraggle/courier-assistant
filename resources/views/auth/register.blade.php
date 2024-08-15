@@ -68,9 +68,10 @@
           Already registered?
         </a>
 
-        <x-button.dark>
-          register
-        </x-button.dark>
+        <x-button.loader>
+          <x-slot:text>register</x-slot>
+          <x-slot:loader></x-slot>
+        </x-button.loader>
       </div>
     </form>
   </x-section.one>

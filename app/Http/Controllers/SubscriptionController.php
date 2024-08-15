@@ -53,6 +53,8 @@ class SubscriptionController extends Controller {
 
         $sub = $user->newSubscription('default', env('STRIPE_PRICE'));
 
+        // K::log($user->paymentMethods()->first()->id);
+
         if ($request->coupon) {
             $coupon =  $user->findActivePromotionCode($request->coupon);
             $sub->withPromotionCode($coupon->id);

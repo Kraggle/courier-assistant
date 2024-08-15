@@ -93,9 +93,11 @@
         cancel
       </x-button.light>
 
-      <x-button.dark ref="submit">
-        save
-      </x-button.dark>
+      <x-button.loader>
+        <x-slot:text
+          ref="submit">save</x-slot>
+        <x-slot:loader></x-slot>
+      </x-button.loader>
     </div>
 
   </form>

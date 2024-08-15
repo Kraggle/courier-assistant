@@ -35,10 +35,11 @@
 
       {{-- submit --}}
       <div class="mt-6 flex justify-end">
-        <x-button.dark class="ms-3"
-          ref="submit">
-          add
-        </x-button.dark>
+        <x-button.loader class="ms-3">
+          <x-slot:text
+            ref="submit">add</x-slot>
+          <x-slot:loader></x-slot>
+        </x-button.loader>
       </div>
 
     </form>

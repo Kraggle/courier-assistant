@@ -31,9 +31,12 @@
         cancel
       </x-button.light>
 
-      <x-button.dark class="bg-green-700 hover:bg-green-600 focus:bg-green-600 active:bg-green-800">
-        resume subscription
-      </x-button.dark>
+      <x-button.loader class="bg-green-700 hover:bg-green-600 focus:bg-green-600 active:bg-green-800">
+        <x-slot:text
+          ref="submit">resume subscription</x-slot>
+        <x-slot:loader
+          class="text-green-600"></x-slot>
+      </x-button.loader>
     </div>
   </form>
 </x-modal>

@@ -31,9 +31,12 @@
         cancel
       </x-button.light>
 
-      <x-button.danger>
-        cancel subscription
-      </x-button.danger>
+      <x-button.loader class="bg-red-500 hover:bg-red-400 focus:bg-red-600 focus:ring-red-400 active:bg-red-600">
+        <x-slot:text
+          ref="submit">cancel subscription</x-slot>
+        <x-slot:loader
+          class="text-red-400"></x-slot>
+      </x-button.loader>
     </div>
   </form>
 </x-modal>

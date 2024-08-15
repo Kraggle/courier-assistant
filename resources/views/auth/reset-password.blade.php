@@ -56,9 +56,10 @@
       </x-form.wrap>
 
       <div class="flex items-center justify-end">
-        <x-button.dark>
-          reset password
-        </x-button.dark>
+        <x-button.loader>
+          <x-slot:text>reset password</x-slot>
+          <x-slot:loader></x-slot>
+        </x-button.loader>
       </div>
     </form>
 

@@ -51,9 +51,10 @@
           </a>
         @endif
 
-        <x-button.dark>
-          Log in
-        </x-button.dark>
+        <x-button.loader>
+          <x-slot:text>log in</x-slot>
+          <x-slot:loader></x-slot>
+        </x-button.loader>
       </div>
     </form>
 
