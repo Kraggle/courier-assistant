@@ -112,6 +112,25 @@ class User extends Authenticatable {
         return $this->routesByDate($start, $end);
     }
 
+    /**
+     * Get the users routes for to a given date.
+     * 
+     * @param $date
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function routesToDate($date) {
+        return $this->routes->where('date', '<=', K::dateString($date));
+    }
+
+    /**
+     * See if the users has routes upto a given date.
+     * 
+     * @param $date
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function hasRoutesToDate($date) {
+        return $this->routesToDate($date)->isNotEmpty();
+    }
 
     /**
      * Get the users routes for a given year.

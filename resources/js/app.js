@@ -6,6 +6,7 @@ import K, { timed } from './K.js'
 import dateDropper from './plugins/datedropper-javascript.js';
 import dayjs from 'dayjs';
 import weekOfYear from 'dayjs/plugin/weekOfYear.js';
+import advancedFormat from 'dayjs/plugin/advancedFormat.js';
 import tippy from 'tippy.js';
 import Cookies from 'js-cookie';
 import DataTable from 'datatables.net-dt'
@@ -23,6 +24,7 @@ window.DataTable = DataTable;
 window.timed = timed;
 
 dayjs.extend(weekOfYear);
+dayjs.extend(advancedFormat);
 
 dayjs.prototype.weekOfMonth = function() {
 	return Math.floor((this.date() - 1) / 7 + 1);
@@ -59,13 +61,20 @@ import.meta.glob([
  * Used to refresh all tooltips when triggered.
  */
 const refreshAll = function() {
-	const ignore = ['.select2', '.no-tooltip'];
+	const ignore = ['.select2', '.no-tooltip'],
+		skip = ['.skip-tooltip'];
 
 	$('[title][title!=""]').each(function() {
 		const $el = $(this),
 			title = $el.attr('title'),
 			data = $el.data();
 		if (!title) return;
+
+		for (const item of skip) {
+			if ($el.hasClass(item) || $el.closest(item).length) {
+				return;
+			}
+		}
 
 		for (const item of ignore) {
 			if ($el.hasClass(item) || $el.closest(item).length) {
@@ -195,3 +204,7 @@ $(() => {
 		}
 	});
 });
+
+// window.addEventListener('load', e => {
+// 	console.log(document.referrer);
+// });

@@ -1,7 +1,7 @@
 @php
   $last_route = $user->route();
   $date = K::date($last_route->date ?? '');
-  $weeks = [$date->copy(), $date->copy()->sub('week', 1), $date->copy()->sub('week', 2), $date->copy()->sub('week', 3)];
+  //$weeks = [$date->copy(), $date->copy()->sub('week', 1), $date->copy()->sub('week', 2), $date->copy()->sub('week', 3)];
 @endphp
 
 <x-layout.app title="routes">
@@ -12,6 +12,53 @@
       </x-slot>
 
       <x-slot:buttons>
+
+        @php
+          $modal = null;
+          $week = false;
+          if (isset($_GET['modal'])) {
+              $modal = $_GET['modal'];
+              $week = !preg_match('/^editRoute/', $modal);
+              preg_match('/(\d+)$/', $modal, $m);
+              $id = $m[1];
+              $r = $user->routes->find($id);
+          }
+        @endphp
+        @if ($modal && !$week && $r)
+          <x-button.dark class="hidden"
+            id="{{ $modal }}"
+            :data-modal="json_encode([
+                'title.text' => Msg::edit('route'),
+                'form.action' => route('route.edit', $r->id),
+                'type.value' => old('type', $r->type),
+                'depot_id.value' => old('depot_id', $r->depot_id),
+                'date.value' => old('date', K::date($r->date)->format('Y-m-d')),
+                'start_time.value' => old('start_time', K::date($r->start_time)->format('g:i A')),
+                'end_time.value' => old('end_time', $r->end_time ? K::date($r->end_time)->format('g:i A') : ''),
+                'start_mileage.value' => old('start_mileage', $r->start_mileage),
+                'start_mileage_plus.value' => old('start_mileage_plus', ''),
+                'end_mileage.value' => old('end_mileage', $r->end_mileage),
+                'end_mileage_plus.value' => old('end_mileage_plus', ''),
+                'invoice_mileage.value' => old('invoice_mileage', $r->invoice_mileage),
+                'stops.value' => old('stops', $r->stops),
+                'bonus.value' => old('bonus', $r->bonus),
+                'vat.checked' => old('vat', $r->vat),
+                'ttfs.value' => old('ttfs', $r->ttfs),
+                'note.value' => old('note', $r->note),
+                'destroy.removeclass' => 'hidden',
+                'destroy.data' => [
+                    'modal' => [
+                        'form.action' => route('route.destroy', $r->id),
+                    ],
+                ],
+                'submit.text' => 'save',
+                'more-btn.text' => 'Show More',
+                'more.addclass' => 'hidden',
+            ])"
+            open-modal="add-route">
+          </x-button.dark>
+        @elseif ($modal && $week)
+        @endif
 
         <x-button.dark class="bg-violet-800 hover:bg-violet-700 focus:bg-violet-700 active:bg-violet-900"
           id="addRoute"
@@ -93,10 +140,177 @@
         </x-table.thead>
 
         <tbody id="pushRows">
-          @foreach ($weeks as $date)
-            @define($routes = $user->routesByWeek($date)->sortByDesc('date'))
-            @include('route.table', ['routes' => $routes])
-          @endforeach
+
+          <x-table.tr class="skip-tooltip hidden cursor-pointer !border-t-2 !border-t-gray-500 !bg-green-100 font-semibold"
+            data-modal=""
+            is="week"
+            open-modal="edit-week">
+
+            {{-- date --}}
+            <x-table.td class="whitespace-nowrap">
+              <div class="text-xs font-light text-gray-600 sm:text-sm">Pay Date</div>
+              <div class="pay_day"></div>
+            </x-table.td>
+
+            {{-- time --}}
+            <x-table.td class="duration sm-only whitespace-nowrap"></x-table.td>
+
+            {{-- miles --}}
+            <x-table.td>
+              <x-table.text-with-alt class="hide-miles">
+                <x-slot:main
+                  class="miles"></x-slot:main>
+                <x-slot:alt
+                  class="fuel_spend"></x-slot:alt>
+              </x-table.text-with-alt>
+              <x-table.text-with-alt class="hide-miles">
+                <x-slot:main
+                  class="mileage"></x-slot:main>
+                <x-slot:alt
+                  class="fuel_pay"></x-slot:alt>
+              </x-table.text-with-alt>
+            </x-table.td>
+
+            {{-- pay --}}
+            <x-table.td>
+              <x-table.text-with-alt>
+                <x-slot:main
+                  class="total_pay"></x-slot:main>
+                <x-slot:alt
+                  class="total_hourly"></x-slot:alt>
+              </x-table.text-with-alt>
+              <x-table.text-with-alt class="hide-actual">
+                <x-slot:main
+                  class="actual_pay"></x-slot:main>
+                <x-slot:alt
+                  class="actual_hourly"></x-slot:alt>
+              </x-table.text-with-alt>
+            </x-table.td>
+
+            {{-- stops --}}
+            <x-table.td class="sm-only">
+              <x-table.text-with-alt class="hide-stops">
+                <x-slot:main
+                  class="stops"></x-slot:main>
+                <x-slot:alt
+                  class="stops_avg"></x-slot:alt>
+              </x-table.text-with-alt>
+            </x-table.td>
+
+            {{-- type --}}
+            <x-table.td>
+              <div class="flex items-center justify-end gap-4">
+                <x-icon class="hide-rate far fa-chart-simple cursor-pointer text-teal-400"
+                  id="addRate"
+                  data-modal=""
+                  data-tooltip-position="left"
+                  title="Set weeks fuel rate?"
+                  open-modal="add-rate" />
+
+                <x-icon class="far fa-edit hidden cursor-pointer text-base text-orange-400 sm:block sm:text-xl"
+                  data-tooltip-position="left"
+                  :title="Str::title('update entire week')" />
+
+                <span class="text-lg font-bold sm:hidden"></span>
+              </div>
+            </x-table.td>
+
+            {{-- action --}}
+            <x-table.td class="sm-only text-right text-2xl">#<span class="week"></span></x-table.td>
+
+          </x-table.tr>
+
+          <x-table.tr class="skip-tooltip hidden cursor-pointer"
+            data-date="{{ $date->format('Y-m-d') }}"
+            data-modal=""
+            is="route"
+            open-modal="add-route">
+
+            {{-- date --}}
+            <x-table.td class="whitespace-nowrap">
+              <div class="date_full block sm:hidden"></div>
+              <div class="date_display hidden sm:block"></div>
+              <div class="date_year hidden sm:block"></div>
+              <div class="time xs-only text-xs font-light text-gray-600 sm:text-sm"></div>
+              <div class="time_string xs-only"></div>
+            </x-table.td>
+
+            {{-- time --}}
+            <x-table.td class="sm-only">
+              <div class="time text-xs font-light text-gray-600 sm:text-sm"></div>
+              <div class="time_string"></div>
+            </x-table.td>
+
+            {{-- miles --}}
+            <x-table.td>
+              <x-table.text-with-alt class="hide-miles">
+                <x-slot:main
+                  class="miles"></x-slot:main>
+                <x-slot:alt
+                  class="fuel_spend"></x-slot:alt>
+              </x-table.text-with-alt>
+              <x-table.text-with-alt class="hide-miles">
+                <x-slot:main
+                  class="mileage"></x-slot:main>
+                <x-slot:alt
+                  class="fuel_pay"></x-slot:alt>
+              </x-table.text-with-alt>
+            </x-table.td>
+
+            {{-- pay --}}
+            <x-table.td>
+              <x-table.text-with-alt>
+                <x-slot:main
+                  class="total_pay"></x-slot:main>
+                <x-slot:alt
+                  class="total_hourly"></x-slot:alt>
+              </x-table.text-with-alt>
+
+              <x-table.text-with-alt class="hide-actual">
+                <x-slot:main
+                  class="actual_pay"></x-slot:main>
+                <x-slot:alt
+                  class="actual_hourly"></x-slot:alt>
+              </x-table.text-with-alt>
+            </x-table.td>
+
+            {{-- stops --}}
+            <x-table.td class="sm-only">
+              <x-table.text-with-alt class="hide-stops">
+                <x-slot:main
+                  class="stops"></x-slot:main>
+                <x-slot:alt
+                  class="stops_hourly"></x-slot:alt>
+              </x-table.text-with-alt>
+            </x-table.td>
+
+            {{-- type --}}
+            <x-table.td class="sm-only whitespace-nowrap">
+              <div class="type"></div>
+              <x-table.text-with-alt>
+                <x-slot:main
+                  class="depot_identifier"></x-slot:main>
+                <x-slot:alt
+                  class="depot_location"></x-slot:alt>
+              </x-table.text-with-alt>
+            </x-table.td>
+
+            {{-- action --}}
+            <x-table.td class="text-base sm:text-xl">
+              <div class="flex items-center justify-end gap-4">
+                <x-icon class="hide-extra far fa-square-ellipsis-vertical mt-[2px] cursor-pointer text-blue-400"
+                  data-modal=""
+                  data-tooltip-position="left"
+                  title="Extra information!"
+                  open-modal="extra-route" />
+
+                <x-icon class="far fa-edit cursor-pointer text-orange-400"
+                  data-tooltip-position="left"
+                  title="{{ Str::title('edit') }}" />
+              </div>
+            </x-table.td>
+          </x-table.tr>
+
         </tbody>
 
       </table>
@@ -135,13 +349,17 @@
       };
 
       $(() => {
-        let loading = false;
+        let loading = false,
+          available = true,
+          first = true;
         const $el = $('#pushRows'),
-          $spinner = $('#spinner');
+          $spinner = $('#spinner'),
+          $route = $('[is=route]'),
+          $week = $('[is=week]');
 
-        const scrollFunc = () => {
+        const getRows = () => {
           if (!$('tr:last-child', $el).isInViewport()) return;
-          if (loading) return;
+          if (loading || !available) return;
           loading = true;
           $spinner.show();
 
@@ -153,18 +371,68 @@
             data: {
               _token: "{{ csrf_token() }}",
               date,
+              first
             },
             success: function(data) {
-              $el.append(data);
+              // console.log(data);
+
+              if (data.items && data.items.length > 0)
+                generateRows(data.items);
+
               $spinner.hide();
               refreshAll();
               loading = false;
+              first = false;
+
+              available = data.available;
             }
           });
-        };
+        }
 
-        $(window).on("scroll", scrollFunc);
-        scrollFunc();
+        const generateRows = rows => {
+          K.each(rows, (index, row) => {
+            let $row;
+
+            switch (row.is) {
+              case 'route':
+                $row = $route.clone();
+                $row.data('modal', row.modal.route);
+                $('.hide-extra', $row).data('modal', row.modal.extra);
+                $row.attr('id', `editRoute${row.id}`);
+                $row.attr('data-date', row.date_ymd);
+
+                if (!row.has_extra)
+                  $('.hide-extra', $row).addClass('hidden');
+
+                break;
+              case 'week':
+                $row = $week.clone();
+                $row.data('modal', row.modal.week);
+                $('.hide-rate', $row).data('modal', row.modal.rate);
+                $row.attr('id', `editWeek${row.week}_${row.year}`);
+
+                if (row.rate_is_set)
+                  $('.hide-rate', $row).addClass('hidden');
+                break;
+            }
+
+            if (!row.miles)
+              $('.hide-miles', $row).addClass('hidden');
+            if (row.total_pay == row.actual_pay)
+              $('.hide-actual', $row).addClass('hidden');
+            if (!row.stops)
+              $('.hide-stops', $row).addClass('hidden');
+
+            K.each(row, (key, value) => {
+              $(`.${key}`, $row).text(value);
+            });
+
+            $el.append($row.removeClass('hidden skip-tooltip'));
+          });
+        }
+
+        $(window).on("scroll", getRows);
+        getRows();
       });
     </script>
   @endpush

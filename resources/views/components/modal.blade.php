@@ -170,7 +170,7 @@
 
     $(() => {
       // open modal button click
-      $('[open-modal]').on('click', function(e) {
+      $('body').on('click', '[open-modal]', function(e) {
         e.preventDefault();
         e.stopPropagation();
         Modal.open($(this));
