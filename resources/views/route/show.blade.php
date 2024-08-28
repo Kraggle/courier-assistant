@@ -6,9 +6,14 @@
 
 <x-layout.app title="routes">
   <x-section.one class="px-0 md:px-0">
-    <x-section.title class="px-4 md:px-6">
+    <x-section.title class="px-4 md:px-6"
+      id="pageTitle">
       <x-slot:title>
         routes
+        <span class="pl-2 align-middle text-sm">
+          (<span class="loaded-count">0</span> /
+          <span>{{ $user->routes->count() }}</span>)
+        </span>
       </x-slot>
 
       <x-slot:buttons>
@@ -211,7 +216,7 @@
                   data-tooltip-position="left"
                   :title="Str::title('update entire week')" />
 
-                <span class="text-lg font-bold sm:hidden"></span>
+                <span class="text-lg font-bold sm:hidden">#<span class="week"></span></span>
               </div>
             </x-table.td>
 
@@ -327,6 +332,14 @@
     </div>
   </x-section.one>
 
+  <div class="fixed right-20 top-0 -translate-y-full rounded-b-md bg-white px-3 py-1 font-serif opacity-0 shadow-md transition-all duration-150 ease-out [&.show]:translate-y-0 [&.show]:opacity-100"
+    id="countFloat">
+    <span class="align-middle text-sm">
+      (<span class="loaded-count">0</span> /
+      <span>{{ $user->routes->count() }}</span>)
+    </span>
+  </div>
+
   @push('modals')
     @include('route.modal.add')
     @include('route.modal.week')
@@ -351,13 +364,19 @@
       $(() => {
         let loading = false,
           available = true,
-          first = true;
+          first = true,
+          count = 0;
         const $el = $('#pushRows'),
           $spinner = $('#spinner'),
           $route = $('[is=route]'),
-          $week = $('[is=week]');
+          $week = $('[is=week]'),
+          $loaded = $('.loaded-count'),
+          $count = $('#countFloat'),
+          $title = $('#pageTitle');
 
         const getRows = () => {
+          $count[`${$title.isInViewport() ? 'remove' : 'add'}Class`]('show');
+
           if (!$('tr:last-child', $el).isInViewport()) return;
           if (loading || !available) return;
           loading = true;
@@ -371,10 +390,11 @@
             data: {
               _token: "{{ csrf_token() }}",
               date,
-              first
+              first,
+              count
             },
             success: function(data) {
-              // console.log(data);
+              console.log(data);
 
               if (data.items && data.items.length > 0)
                 generateRows(data.items);
@@ -385,6 +405,8 @@
               first = false;
 
               available = data.available;
+              count = data.total;
+              $loaded.text(data.total);
             }
           });
         }

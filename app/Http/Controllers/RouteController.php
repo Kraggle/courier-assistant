@@ -30,6 +30,7 @@ class RouteController extends FilesController {
         $user = K::user();
         $first = K::isTrue($request->input('first', false));
         $i = 0;
+        $count = intval($request->input('count', 0));
 
         $date = K::firstDayOfWeek($request->date);
 
@@ -49,6 +50,7 @@ class RouteController extends FilesController {
                 continue;
 
             $weeks[] = $routes;
+            $count += $routes->count();
         }
 
         $items = collect();
@@ -172,7 +174,11 @@ class RouteController extends FilesController {
             });
         }
 
-        return response()->json(['items' => $items, 'available' => $routes_available]);
+        return response()->json([
+            'items' => $items,
+            'available' => $routes_available,
+            'total' => $count,
+        ]);
     }
 
     /**
