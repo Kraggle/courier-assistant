@@ -394,7 +394,7 @@
               count
             },
             success: function(data) {
-              console.log(data);
+              // console.log(data);
 
               if (data.items && data.items.length > 0)
                 generateRows(data.items);
