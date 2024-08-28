@@ -8,7 +8,7 @@
     "name": "_commonjsHelpers"
   },
   "resources/css/app.css": {
-    "file": "assets/app-Bf-Vt6IT.css",
+    "file": "assets/app-C5R3bMKy.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -88,6 +88,10 @@
     "file": "assets/icon-color-hHKnRg21.svg",
     "src": "resources/images/icon-color.svg"
   },
+  "resources/images/icon.png": {
+    "file": "assets/icon-BnkZxbsk.png",
+    "src": "resources/images/icon.png"
+  },
   "resources/images/icon.svg": {
     "file": "assets/icon-CxPtjnCY.svg",
     "src": "resources/images/icon.svg"
@@ -103,6 +107,10 @@
   "resources/images/logo-google.png": {
     "file": "assets/logo-google-DsjRFvjy.png",
     "src": "resources/images/logo-google.png"
+  },
+  "resources/images/logo-white.png": {
+    "file": "assets/logo-white-DNU_qmyR.png",
+    "src": "resources/images/logo-white.png"
   },
   "resources/images/logo.png": {
     "file": "assets/logo-BtE1VQ4w.png",
@@ -129,7 +137,7 @@
     "src": "resources/images/stripe-powered.svg"
   },
   "resources/js/app.js": {
-    "file": "assets/app-DtfoOYzT.js",
+    "file": "assets/app-CN3gf2e0.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
