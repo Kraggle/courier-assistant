@@ -151,6 +151,7 @@ Route::middleware(['auth', Subscribed::class, Ready::class])->group(function () 
         Route::patch('/expense', 'bulk')->name('expense.bulk');
         Route::post('/expense', 'download')->name('expense.download');
         Route::post('/expenses', 'export')->name('expense.export');
+        Route::post('/expenses/get', 'get')->name('expense.get');
         Route::put('/expense/{expense}', 'edit')->name('expense.edit');
         Route::delete('/expense/{expense}', 'destroy')->name('expense.destroy');
     });

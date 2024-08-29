@@ -332,7 +332,7 @@
     </div>
   </x-section.one>
 
-  <div class="fixed right-20 top-0 -translate-y-full rounded-b-md bg-white px-3 py-1 font-serif opacity-0 shadow-md transition-all duration-150 ease-out [&.show]:translate-y-0 [&.show]:opacity-100"
+  <div class="fixed right-5 top-0 -translate-y-full rounded-b-md bg-white px-3 py-1 font-serif opacity-0 shadow-md transition-all duration-150 ease-out sm:right-12 [&.show]:translate-y-0 [&.show]:opacity-100"
     id="countFloat">
     <span class="align-middle text-sm">
       (<span class="loaded-count">0</span> /
@@ -352,15 +352,6 @@
 
   @push('scripts')
     <script type="module">
-      $.fn.isInViewport = function() {
-        const elementTop = $(this).offset().top,
-          elementBottom = elementTop + $(this).outerHeight();
-        const viewportTop = $(window).scrollTop(),
-          viewportBottom = viewportTop + $(window).height();
-
-        return elementBottom > viewportTop && elementTop < viewportBottom;
-      };
-
       $(() => {
         let loading = false,
           available = true,

@@ -107,9 +107,10 @@ interface Date {
 }
 
 interface JQuery {
-    perfectScrollbar(settings?: object): jQuery;
+    perfectScrollbar(settings?: object): this;
     replaceTag(element: HTMLElement, newTag: string, keepProps?: boolean): this;
     inArray(value: any, array: any[], fromIndex?: number): number;
+    isInViewport(): boolean;
 
     /**
      * Serialize a form into a javascript object.
@@ -150,6 +151,7 @@ interface Window {
     DataTable: DataTable;
     timed: timed;
     Trix: Trix;
+    addTooltip(): void;
 }
 
 interface ImportMeta {

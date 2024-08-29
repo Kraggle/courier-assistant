@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Helpers\K;
 use App\Models\DSP;
+use Illuminate\Support\Str;
 use Laravel\Cashier\Billable;
 use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
@@ -381,13 +382,21 @@ class User extends Authenticatable {
     }
 
     /**
+     * Get the users expenses raw.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function expensesRaw(): HasMany {
+        return $this->hasMany(Expense::class);
+    }
+
+    /**
      * Get the users expenses.
      * 
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function expenses(): HasMany {
         return $this->hasMany(Expense::class)->orderBy('date', 'desc');
-        // ->where('date', '<=',  K::date())
     }
 
     /**
@@ -406,6 +415,42 @@ class User extends Authenticatable {
      */
     public function expensesToNextWeek(): HasMany {
         return $this->hasMany(Expense::class)->orderBy('date', 'desc')->where('date', '<=',  K::date()->add('week', 1));
+    }
+
+    /**
+     * Get the users expenses with filters.
+     * 
+     * @param $opts array
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function expensesWithFilters($opts = []) {
+        extract(K::merge([
+            'future' => 0,
+            'by' => 'date',
+            'dir' => 'desc',
+            'search' => ''
+        ], $opts));
+
+        return $this->expensesRaw
+            ->when(!$future, function ($query) {
+                return $query->where('date', '<=',  K::date()->add('week', 1));
+            })
+            ->when($dir == 'asc', function ($query) use ($by) {
+                return $query->sortBy($by)->values();
+            })
+            ->when($dir == 'desc', function ($query) use ($by) {
+                return $query->sortByDesc($by)->values();
+            })
+            ->when($search, function ($query) use ($search) {
+                return $query->filter(function ($expense) use ($search) {
+                    $columns = ['type', 'describe'];
+                    foreach ($columns as $column) {
+                        if (strpos(Str::lower($expense->{$column}), Str::lower($search)) !== false) {
+                            return true;
+                        }
+                    }
+                });
+            });
     }
 
     /**

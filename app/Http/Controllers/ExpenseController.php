@@ -6,6 +6,7 @@ use App\Helpers\K;
 use App\Helpers\Msg;
 use App\Models\Expense;
 use App\Models\RepeatRule;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Spatie\SimpleExcel\SimpleExcelReader;
@@ -22,6 +23,85 @@ class ExpenseController extends FilesController {
         // $rule->createRepeats();
 
         return view('expense.show', ['user' => K::user()]);
+    }
+
+    /**
+     * Get the users expenses from the database with filters.
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function get(Request $request) {
+        $user = K::user();
+
+        extract(K::merge([
+            'page' => 1,
+            'length' => 10,
+        ], $request->all()));
+
+        $expenses = $user->expensesWithFilters($request->all());
+        $paged = $expenses->forPage($page, $length);
+        $items = collect();
+        $paged->each(function ($e) use ($items) {
+            $repeat = $e->repeat;
+            $end = K::date($repeat->end_date ?? K::date($e->date)->add(1, 'year'));
+            $hide = 'choice-wrap.' . ($repeat ? 'removeclass' : 'addclass');
+
+            $items->push(collect([
+                'id' => $e->id,
+                'date' => K::displayDate($e->date, 'jS M Y'),
+                'cost' => K::formatCurrency($e->cost),
+                'type' => Str::title($e->type),
+                'type_desc' => $e->getType(),
+                'describe' => $e->describe,
+                'has_image' => $e->hasImage(),
+                'is_future' => $e->isFuture(),
+                'is_repeat' => $e->isRepeat(),
+                'modal' => [
+                    'edit' => [
+                        'title.text' => $repeat ? 'Edit repeat expense' : 'Edit expense',
+                        'form.action' => route('expense.edit', $e->id),
+                        'form.mode' => 'edit',
+                        $hide => 'hidden',
+                        'choice.value' => old('choice', 'this'),
+                        'date.value' => old('date', K::date($e->date)->format('Y-m-d')),
+                        'type.value' => old('type', $e->type),
+                        'date_to.value' => old('date_to', $end->format('Y-m-d')),
+                        'repeat.value' => old('repeat', $repeat->rules->repeat ?? 'never'),
+                        'every.value' => old('every', $repeat->rules->every ?? 'week'),
+                        'every_x.value' => old('every_x', $repeat->rules->every_x ?? '1'),
+                        'month.value' => old('month', $repeat->rules->month ?? 'day'),
+                        'describe.value' => old('describe', $e->describe),
+                        'cost.value' => old('cost', $e->cost),
+                        'image-wrap.set-inputs' => old('image-wrap', ''),
+                        'image-wrap.set-img' => $e->getImageURL(),
+                        'destroy.removeclass' => 'hidden',
+                        'destroy.data' => [
+                            'modal' => [
+                                'form.action' => route('expense.destroy', $e->id),
+                                'title.text' => $repeat ? 'Delete repeat expense' : 'Delete expense',
+                                'message.text' => $repeat ? 'Choose which of these repeat expenses you want to delete.' : Msg::sureDelete('expense'),
+                                $hide => 'hidden',
+                                'submit.text' => $repeat ? 'delete' : 'yes',
+                            ],
+                        ],
+                        'submit.text' => 'save',
+                        'is-repeat.value' => old('is-repeat', $e->isRepeat()),
+                    ],
+                    'receipt' => [
+                        'image.src' => $e->getImageURL(),
+                        'form.action' => route('expense.download'),
+                        'path.value' => $e->image,
+                    ]
+                ]
+            ]));
+        });
+
+        return response()->json([
+            'items' => $items,
+            'filtered' => $expenses->count(),
+            'total' => $user->{$future ? 'expenses' : 'expensesToNextWeek'}->count(),
+        ]);
     }
 
     /**

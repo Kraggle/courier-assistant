@@ -45,10 +45,10 @@
 
           <x-slot:content>
             {{-- toggle all --}}
-            <x-dropdown.link class="cursor-pointer"
+            {{-- <x-dropdown.link class="cursor-pointer"
               href="\expense?future=1">
               Show future expenses
-            </x-dropdown.link>
+            </x-dropdown.link> --}}
 
             {{-- bulk add --}}
             <x-dropdown.link class="cursor-pointer"
@@ -74,137 +74,144 @@
 
     </x-section.title>
 
-    <div class="overflow-x-auto [&_.dt-layout-row:not(.dt-layout-table)]:px-4 md:[&_.dt-layout-row:not(.dt-layout-table)]:px-6">
-      <table class="w-full table-auto whitespace-nowrap text-sm sm:text-lg"
+    @if ($user->hasExpenses())
+      <div class="grid grid-cols-2 px-6 pb-3 sm:grid-cols-4">
+
+        <div class="flex items-center gap-1">
+          <span class="text-sm font-bold uppercase">Per Page:</span>
+          <x-form.select id="length"
+            minresultsforsearch=999>
+            <x-slot:options>
+              @foreach ([10, 25, 50, 100] as $i)
+                <option value="{{ $i }}"
+                  {{ K::selected($i, $_GET['length'] ?? 25) }}>{{ $i }}</option>
+              @endforeach
+            </x-slot>
+          </x-form.select>
+        </div>
+
+        <div class="hidden sm:block"></div>
+
+        <x-form.check id="future"
+          :checked="$_GET['future'] ?? 0">
+          <x-slot:label>Show future expenses?</x-slot>
+        </x-form.check>
+
+        <x-form.text-prefix class="col-span-2 w-full sm:col-span-1"
+          id="search"
+          value="{{ $_GET['search'] ?? '' }}"
+          placeholder="Filter results...">
+
+          <x-icon class="fal fa-search"></x-icon>
+
+        </x-form.text-prefix>
+
+      </div>
+    @endif
+
+    <div class="overflow-x-auto">
+
+      <table class="w-full table-auto whitespace-nowrap text-sm sm:text-lg [&_.sm-only]:hidden sm:[&_.sm-only]:table-cell sm:[&_.xs-only]:hidden"
         id="table_id">
 
         <x-table.thead>
-          <x-table.th class="pr-2"
-            data-priority="1">date</x-table.th>
-          <x-table.th class="px-2"
-            data-priority="1">expense</x-table.th>
-          <x-table.th class="px-2"
-            data-priority="1">cost</x-table.th>
-          <x-table.th class="__sm-only px-2"
-            data-priority="2">type</x-table.th>
-          <x-table.th class="w-[1%] pl-2"
-            data-priority="1"
-            data-dt-order="disable"></x-table.th>
+          @php
+            $by = $_GET['by'] ?? 'date';
+            $dir = $_GET['dir'] ?? 'desc';
+          @endphp
 
+          <x-table.th class="pr-2">
+            <x-button.sort data-by="date"
+              :active="$by === 'date'"
+              :dir="$dir">date</x-button.sort>
+          </x-table.th>
+          <x-table.th class="px-2">
+            <x-button.sort data-by="describe"
+              :active="$by === 'describe'"
+              :dir="$dir">expense</x-button.sort>
+          </x-table.th>
+          <x-table.th class="px-2">
+            <x-button.sort data-by="cost"
+              :active="$by === 'cost'"
+              :dir="$dir">cost</x-button.sort>
+          </x-table.th>
+          <x-table.th class="sm-only px-2">
+            <x-button.sort data-by="type"
+              :active="$by === 'type'"
+              :dir="$dir">type</x-button.sort>
+          </x-table.th>
+          <x-table.th class="w-[1%] pl-2"></x-table.th>
         </x-table.thead>
 
-        <tbody>
+        <tbody id="pushRows">
+          <x-table.tr class="keep skip-tooltip hidden cursor-pointer [&.is-future_td:not(:last-child)]:opacity-50"
+            open-modal="add-expense"
+            is="row">
 
-          @define($expenses = isset($_GET['future']) ? $user->expenses : $user->expensesToNextWeek)
-          @foreach ($expenses as $e)
-            @php
-              $repeat = $e->repeat;
-              $end = K::date($repeat->end_date ?? K::date($e->date)->add(1, 'year'));
-              $hide = 'choice-wrap.' . ($repeat ? 'removeclass' : 'addclass');
-              $future = $e->isFuture() ? 'opacity-50' : '';
-            @endphp
-            <x-table.tr class="cursor-pointer"
-              id="editExpense{{ $e->id }}"
-              open-modal="add-expense"
-              :data-modal="json_encode([
-                  'title.text' => $repeat ? 'Edit repeat expense' : 'Edit expense',
-                  'form.action' => route('expense.edit', $e->id),
-                  'form.mode' => 'edit',
-                  $hide => 'hidden',
-                  'choice.value' => old('choice', 'this'),
-                  'date.value' => old('date', K::date($e->date)->format('Y-m-d')),
-                  'type.value' => old('type', $e->type),
-                  'date_to.value' => old('date_to', $end->format('Y-m-d')),
-                  'repeat.value' => old('repeat', $repeat->rules->repeat ?? 'never'),
-                  'every.value' => old('every', $repeat->rules->every ?? 'week'),
-                  'every_x.value' => old('every_x', $repeat->rules->every_x ?? '1'),
-                  'month.value' => old('month', $repeat->rules->month ?? 'day'),
-                  'describe.value' => old('describe', $e->describe),
-                  'cost.value' => old('cost', $e->cost),
-                  'image-wrap.set-inputs' => old('image-wrap', ''),
-                  'image-wrap.set-img' => $e->getImageURL(),
-                  'destroy.removeclass' => 'hidden',
-                  'destroy.data' => [
-                      'modal' => [
-                          'form.action' => route('expense.destroy', $e->id),
-                          'title.text' => $repeat ? 'Delete repeat expense' : 'Delete expense',
-                          'message.text' => $repeat ? 'Choose which of these repeat expenses you want to delete.' : Msg::sureDelete('expense'),
-                          $hide => 'hidden',
-                          'submit.text' => $repeat ? 'delete' : 'yes',
-                      ],
-                  ],
-                  'submit.text' => 'save',
-                  'is-repeat.value' => old('is-repeat', $e->isRepeat()),
-              ])">
+            {{-- date --}}
+            <x-table.td class="date whitespace-nowrap"></x-table.td>
 
-              {{-- date --}}
-              <x-table.td class="{{ $future }} whitespace-nowrap">
-                {{ K::displayDate($e->date, 'jS M Y') }}
-              </x-table.td>
+            {{-- describe --}}
+            <x-table.td class="describe"></x-table.td>
 
-              {{-- expense --}}
-              <x-table.td class="{{ $future }}">
-                {{ $e->describe }}
-              </x-table.td>
+            {{-- cost --}}
+            <x-table.td class="cost"></x-table.td>
 
-              {{-- cost --}}
-              <x-table.td class="{{ $future }}">
-                {{ K::formatCurrency($e->cost) }}
-              </x-table.td>
+            {{-- type --}}
+            <x-table.td class="sm-only">
+              <span class="type"></span><span class="px-1">|</span>
+              <span class="type_desc text-xs text-gray-400 md:text-sm"></span>
+            </x-table.td>
 
-              {{-- type --}}
-              <x-table.td class="__sm-only {{ $future }}">
-                <span>{{ Str::title($e->type) }}</span><span class="px-1">|</span>
-                <span class="text-xs text-gray-400 md:text-sm">{{ $e->getType() }}</span>
-              </x-table.td>
+            {{-- action --}}
+            <x-table.td class="text-base sm:text-xl">
+              <div class="flex justify-end gap-4">
+                <x-icon class="hide-receipt far fa-receipt cursor-pointer"
+                  data-tooltip-position="left"
+                  title="{{ Str::title('receipt') }}"
+                  open-modal="show-receipt" />
 
-              {{-- action --}}
-              <x-table.td class="text-base sm:text-xl">
-                <div class="flex justify-end gap-4">
-                  @if ($e->hasImage())
-                    <x-icon class="far fa-receipt cursor-pointer"
-                      data-modal="{{ json_encode([
-                          'image.src' => $e->getImageURL(),
-                          'form.action' => route('expense.download'),
-                          'path.value' => $e->image,
-                      ]) }}"
-                      data-tooltip-position="left"
-                      title="{{ Str::title('receipt') }}"
-                      open-modal="show-receipt" />
-                  @endif
+                <x-icon class="hide-future far fa-up cursor-pointer text-green-500"
+                  data-tooltip-position="left"
+                  title="{{ Str::title('upcoming') }}" />
 
-                  @if ($e->isFuture())
-                    <x-icon class="far fa-up cursor-pointer text-green-500"
-                      data-tooltip-position="left"
-                      title="{{ Str::title('upcoming') }}" />
-                  @endif
+                <x-icon class="hide-repeat far fa-repeat cursor-pointer text-blue-400"
+                  data-tooltip-position="left"
+                  title="{{ Str::title('repeat') }}" />
 
-                  @if ($e->isRepeat())
-                    <x-icon class="far fa-repeat cursor-pointer text-blue-400"
-                      data-tooltip-position="left"
-                      title="{{ Str::title('repeat') }}" />
-                  @endif
+                <x-icon class="far fa-edit cursor-pointer text-orange-400"
+                  data-tooltip-position="left"
+                  title="{{ Str::title('edit') }}" />
+              </div>
+            </x-table.td>
+          </x-table.tr>
 
-                  <x-icon class="far fa-edit cursor-pointer text-orange-400"
-                    data-tooltip-position="left"
-                    title="{{ Str::title('edit') }}" />
-                </div>
-              </x-table.td>
-            </x-table.tr>
-          @endforeach
-
+          <tr class="keep">
+            <td class="text-center"
+              colspan="6">
+              <x-loader class="pb-6 pt-12"
+                id="spinner"
+                size="4"
+                color="bg-gray-500" />
+            </td>
+          </tr>
         </tbody>
 
       </table>
-      @if (!$user->hasExpenses())
-        <div class="px-6 pt-6 text-center">{{ Msg::noResults('expenses') }}</div>
-      @else
-        <x-loader class="hidden pb-6 pt-12"
-          id="spinner"
-          size="4"
-          color="bg-gray-500" />
-      @endif
+
     </div>
+
+    @if (!$user->hasExpenses())
+      <div class="px-6 pt-6 text-center">{{ Msg::noResults('expenses') }}</div>
+    @else
+      <div class="flex flex-wrap-reverse justify-center px-6 pt-6 sm:flex-nowrap sm:justify-between">
+        <div class="whitespace-nowrap"
+          id="counter"></div>
+        <div class="flex gap-1.5"
+          id="pagination"
+          data-page="{{ $_GET['page'] ?? 1 }}"></div>
+      </div>
+    @endif
   </x-section.one>
 
   @include('expense.modal.add')
@@ -215,24 +222,191 @@
 
   <script type="module">
     $(() => {
-      const $table = $('#table_id'),
-        table = $table.DataTable({
-          responsive: true,
-          order: [0, 'asc'],
-          columnDefs: [{
-            type: 'date',
-            targets: 0
-          }, ],
-          pageLength: 25
-        });
+      let total = 0;
+      const $el = $('#pushRows'),
+        $spinner = $('#spinner'),
+        $expense = $('[is=row]'),
+        $counter = $('#counter'),
+        $page = $('#pagination'),
+        $length = $('#length'),
+        $future = $('#future'),
+        $search = $('#search'),
+        $sort = $('.sort-button'),
+        length = () => parseInt($length.val() || 10),
+        page = () => parseInt($page.data('page') || 1),
+        pages = () => Math.ceil(total / length()),
+        search = () => $search.val().trim(),
+        future = () => $future.is(':checked') ? 1 : 0,
+        by = () => $('.sort-active').data('by'),
+        dir = () => $('.sort-active').hasClass('sort-asc') ? 'asc' : 'desc';
 
+      const populatePage = (resetPage = false) => {
+        resetPage && $page.data('page', 1) && K.removeURLParam('page');
+        $('tr:not(.keep)', $el).remove();
+        $spinner.show();
+
+        $.ajax({
+          url: "{{ route('expense.get') }}",
+          method: "POST",
+          data: {
+            _token: "{{ csrf_token() }}",
+            length: length(),
+            page: page(),
+            future: future(),
+            by: by(),
+            dir: dir(),
+            search: search()
+          },
+          success: function(data) {
+            console.log(data);
+
+            if (data.items && data.items.length > 0)
+              generateRows(data.items);
+
+            const start = ((page() - 1) * length()) + 1,
+              x = `${start} to ${start + data.items.length - 1} of ${data.filtered}`;
+
+            $counter.text(`${x}${data.total != data.filtered ? ` ( filtered from ${data.total} total )` : ''}`);
+            $spinner.hide();
+            refreshAll();
+            total = data.filtered;
+            buildPagination();
+          }
+        });
+      }
+
+      const generateRows = rows => {
+        K.each(rows, (index, row) => {
+          let $row;
+
+          $row = $expense.clone();
+          $row.data('modal', row.modal.edit);
+          $('.hide-receipt', $row).data('modal', row.modal.receipt);
+          $row.attr('id', `editExpense${row.id}`);
+
+          if (!row.has_image)
+            $('.hide-receipt', $row).addClass('hidden');
+          if (!row.is_future)
+            $('.hide-future', $row).addClass('hidden');
+          else
+            $row.addClass('is-future');
+          if (!row.is_repeat)
+            $('.hide-repeat', $row).addClass('hidden');
+
+          K.each(row, (key, value) => {
+            $(`.${key}`, $row).text(value);
+          });
+
+          $el.append($row.removeClass('hidden skip-tooltip keep'));
+        });
+      }
+
+      // build the page number links
+      const buildPagination = () => {
+        const btnClass = 'cursor-pointer border border-gray-300 rounded-md px-1 min-w-6 bg-gray-100 text-center leading-7 shadow-sm';
+
+        const $p = $page;
+        $p.html('');
+
+        if (page() > 1) {
+          $p.append($('<i />', {
+            class: `fal fa-angles-left ${btnClass}`,
+            page: 1,
+            title: 'First'
+          }));
+          $p.append($('<i />', {
+            class: `fal fa-angle-left ${btnClass}`,
+            page: page() - 1,
+            title: 'Previous'
+          }));
+        }
+
+        let start = page() - 3,
+          end = page() + 3;
+        start = start < 1 ? 1 : start;
+        end = end > pages() ? pages() : end;
+
+        if (pages() <= 7) {
+          start = 1;
+          end = pages();
+        } else if (page() <= 3) {
+          start = 1;
+          end = 7;
+        } else if (end >= pages()) {
+          start = pages() - 6;
+          end = pages();
+        }
+
+        for (let i = start; i <= end; i++) {
+          $p.append($('<span />', {
+            class: `${page() === i? 'border-indigo-300 text-indigo-500 active' : 'border-gray-300'}  cursor-pointer border rounded-md px-1 min-w-6 bg-gray-100 text-center leading-7 shadow-sm`,
+            page: i,
+            title: `Page ${i}`,
+            text: i
+          }));
+        }
+
+        if (page() != pages()) {
+          $p.append($('<i />', {
+            class: `fal fa-angle-right ${btnClass}`,
+            page: page() + 1,
+            title: 'Next'
+          }));
+          $p.append($('<i />', {
+            class: `fal fa-angles-right ${btnClass}`,
+            page: pages(),
+            title: 'Last'
+          }));
+        }
+      }
+
+      // update items on search input
       const timer = timed();
-      $(window).on('resize', () => {
+      $search.on('input', () => {
         timer.run(() => {
-          $table.css('width', '');
-          table.columns.adjust().responsive.recalc();
-        }, 500);
+          const s = search();
+          if (!s.length) K.removeURLParam('search');
+          else K.addURLParam('search', s);
+          populatePage(true);
+        }, 800);
       });
+
+      // change page on pagination click
+      $page.on('click', '[page]:not(.active)', (e) => {
+        const p = parseInt($(e.target).attr('page'));
+        K.addURLParam('page', p);
+        $page.data('page', p);
+        populatePage();
+      });
+
+      $length.on('change', (e) => {
+        const l = parseInt($(e.target).val());
+        K.addURLParam('length', l);
+        populatePage(true);
+      });
+
+      $future.on('change', (e) => {
+        const f = future();
+        if (!f) K.removeURLParam('future');
+        else K.addURLParam('future', 1);
+        populatePage(true);
+      });
+
+      $sort.on('click', function() {
+        const by = $(this).data('by'),
+          dir = $(this).hasClass('sort-asc') ? 'desc' : 'asc';
+        $('.sort-button').removeClass('sort-asc sort-desc sort-active');
+        $(this).addClass(`sort-${dir} sort-active`);
+        K.addURLParam('by', by);
+        K.addURLParam('dir', dir);
+        populatePage(true);
+      });
+
+      const time = timed();
+      time.run(() => {
+        populatePage();
+      }, 100);
+
     });
   </script>
 </x-layout.app>
