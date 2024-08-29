@@ -85,8 +85,11 @@
         <div>
           <x-form.check id="first"
             name="first"
-            ref="first"
-            label="Have you skipped any refuels to this one OR is this the first?" />
+            ref="first">
+
+            <x-slot:label>Have you skipped any refuels to this one OR is this the first?</x-slot>
+
+          </x-form.check>
 
           <x-form.error class="mt-2"
             :messages="$errors->get('cost')" />

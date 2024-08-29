@@ -1,4 +1,4 @@
-@props(['checked'])
+@props(['checked', 'label' => ''])
 
 <label class="inline-flex items-center gap-1">
   <input type="checkbox"
