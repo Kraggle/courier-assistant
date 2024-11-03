@@ -282,6 +282,15 @@ class User extends Authenticatable {
     }
 
     /**
+     * Get the users refuels unsorted.
+     * 
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function refuelsRaw(): HasManyThrough {
+        return $this->hasManyThrough(Refuel::class, Vehicle::class);
+    }
+
+    /**
      * Get the users refuels.
      * 
      * @return \Illuminate\Database\Eloquent\Collection
@@ -360,6 +369,35 @@ class User extends Authenticatable {
      */
     public function hasRefuels(): bool {
         return $this->refuels->count() > 0;
+    }
+
+    /**
+     * Get the users refuels with filters.
+     * 
+     * @param $opts array
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function refuelsWithFilters($opts = []) {
+        extract(K::merge([
+            'by' => 'date',
+            'dir' => 'desc',
+            'search' => ''
+        ], $opts));
+
+        return $this->refuelsRaw
+            ->when($dir == 'asc', function ($query) use ($by) {
+                return $query->sortBy($by)->values();
+            })
+            ->when($dir == 'desc', function ($query) use ($by) {
+                return $query->sortByDesc($by)->values();
+            })
+            ->when($search, function ($query) use ($search) {
+                return $query->filter(function ($refuel) use ($search) {
+                    $search = Str::lower($search);
+                    if (strpos(Str::lower($refuel->vehicle->reg), $search) !== false)
+                        return true;
+                });
+            });
     }
 
     /**

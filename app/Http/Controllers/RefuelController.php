@@ -6,9 +6,11 @@ use App\Helpers\K;
 use App\Helpers\Msg;
 use App\Models\Refuel;
 use App\Models\Vehicle;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Vite;
 use Spatie\SimpleExcel\SimpleExcelReader;
 
 class RefuelController extends FilesController {
@@ -17,14 +19,72 @@ class RefuelController extends FilesController {
      * Show the vehicle's refuels.
      * 
      * @param Request $request
-     * @param Vehicle $vehicle
      * @return \Illuminate\View\View
      */
-    public function show(Request $request, Vehicle $vehicle) {
-        if (!Gate::allows('view-vehicle', $vehicle))
-            return redirect('/')->with('error', 'You do not have permission to view this vehicle.');
+    public function show(Request $request) {
+        return view('refuel.show', ['user' => $request->user()]);
+    }
 
-        return view('refuel.show', ['user' => $request->user(), 'vehicle' => $vehicle]);
+    /**
+     * Get the users refuels from the database with filters.
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function get(Request $request) {
+        $user = K::user();
+
+        extract(K::merge([
+            'page' => 1,
+            'length' => 10,
+        ], $request->all()));
+
+        $refuels = $user->refuelsWithFilters($request->all());
+        $paged = $refuels->forPage($page, $length);
+        $items = collect();
+        $paged->each(function ($r) use ($items) {
+            $items->push(collect([
+                'id' => $r->id,
+                'date' => K::displayDate($r->date, 'D, jS M \'y'),
+                'cost' => K::formatCurrency($r->cost),
+                'mileage' => number_format($r->mileage),
+                'vehicle' => $r->vehicle->reg,
+                'miles' => number_format($r->miles),
+                'fuel_rate' => K::formatCurrency($r->fuel_rate, true),
+                'has_image' => $r->hasImage(),
+                'modal' => [
+                    'edit' => [
+                        'title.text' => 'Edit refuel',
+                        'form.action' => route('refuel.edit', $r->id),
+                        'vehicle.value' => old('vehicle', $r->vehicle->id),
+                        'date.value' => old('date', $r->date->format('Y-m-d')),
+                        'mileage.value' => old('mileage', $r->mileage),
+                        'cost.value' => old('cost', $r->cost),
+                        'first.checked' => old('first', K::isTrue($r->first)),
+                        'image-wrap.set-inputs' => old('image-wrap', ''),
+                        'image-wrap.set-img' => $r->getImageURL() ?? Vite::asset('resources/images/no-image.svg'),
+                        'destroy.removeclass' => 'hidden',
+                        'destroy.data' => [
+                            'modal' => [
+                                'form.action' => route('refuel.destroy', $r->id),
+                            ],
+                        ],
+                        'submit.text' => 'save',
+                    ],
+                    'receipt' => [
+                        'image.src' => $r->getImageURL(),
+                        'form.action' => route('refuel.download'),
+                        'path.value' => $r->image,
+                    ]
+                ]
+            ]));
+        });
+
+        return response()->json([
+            'items' => $items,
+            'filtered' => $refuels->count(),
+            'total' => $user->refuels->count(),
+        ]);
     }
 
     /**
@@ -35,24 +95,26 @@ class RefuelController extends FilesController {
      * 
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function add(Request $request, Vehicle $vehicle) {
-        $last = $vehicle->refuels->first();
-        $last_mileage = $last->mileage ?? 0;
+    public function add(Request $request) {
 
         $request->validate([
+            'vehicle' => ['required', 'exists:vehicles,id'],
             'date' => ['required', 'date:Y-m-d'],
             'cost' => ['nullable', 'decimal:0,2'],
-            'mileage' => ['required', 'int', "gt:$last_mileage"],
-            'first' => ['nullable', 'int'],
+            'mileage' => ['required', 'int'],
+            'first' => ['int'],
             'image' => 'mimes:jpeg,jpg,png,pdf'
         ]);
+
+        $vehicle = K::user()->vehicles()->find($request->vehicle);
+        $last = $vehicle->refuels->first();
 
         $user = $request->user();
         $link = $request->hasFile('image') ? $this->uploadFile($request->file('image'), "images/{$user->id}/refuel") : null;
 
         $first = K::isTrue($request->first);
 
-        // set first to true if there is no last refuel
+        // set first to true if there is no last refuel or mileage is too great
         if ((!$first && !$last) || ($last && $request->mileage - $last->mileage > 600))
             $first = true;
 
@@ -120,7 +182,7 @@ class RefuelController extends FilesController {
         if (!$vehicle->hasRefuels()) return;
 
         $refuels = $vehicle->refuels->sortBy('date')->sortBy('mileage');
-        $last = $refuels[0];
+        $last = $refuels->first();
 
         foreach ($refuels as $refuel) {
             if ($refuel === $last || $refuel->cost == 0)

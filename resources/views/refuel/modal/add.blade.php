@@ -7,7 +7,7 @@
     ref="form"
     method="POST"
     enctype="multipart/form-data"
-    action="{{ route('refuel.add', $vehicle->id) ?? '' }}">
+    action="{{ route('refuel.add') }}">
     @csrf
     @method('PUT')
 
@@ -33,6 +33,39 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2">
       <div class="flex flex-col">
+        {{-- vehicle --}}
+        @define($key = 'vehicle')
+        <x-form.wrap class="required"
+          value="vehicle"
+          :key="$key"
+          help="This is vehicle you are adding the refuel to.">
+
+          <div class="flex">
+            <div class="flex-grow">
+              <x-form.select id="{{ $key }}_route"
+                name="{{ $key }}"
+                ref="{{ $key }}"
+                placeholder="Select your vehicle..."
+                :value="old($key)"
+                minresultsforsearch=999>
+
+                <x-slot:options>
+                  @foreach ($user->vehicles()->orderBy('reg')->get() as $vehicle)
+                    <option value="{{ $vehicle->id }}">{{ $vehicle->reg }}</option>
+                  @endforeach
+                </x-slot>
+
+              </x-form.select>
+            </div>
+
+            <x-button.light size="xs"
+              open-modal="add-vehicle">
+              new
+            </x-button.light>
+          </div>
+
+        </x-form.wrap>
+
         {{-- date picker --}}
         @define($key = 'date')
         <x-form.wrap class="required"
@@ -90,9 +123,6 @@
             <x-slot:label>Have you skipped any refuels to this one OR is this the first?</x-slot>
 
           </x-form.check>
-
-          <x-form.error class="mt-2"
-            :messages="$errors->get('cost')" />
         </div>
       </div>
 

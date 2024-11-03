@@ -49,29 +49,38 @@
         :key="$key"
         help="The depot you're working out of for this route. Also used to determine the day rate for the route. If the depot you're working out of is not present, click the `Not Found` button to add it yourself.">
 
-        <x-form.select id="{{ $key }}_route"
-          name="{{ $key }}"
-          ref="{{ $key }}"
-          placeholder="Select your depot..."
-          :value="old($key)">
+        <div class="flex">
+          <div class="flex-grow">
+            <x-form.select id="{{ $key }}_route"
+              name="{{ $key }}"
+              ref="{{ $key }}"
+              placeholder="Select your depot..."
+              :value="old($key)">
 
-          <x-slot:elements>
+              <x-slot:elements>
 
-            @foreach (\App\Models\Depot::all()->sortBy('location') as $depot)
-              <div class="flex items-center justify-between"
-                value="{{ $depot->id }}">
-                <span>{{ $depot->location }}</span>
-                <span class="text-base font-semibold">{{ $depot->identifier }}</span>
-              </div>
-            @endforeach
+                @foreach (\App\Models\Depot::all()->sortBy('location') as $depot)
+                  <div class="flex items-center justify-between"
+                    value="{{ $depot->id }}">
+                    <span>{{ $depot->location }}</span>
+                    <span class="text-base font-semibold">{{ $depot->identifier }}</span>
+                  </div>
+                @endforeach
 
-          </x-slot>
+              </x-slot>
 
-          <x-slot:noresults>
-            <a href="{{ route('depot.create') }}">Not Found, click to add!</a>
-          </x-slot>
+              <x-slot:noresults>
+                <div>Not found!</div>
+              </x-slot>
 
-        </x-form.select>
+            </x-form.select>
+          </div>
+
+          <x-button.light size="xs"
+            open-modal="add-depot">
+            new
+          </x-button.light>
+        </div>
 
       </x-form.wrap>
 

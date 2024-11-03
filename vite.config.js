@@ -16,6 +16,7 @@ export default defineConfig({
                 'resources/js/editor.js',
                 'resources/js/map.js',
                 'resources/js/stripe.js',
+                'resources/js/table.js',
             ],
             refresh: [
                 'app/**',

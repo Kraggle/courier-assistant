@@ -13,7 +13,7 @@ class WizardController extends Controller {
     public function show(Request $request) {
         $user = $request->user();
 
-        if ($user->hasVehicle() && $user->hasDSP() && $user->hasRate() && $user->hasDepot())
+        if ($user->hasDSP())
             return redirect('/');
 
         return view('wizard.show', ['user' => $user]);

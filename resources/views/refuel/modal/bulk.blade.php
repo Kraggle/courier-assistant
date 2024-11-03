@@ -6,7 +6,7 @@
     ref="form"
     method="POST"
     enctype="multipart/form-data"
-    action="{{ route('refuel.bulk', $vehicle->id) }}">
+    action="{{ route('refuel.bulk') }}">
     @csrf
     @method('patch')
 

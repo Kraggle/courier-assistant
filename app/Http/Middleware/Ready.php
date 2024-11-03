@@ -15,10 +15,7 @@ class Ready {
      */
     public function handle(Request $request, Closure $next): Response {
         if (
-            !$request->user()?->hasDSP() ||
-            !$request->user()?->hasVehicle() ||
-            !$request->user()?->hasDepot() ||
-            !$request->user()?->hasRate()
+            !$request->user()?->hasDSP()
         )
             return Redirect::to('wizard');
 

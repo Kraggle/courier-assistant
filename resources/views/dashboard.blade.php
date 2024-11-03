@@ -4,8 +4,6 @@
 
   $first = K::date($last_route->date ?? '');
   $weeks = [$first->copy(), $first->copy()->sub('week', 1), $first->copy()->sub('week', 2), $first->copy()->sub('week', 3)];
-
-  $vehicle = $user->vehicle();
 @endphp
 
 <x-layout.app title="dashboard">
@@ -20,7 +18,7 @@
             'title.text' => Msg::add('route'),
             'form.action' => route('route.add'),
             'type.value' => old('type', $last_route->type ?? '-1'),
-            'depot_id.value' => old('depot_id', $last_route->depot_id ?? $user->options->depot_id),
+            'depot_id.value' => old('depot_id', $last_route->depot_id ?? ($user->options->depot_id ?? null)),
             'date.value' => old('date', now()->format('Y-m-d')),
             'start_time.value' => old('start_time', K::date($last_route->start_time ?? now())->format('g:i A')),
             'end_time.value' => old('end_time', ''),
@@ -49,7 +47,7 @@
         id="addRefuel"
         data-modal="{{ json_encode([
             'title.text' => Msg::add('refuel'),
-            'form.action' => route('refuel.add', $vehicle->id ?? 1),
+            'form.action' => route('refuel.add'),
             'date.value' => old('date', now()->format('Y-m-d')),
             'mileage.value' => old('mileage', ''),
             'cost.value' => old('cost', ''),
@@ -72,7 +70,7 @@
             'form.action' => route('rate.add'),
             'type.value' => old('type', '-1'),
             'date.value' => old('date', now()->format('Y-m-d')),
-            'depot_id.value' => old('depot_id', $user->options->depot_id),
+            'depot_id.value' => old('depot_id', $last_route->depot_id ?? ($user->options->depot_id ?? null)),
             'amount.value' => old('amount', ''),
             'destroy.addclass' => 'hidden',
             'submit.text' => 'add',
@@ -502,6 +500,8 @@
     @include('refuel.modal.add')
     @include('expense.modal.add')
     @include('route.modal.destroy')
+    @include('vehicle.modal.add')
+    @include('depot.modal.add')
   @endpush
 
   {{-- used to test javascript --}}

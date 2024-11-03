@@ -6,10 +6,12 @@ use App\Helpers\K;
 use App\Helpers\Msg;
 use App\Models\Rate;
 use App\Models\User;
+use App\Helpers\Lists;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Vite;
 use Spatie\SimpleExcel\SimpleExcelReader;
 
 class RateController extends FilesController {
@@ -23,6 +25,73 @@ class RateController extends FilesController {
             return redirect('dsp.show')->with('error', 'You first have to add or select your Delivery Service Provider.');
 
         return view('rate.show');
+    }
+
+    /**
+     * Get the users refuels from the database with filters.
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function get(Request $request) {
+        $user = K::user();
+
+        extract(K::merge([
+            'page' => 1,
+            'length' => 10,
+        ], $request->all()));
+
+        $refuels = $user->dsp()->ratesWithFilters($request->all());
+        $paged = $refuels->forPage($page, $length);
+        $items = collect();
+        $paged->each(function ($r) use ($items) {
+            $logs = [];
+            if ($r->hasChangeLogs()) {
+                foreach ($r->changeLogs() as $log)
+                    $logs[] = [
+                        'date' => K::displayDate($log->created_at, 'd-m-Y'),
+                        'properties' => $log->properties,
+                        'user' => $log->causer->name,
+                    ];
+            }
+
+            $items->push(collect([
+                'id' => $r->id,
+                'date' => K::displayDate($r->date, 'jS M Y'),
+                'type' => $r->getType(true, 'hidden sm:inline'),
+                'amount' => K::formatCurrency($r->amount, $r->amount < 0.9999),
+                'depot_identifier' => $r->depot_identifier,
+                'creator' => $r->creator,
+                'has_changes' => $r->hasChangeLogs(),
+                'modal' => [
+                    'edit' => [
+                        'title.text' => Msg::edit('rate'),
+                        'form.action' => route('rate.edit', $r->id),
+                        'date.value' => old('date', $r->date),
+                        'type.value' => old('type', $r->type),
+                        'depot_id.value' => old('depot_id', $r->depot_id),
+                        'amount.value' => old('amount', $r->amount),
+                        'destroy.removeclass' => 'hidden',
+                        'destroy.data' => [
+                            'modal' => [
+                                'form.action' => route('rate.destroy', $r->id),
+                            ],
+                        ],
+                        'submit.text' => 'save',
+                    ],
+                    'changes' => [
+                        'title.text' => 'changes',
+                        'tbody.changes' => $logs,
+                    ]
+                ]
+            ]));
+        });
+
+        return response()->json([
+            'items' => $items,
+            'filtered' => $refuels->count(),
+            'total' => $user->refuels->count(),
+        ]);
     }
 
     /**

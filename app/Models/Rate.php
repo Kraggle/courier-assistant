@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Rate extends Model {
@@ -21,6 +22,17 @@ class Rate extends Model {
         'date',
         'type',
         'amount'
+    ];
+
+    /**
+     * Attributes to be appended to the model.
+     * 
+     * @var array
+     */
+    protected $appends = [
+        'creator',
+        'depot_identifier',
+        'type_display',
     ];
 
     protected $casts = [
@@ -58,7 +70,7 @@ class Rate extends Model {
      * @return string
      */
     public function getType($html = true, $class = '') {
-        $type = Lists::rateTypes($this->type);
+        $type = $this->type_display;
         if ($html) return str_replace(':class', $class, preg_replace(
             '/(\([^)]+\))/',
             '<span class=":class pl-1 text-xs text-gray-400">\1</span>',
@@ -119,5 +131,32 @@ class Rate extends Model {
      */
     public function hasCreateLog(): bool {
         return $this->createLog() != null;
+    }
+
+    /**
+     * Get the creator for the rate.
+     */
+    protected function creator(): Attribute {
+        return new Attribute(
+            get: fn() => $this->createLog()->causer->name ?? User::all()->first()->name,
+        );
+    }
+
+    /**
+     * Get the creator for the rate.
+     */
+    protected function depotIdentifier(): Attribute {
+        return new Attribute(
+            get: fn() => $this->depot->identifier,
+        );
+    }
+
+    /**
+     * Get the creator for the rate.
+     */
+    protected function typeDisplay(): Attribute {
+        return new Attribute(
+            get: fn() => Lists::rateTypes($this->type),
+        );
     }
 }

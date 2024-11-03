@@ -4,21 +4,23 @@
 
     <x-section.one maxWidth="md">
       <form class="flex flex-col"
+        help-root
         method="POST"
         action="{{ route('dsp.attach') }}">
         @csrf
         @method('PATCH')
 
-        <div class="flex items-center justify-between">
-          <div class="font-serif text-xl">
+        <x-section.title>
+          <x-slot:title>
             Select your DSP!
-          </div>
+          </x-slot>
 
-          <x-icon class="far fa-circle-question cursor-pointer"
-            data-help-trigger="false"
-            title="Toggle help text!" />
-
-        </div>
+          <x-slot:buttons>
+            <x-icon class="far fa-circle-question cursor-pointer"
+              data-help-trigger="false"
+              title="Toggle help text!" />
+          </x-slot>
+        </x-section.title>
 
         {{-- dsp_id --}}
         @define($key = 'dsp_id')
@@ -26,29 +28,37 @@
           :key="$key"
           help="Search here for the name of the Delivery Service Provider you work for. It's important you select the correct one, as they differ in their pay rates. The one you select, if already added, will most likely already have rates set to date.">
 
-          <x-form.select id="{{ $key }}"
-            name="{{ $key }}"
-            style="width: 100%"
-            placeholder="Select your Delivery Service Provider">
+          <div class="flex">
+            <div class="flex-grow">
+              <x-form.select id="{{ $key }}"
+                name="{{ $key }}"
+                style="width: 100%"
+                placeholder="Select your Delivery Service Provider">
 
-            <x-slot:elements>
+                <x-slot:elements>
 
-              @foreach (\App\Models\DSP::all()->sortBy('name') as $dsp)
-                <div class="flex items-center justify-between"
-                  value="{{ $dsp->id }}">
-                  <span>{{ $dsp->name }}</span>
-                  <span class="text-base font-semibold">{{ $dsp->identifier }}</span>
-                </div>
-              @endforeach
+                  @foreach (\App\Models\DSP::all()->sortBy('name') as $dsp)
+                    <div class="flex items-center justify-between"
+                      value="{{ $dsp->id }}">
+                      <span>{{ $dsp->name }}</span>
+                      <span class="text-base font-semibold">{{ $dsp->identifier }}</span>
+                    </div>
+                  @endforeach
 
-            </x-slot>
+                </x-slot>
 
-            <x-slot:noresults>
-              <span class="font-semibold">Not Found, please add below!</span>
-            </x-slot>
+                <x-slot:noresults>
+                  <span class="font-semibold">Not Found!</span>
+                </x-slot>
 
-          </x-form.select>
+              </x-form.select>
+            </div>
 
+            <x-button.light size="xs"
+              open-modal="create-dsp">
+              new
+            </x-button.light>
+          </div>
         </x-form.wrap>
 
         {{-- date --}}
@@ -72,201 +82,7 @@
       </form>
     </x-section.one>
 
-    <x-section.one maxWidth="md">
-      <form class="flex flex-col"
-        method="POST"
-        action="{{ route('dsp.create') }}">
-        @csrf
-        @method('PUT')
-
-        <div class="flex items-center justify-between">
-          <div class="font-serif text-xl">
-            OR ... add it here!
-          </div>
-        </div>
-
-        {{-- name --}}
-        @define($key = 'name')
-        <x-form.wrap value="DSPs Name"
-          :key="$key"
-          help="The name of your Delivery Service Provider. Please be accurate with this as anyone else searching for your DSP will want to find it easily. Also if there is any profanity found the DSP will be removed and you will loose any data added.">
-
-          <x-form.text id="{{ $key }}"
-            name="{{ $key }}" />
-
-        </x-form.wrap>
-
-        {{-- identifier --}}
-        @define($key = 'identifier')
-        <x-form.wrap value="Amazon identifier"
-          :key="$key"
-          help="Amazons identifier for your Delivery Service Provider, you can ask your OSM for this if you don't know it. It's another way for other drivers to find the correct DSP.">
-
-          <x-form.text id="{{ $key }}"
-            name="{{ $key }}"
-            placeholder="e.g. CLBT, LWTS, ROKL, GAMD" />
-
-        </x-form.wrap>
-
-        {{-- submit --}}
-        <div class="flex justify-end">
-          <x-button.dark>
-            create
-          </x-button.dark>
-        </div>
-
-      </form>
-    </x-section.one>
-  @elseif (!$user->hasVehicle())
-    <x-section.one maxWidth="md">
-      <form class="flex flex-col"
-        method="POST"
-        help-root
-        action="{{ route('vehicle.create') }}">
-        @csrf
-        @method('PUT')
-
-        <div class="flex items-center justify-between">
-          <div class="font-serif text-xl">
-            Add your first vehicle!
-          </div>
-
-          <x-icon class="far fa-circle-question cursor-pointer"
-            data-help-trigger="false"
-            title="Toggle help text!" />
-
-        </div>
-
-        {{-- reg --}}
-        @define($key = 'reg')
-        <x-form.wrap value="Vehicle Regestration"
-          :key="$key"
-          help="We separate each vehicle for refuels, this makes it easier to see the difference in your fuel costs, like if one vehicle ran cheaper than another.">
-
-          <x-form.text class="block w-full text-center text-2xl font-extrabold uppercase"
-            id="{{ $key }}"
-            name="{{ $key }}" />
-
-        </x-form.wrap>
-
-        {{-- submit --}}
-        <div class="flex justify-end">
-          <x-button.dark>
-            add
-          </x-button.dark>
-        </div>
-
-      </form>
-    </x-section.one>
-  @elseif(!$user->hasDepot())
-    <div class="flex flex-col gap-[inherit]"
-      help-root>
-      <x-section.one maxWidth="md">
-        <form class="flex flex-col"
-          method="POST"
-          action="{{ route('user.options') }}">
-          @csrf
-
-          <div class="flex items-center justify-between">
-            <div class="font-serif text-xl">
-              Select your Depot!
-            </div>
-
-            <x-icon class="far fa-circle-question cursor-pointer"
-              data-help-trigger="false"
-              title="Toggle help text!" />
-
-          </div>
-
-          {{-- depot --}}
-          @define($key = 'depot_id')
-          <x-form.wrap value="depot"
-            :key="$key"
-            help="The depot that you work out of, this can be changed per route, but it is better to have a default so you don't need to change it each time you add a new route.">
-
-            <x-form.select id="{{ $key }}_rate"
-              name="{{ $key }}"
-              style="width: 100%">
-
-              <x-slot:elements>
-
-                @foreach (\App\Models\Depot::all()->sortBy('location') as $depot)
-                  <div class="flex items-center justify-between"
-                    value="{{ $depot->id }}">
-                    <span>{{ $depot->location }}</span>
-                    <span class="text-base font-semibold">{{ $depot->identifier }}</span>
-                  </div>
-                @endforeach
-
-              </x-slot>
-
-              <x-slot:noresults>
-                <a href="{{ route('depot.create') }}">Not Found, click to add!</a>
-              </x-slot>
-
-            </x-form.select>
-
-          </x-form.wrap>
-
-          {{-- submit --}}
-          <div class="flex justify-end">
-            <x-button.dark>
-              choose
-            </x-button.dark>
-          </div>
-
-        </form>
-      </x-section.one>
-
-      <x-section.one maxWidth="md">
-        <form class="flex flex-col"
-          method="POST"
-          action="{{ route('depot.store') }}">
-          @csrf
-          @method('PUT')
-
-          {{-- split header --}}
-          <div class="flex items-center justify-between">
-            <div class="font-serif text-xl">
-              OR ... add it here!
-            </div>
-          </div>
-
-          {{-- location --}}
-          @define($key = 'location')
-          <x-form.wrap value="Depot location"
-            :key="$key"
-            help="The location of your depot, for instance this could be Chester, Liverpool, Warrington etc...">
-
-            <x-form.text id="{{ $key }}"
-              name="{{ $key }}"
-              placeholder="e.g. Chester, Liverpool..." />
-
-          </x-form.wrap>
-
-          {{-- identifier --}}
-          @define($key = 'identifier')
-          <x-form.wrap value="Amazon identifier"
-            :key="$key"
-            help="Amazons identifier for your depot, you can ask your OSM for this if you don't know it. It's another way for other drivers to find the correct depot.">
-
-            <x-form.text id="{{ $key }}"
-              name="{{ $key }}"
-              placeholder="e.g. DCE1, DXM4..." />
-
-          </x-form.wrap>
-
-          {{-- submit --}}
-          <div class="flex justify-end">
-            <x-button.dark>
-              create
-            </x-button.dark>
-          </div>
-
-        </form>
-      </x-section.one>
-    </div>
-  @elseif(!$user->hasRate())
+    @include('dsp.modal.create')
     <x-section.one maxWidth="md">
       <form class="flex flex-col"
         help-root

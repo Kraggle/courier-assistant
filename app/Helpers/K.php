@@ -518,7 +518,7 @@ class K {
 
         $aType = $type;
         if (gettype($aType) == 'string')
-            $aType = array_map(fn ($item) => Str::of($item)->trim(), explode(',', $aType));
+            $aType = array_map(fn($item) => Str::of($item)->trim(), explode(',', $aType));
 
         foreach ($aType as $v) {
             $v = explode(':', $v, 2);
@@ -690,6 +690,7 @@ class K {
 
     public static function buttonSize(string $size = 'sm'): string {
         return [
+            'xs' => 'px-4 py-2 sm:px-3 sm:py-1 text-xs',
             'sm' => 'px-5 py-3 sm:px-4 sm:py-2 text-xs',
             'md' => 'px-6 py-4 sm:px-5 sm:py-3 text-sm',
             'lg' => 'px-7 py-5 sm:px-6 sm:py-4 text-base',

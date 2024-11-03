@@ -1,30 +1,20 @@
-@define($refuels = $vehicle->refuels)
+@define($refuels = $user->refuels)
 
 <x-layout.app title="refuels">
   <x-section.one class="px-0 md:px-0">
 
-    @define($tab = $vehicle->id ?? 0)
-    <x-tab.container :active="$tab">
-      <x-slot:tabs>
-        @foreach ($user->vehiclesByDate() as $v)
-          <x-tab.link :href="route('refuels', $v->id)"
-            :tab="$v->id">
-            {{ $v->reg }}
-          </x-tab.link>
-        @endforeach
-
-        <x-tab.link :href="route('vehicle.show')"
-          tab="false">
-          New Vehicle
-        </x-tab.link>
+    <x-section.title class="px-4 md:px-6">
+      <x-slot:title>
+        Refuels
       </x-slot>
 
-      <x-slot:button>
+      <x-slot:buttons>
         <x-button.dark class="bg-violet-800 hover:bg-violet-700 focus:bg-violet-700 active:bg-violet-900"
           id="addRefuel"
           data-modal="{{ json_encode([
               'title.text' => Msg::add('refuel'),
-              'form.action' => route('refuel.add', $vehicle->id),
+              'form.action' => route('refuel.add'),
+              'vehicle.value' => old('vehicle', $refuels->first()->vehicle->id ?? 0),
               'date.value' => old('date', now()->format('Y-m-d')),
               'mileage.value' => old('mileage', ''),
               'cost.value' => old('cost', ''),
@@ -58,7 +48,7 @@
               data-modal="{{ json_encode([
                   'title.text' => Msg::exportTitle('refuels'),
                   'question.text' => Msg::exportQuestion('refuels'),
-                  'form.action' => route('refuel.export', $vehicle->id),
+                  'form.action' => route('refuel.export'),
                   'form.filename' => 'refuel-' . $user->id . '.csv',
               ]) }}"
               open-modal="export-modal">
@@ -67,92 +57,153 @@
           </x-slot>
         </x-dropdown.wrap>
       </x-slot>
+    </x-section.title>
 
-      <x-slot:content>
-        <div class="overflow-x-auto">
-          <table class="w-full table-auto whitespace-nowrap text-sm md:text-lg">
+    <div class="grid grid-cols-2 px-6 pb-3 sm:grid-cols-4">
 
-            <x-table.thead>
+      <div class="flex items-center gap-1">
+        <span class="text-sm font-bold uppercase">Per Page:</span>
+        <x-form.select id="length"
+          minresultsforsearch=999>
+          <x-slot:options>
+            @foreach ([10, 25, 50, 100] as $i)
+              <option value="{{ $i }}"
+                {{ K::selected($i, $_GET['length'] ?? 25) }}>{{ $i }}</option>
+            @endforeach
+          </x-slot>
+        </x-form.select>
+      </div>
 
-              @foreach (['date', 'cost', 'odometer', 'miles', 'ppm', ''] as $header)
-                <x-table.th class="{{ $loop->last ? 'w-[1%] pl-2' : ($loop->first ? 'pr-2' : 'px-2') }} whitespace-nowrap text-xs md:text-sm">
-                  {{ $header }}
-                </x-table.th>
-              @endforeach
+      <div class="hidden sm:block"></div>
 
-            </x-table.thead>
+      <div class="hidden sm:block"></div>
 
-            <tbody>
+      <x-form.text-prefix class="col-span-2 w-full sm:col-span-1"
+        id="search"
+        value="{{ $_GET['search'] ?? '' }}"
+        placeholder="Filter results...">
 
-              @foreach ($refuels as $r)
-                <x-table.tr class="cursor-pointer"
-                  id="editRefuel{{ $r->id }}"
-                  open-modal="add-refuel"
-                  :data-modal="json_encode([
-                      'title.text' => Msg::edit('refuel'),
-                      'form.action' => route('refuel.edit', $r->id),
-                      'date.value' => old('date', $r->date->format('Y-m-d')),
-                      'mileage.value' => old('mileage', $r->mileage),
-                      'cost.value' => old('cost', $r->cost),
-                      'first.checked' => old('first', K::isTrue($r->first)),
-                      'image-wrap.set-inputs' => old('image-wrap', ''),
-                      'image-wrap.set-img' => $r->getImageURL() ?? Vite::asset('resources/images/no-image.svg'),
-                      'destroy.removeclass' => 'hidden',
-                      'destroy.data' => [
-                          'modal' => [
-                              'form.action' => route('refuel.destroy', $r->id),
-                          ],
-                      ],
-                      'submit.text' => 'save',
-                  ])">
+        <x-icon class="fal fa-search"></x-icon>
 
-                  {{-- date --}}
-                  <x-table.td>{{ $r->date->format('D, jS M \'y') }}</x-table.td>
+      </x-form.text-prefix>
 
-                  {{-- cost --}}
-                  <x-table.td>{{ '£' . number_format($r->cost, 2) }}</x-table.td>
+    </div>
 
-                  {{-- odometer --}}
-                  <x-table.td> {{ number_format($r->mileage, 0) }}</x-table.td>
+    <div class="overflow-x-auto">
 
-                  {{-- miles --}}
-                  <x-table.td>{{ number_format($r->miles) }}</x-table.td>
+      <input id="assetURL"
+        type="hidden"
+        value="{{ route('refuel.get') }}">
 
-                  {{-- ppm --}}
-                  <x-table.td>{{ number_format($r->fuel_rate, 4) . 'p' }}</x-table.td>
+      <table class="w-full table-auto whitespace-nowrap text-sm sm:text-lg [&_.sm-only]:hidden sm:[&_.sm-only]:table-cell sm:[&_.xs-only]:hidden"
+        id="table_id">
 
-                  {{-- actions --}}
-                  <x-table.td class="flex justify-end gap-4 text-base sm:text-xl">
-                    @if ($r->hasImage())
-                      <x-icon class="far fa-receipt cursor-pointer"
-                        data-modal="{{ json_encode([
-                            'image.src' => $r->getImageURL(),
-                        ]) }}"
-                        data-tooltip-position="left"
-                        title="{{ Str::title('receipt') }}"
-                        open-modal="show-receipt" />
-                    @endif
+        <x-table.thead>
+          @php
+            $by = $_GET['by'] ?? 'date';
+            $dir = $_GET['dir'] ?? 'desc';
+          @endphp
 
-                    <x-icon class="far fa-edit cursor-pointer text-orange-400"
-                      data-tooltip-position="left"
-                      title="{{ Str::title('edit') }}" />
-                  </x-table.td>
+          <x-table.th class="pr-2">
+            <x-button.sort data-by="date"
+              :active="$by === 'date'"
+              :dir="$dir">date</x-button.sort>
+          </x-table.th>
+          <x-table.th class="px-2">
+            <x-button.sort data-by="vehicle"
+              :active="$by === 'vehicle'"
+              :dir="$dir">vehicle</x-button.sort>
+          </x-table.th>
+          <x-table.th class="px-2">
+            <x-button.sort data-by="cost"
+              :active="$by === 'cost'"
+              :dir="$dir">cost</x-button.sort>
+          </x-table.th>
+          <x-table.th class="px-2">
+            <x-button.sort data-by="mileage"
+              :active="$by === 'mileage'"
+              :dir="$dir">odometer</x-button.sort>
+          </x-table.th>
+          <x-table.th class="px-2">
+            <x-button.sort data-by="miles"
+              :active="$by === 'miles'"
+              :dir="$dir">miles</x-button.sort>
+          </x-table.th>
+          <x-table.th class="px-2">
+            <x-button.sort data-by="fuel_rate"
+              :active="$by === 'fuel_rate'"
+              :dir="$dir">ppm</x-button.sort>
+          </x-table.th>
+          <x-table.th class="w-[1%] pl-2"></x-table.th>
+        </x-table.thead>
 
-                </x-table.tr>
-              @endforeach
+        <tbody id="pushRows">
 
-            </tbody>
+          <x-table.tr class="keep skip-tooltip hidden cursor-pointer"
+            open-modal="add-refuel"
+            is="row">
 
-          </table>
+            {{-- date --}}
+            <x-table.td class="date whitespace-nowrap"></x-table.td>
 
-          @if ($refuels->count() == 0)
-            <div class="px-6 pt-6 text-center">{{ Msg::noResults('refuels') }}</div>
-          @endif
+            {{-- vehicle --}}
+            <x-table.td class="vehicle"></x-table.td>
 
+            {{-- cost --}}
+            <x-table.td class="cost"></x-table.td>
+
+            {{-- odometer --}}
+            <x-table.td class="mileage"></x-table.td>
+
+            {{-- miles --}}
+            <x-table.td class="miles"></x-table.td>
+
+            {{-- ppm --}}
+            <x-table.td class="fuel_rate"></x-table.td>
+
+            {{-- actions --}}
+            <x-table.td class="text-base sm:text-xl">
+              <div class="flex justify-end gap-4">
+                <x-icon class="hide-receipt far fa-receipt cursor-pointer"
+                  data-tooltip-position="left"
+                  title="{{ Str::title('receipt') }}"
+                  open-modal="show-receipt" />
+
+                <x-icon class="far fa-edit cursor-pointer text-orange-400"
+                  data-tooltip-position="left"
+                  title="{{ Str::title('edit') }}" />
+              </div>
+            </x-table.td>
+
+          </x-table.tr>
+
+          <tr class="keep">
+            <td class="text-center"
+              colspan="6">
+              <x-loader class="pb-6 pt-12"
+                id="spinner"
+                size="4"
+                color="bg-gray-500" />
+            </td>
+          </tr>
+        </tbody>
+
+      </table>
+
+      @if (!$user->hasRefuels())
+        <div class="px-6 pt-6 text-center">{{ Msg::noResults('refuels') }}</div>
+      @else
+        <div class="flex flex-wrap-reverse justify-center px-6 pt-6 sm:flex-nowrap sm:justify-between">
+          <div class="whitespace-nowrap"
+            id="counter"></div>
+          <div class="flex gap-1.5"
+            id="pagination"
+            data-page="{{ $_GET['page'] ?? 1 }}"></div>
         </div>
-      </x-slot>
+      @endif
 
-    </x-tab.container>
+    </div>
+
   </x-section.one>
 
   @include('refuel.modal.add')
@@ -160,5 +211,7 @@
   @include('modal.receipt')
   @include('modal.export')
   @include('refuel.modal.destroy')
+  @include('vehicle.modal.add')
 
+  @vite(['resources/js/table.js'])
 </x-layout.app>

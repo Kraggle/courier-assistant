@@ -348,6 +348,7 @@
     @include('route.modal.destroy')
     @include('rate.modal.add')
     @include('modal.export')
+    @include('depot.modal.add')
   @endpush
 
   @push('scripts')

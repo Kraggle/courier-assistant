@@ -1,7 +1,6 @@
 @auth
   @php
     $user = K::user();
-    $refuel_link = $user->hasVehicle() ? route('refuels', $user->vehicle()->id) : route('vehicle.show');
 
     $links = [
         [
@@ -31,7 +30,6 @@
             [
                 'title' => 'refuels',
                 'route' => 'refuels',
-                'href' => $refuel_link,
                 'icon' => 'fas fa-gas-pump',
             ],
             [

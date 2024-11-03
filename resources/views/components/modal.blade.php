@@ -126,6 +126,7 @@
 
           } else if (field == 'checked') {
             $el.prop('checked', value);
+            $el.siblings('input[type=hidden]').val(value ? 1 : 0);
 
           } else if (field == 'removeclass') {
             $el.removeClass(value);

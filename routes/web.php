@@ -131,15 +131,17 @@ Route::middleware(['auth', Subscribed::class, Ready::class])->group(function () 
         Route::get('/rate', 'show')->name('rate.show');
         Route::patch('/rate', 'bulk')->name('rate.bulk');
         Route::post('/rate', 'export')->name('rate.export');
+        Route::post('/rate/get', 'get')->name('rate.get');
         Route::put('/rate/{rate}', 'edit')->name('rate.edit');
         Route::delete('/rate/{rate}', 'destroy')->name('rate.destroy');
     });
 
     Route::controller(RefuelController::class)->group(function () {
-        Route::get('/refuels/{vehicle}', 'show')->name('refuels');
-        Route::put('/refuels/{vehicle}', 'add')->name('refuel.add');
-        Route::patch('/refuels/{vehicle}', 'bulk')->name('refuel.bulk');
-        Route::post('/refuels/{vehicle}', 'export')->name('refuel.export');
+        Route::get('/refuels', 'show')->name('refuels');
+        Route::put('/refuels', 'add')->name('refuel.add');
+        Route::patch('/refuels', 'bulk')->name('refuel.bulk');
+        Route::post('/refuels', 'export')->name('refuel.export');
+        Route::post('/refuels/get', 'get')->name('refuel.get');
         Route::post('/refuel', 'download')->name('refuel.download');
         Route::put('/refuel/{refuel}', 'edit')->name('refuel.edit');
         Route::delete('/refuel/{refuel}', 'destroy')->name('refuel.destroy');

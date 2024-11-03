@@ -30,17 +30,13 @@ class VehicleController extends Controller {
         $reg = Str::upper($request->reg);
 
         $request->validate([
-            'reg' => ['required', Rule::unique('vehicles')->where(fn ($query) => $query->where('user_id', $user->id))],
+            'reg' => ['required', Rule::unique('vehicles')->where(fn($query) => $query->where('user_id', $user->id))],
         ]);
 
-        $vehicle = $user->vehicles()->create([
+        $user->vehicles()->create([
             'reg' => $reg,
         ]);
 
-        $user->refresh();
-        if ($user->vehicles()->count() == 1)
-            return redirect()->route('dashboard')->with('success', "You are all setup now, why don't you try adding your first route?");
-
-        return redirect()->route('refuels', $vehicle->id)->with('success', Msg::added('vehicle'));
+        return back()->with('info', Msg::added('vehicle'));
     }
 }

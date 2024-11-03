@@ -37,7 +37,7 @@
         <x-form.text id="{{ $key }}"
           name="{{ $key }}"
           ref="{{ $key }}"
-          placeholder="e.g. CLBT, LWTS, ROKL, GAMD" />
+          placeholder="e.g. CLBT, LWTS, ROKL" />
 
       </x-form.wrap>
     </div>

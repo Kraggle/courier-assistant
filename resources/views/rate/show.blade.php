@@ -2,6 +2,7 @@
   $user = K::user();
   $dsp = $user->dsp();
   $rates = $dsp->rates;
+  $last_route = $user->route();
 @endphp
 
 <x-layout.app title="pay rates">
@@ -21,7 +22,7 @@
               'form.action' => route('rate.add'),
               'date.value' => old('date', now()->format('Y-m-d')),
               'type.value' => old('type', '-1'),
-              'depot_id.value' => old('depot_id', $user->options->depot_id),
+              'depot_id.value' => old('depot_id', $last_route->depot_id ?? ($user->options->depot_id ?? null)),
               'amount.value' => old('amount', ''),
               'destroy.addclass' => 'hidden',
               'submit.text' => 'add',
@@ -61,110 +62,140 @@
       </x-slot>
     </x-section.title>
 
+    <div class="grid grid-cols-2 px-6 pb-3 sm:grid-cols-4">
+
+      <div class="flex items-center gap-1">
+        <span class="text-sm font-bold uppercase">Per Page:</span>
+        <x-form.select id="length"
+          minresultsforsearch=999>
+          <x-slot:options>
+            @foreach ([10, 25, 50, 100] as $i)
+              <option value="{{ $i }}"
+                {{ K::selected($i, $_GET['length'] ?? 25) }}>{{ $i }}</option>
+            @endforeach
+          </x-slot>
+        </x-form.select>
+      </div>
+
+      <div class="hidden sm:block"></div>
+
+      <div class="hidden sm:block"></div>
+
+      <x-form.text-prefix class="col-span-2 w-full sm:col-span-1"
+        id="search"
+        value="{{ $_GET['search'] ?? '' }}"
+        placeholder="Filter results...">
+
+        <x-icon class="fal fa-search"></x-icon>
+
+      </x-form.text-prefix>
+
+    </div>
+
     <div class="overflow-x-auto">
+
+      <input id="assetURL"
+        type="hidden"
+        value="{{ route('rate.get') }}">
+
       <table class="w-full table-auto whitespace-nowrap text-sm sm:text-lg [&_.sm-only]:hidden sm:[&_.sm-only]:table-cell sm:[&_.xs-only]:hidden">
 
         <x-table.thead>
-          <x-table.th class="pr-2">from date</x-table.th>
-          <x-table.th class="px-2">type</x-table.th>
-          <x-table.th class="px-2">rate</x-table.th>
-          <x-table.th class="px-2">depot</x-table.th>
-          <x-table.th class="sm-only px-2">creator</x-table.th>
-          <x-table.th class="w-[1%] pl-2"></x-table.th>
+          @php
+            $by = $_GET['by'] ?? 'date';
+            $dir = $_GET['dir'] ?? 'desc';
+          @endphp
 
+          <x-table.th class="pr-2">
+            <x-button.sort data-by="date"
+              :active="$by === 'date'"
+              :dir="$dir">from date</x-button.sort>
+          </x-table.th>
+          <x-table.th class="px-2">
+            <x-button.sort data-by="vehicle"
+              :active="$by === 'vehicle'"
+              :dir="$dir">type</x-button.sort>
+          </x-table.th>
+          <x-table.th class="px-2">
+            <x-button.sort data-by="cost"
+              :active="$by === 'cost'"
+              :dir="$dir">rate</x-button.sort>
+          </x-table.th>
+          <x-table.th class="px-2">
+            <x-button.sort data-by="mileage"
+              :active="$by === 'mileage'"
+              :dir="$dir">depot</x-button.sort>
+          </x-table.th>
+          <x-table.th class="px-2">
+            <x-button.sort data-by="miles"
+              :active="$by === 'miles'"
+              :dir="$dir">creator</x-button.sort>
+          </x-table.th>
+          <x-table.th class="w-[1%] pl-2"></x-table.th>
         </x-table.thead>
 
-        <tbody>
+        <tbody id="pushRows">
 
-          @foreach ($rates as $rate)
-            <x-table.tr class="cursor-pointer"
-              id="editRate{{ $rate->id }}"
-              open-modal="add-rate"
-              :data-modal="json_encode([
-                  'title.text' => Msg::edit('rate'),
-                  'form.action' => route('rate.edit', $rate->id),
-                  'date.value' => old('date', $rate->date),
-                  'type.value' => old('type', $rate->type),
-                  'depot_id.value' => old('depot_id', $rate->depot_id),
-                  'amount.value' => old('amount', $rate->amount),
-                  'destroy.removeclass' => 'hidden',
-                  'destroy.data' => [
-                      'modal' => [
-                          'form.action' => route('rate.destroy', $rate->id),
-                      ],
-                  ],
-                  'submit.text' => 'save',
-              ])">
+          <x-table.tr class="keep skip-tooltip hidden cursor-pointer"
+            open-modal="add-rate"
+            is="row">
 
-              {{-- date --}}
-              <x-table.td>
-                {{ K::date($rate->date)->format('jS M Y') }}
-              </x-table.td>
+            {{-- date --}}
+            <x-table.td class="date whitespace-nowrap"></x-table.td>
 
-              {{-- type --}}
-              <x-table.td>
-                {!! $rate->getType(true, 'hidden sm:inline') !!}
-              </x-table.td>
+            {{-- type --}}
+            <x-table.td class="type"></x-table.td>
 
-              {{-- amount --}}
-              <x-table.td>
-                {{ K::formatCurrency($rate->amount, $rate->amount < 0.9999) }}
-              </x-table.td>
+            {{-- rate --}}
+            <x-table.td class="amount"></x-table.td>
 
-              {{-- depot --}}
-              <x-table.td>
-                {{ $rate->depot->identifier }}
-              </x-table.td>
+            {{-- depot --}}
+            <x-table.td class="depot_identifier"></x-table.td>
 
-              {{-- creator --}}
-              <x-table.td class="sm-only">
-                @if ($rate->hasCreateLog())
-                  {{ $rate->createLog()->causer->name }}
-                @else
-                  {{ App\Models\User::all()->first()->name }}
-                @endif
-              </x-table.td>
+            {{-- creator --}}
+            <x-table.td class="creator"></x-table.td>
 
-              {{-- action --}}
-              <x-table.td class="text-base sm:text-xl">
-                <div class="flex justify-end gap-4">
-                  @if ($rate->hasChangeLogs())
-                    @php
-                      $logs = [];
-                      foreach ($rate->changeLogs() as $log) {
-                          $logs[] = [
-                              'date' => K::displayDate($log->created_at, 'd-m-Y'),
-                              'properties' => $log->properties,
-                              'user' => $log->causer->name,
-                          ];
-                      }
+            {{-- actions --}}
+            <x-table.td class="text-base sm:text-xl">
+              <div class="flex justify-end gap-4">
+                <x-icon class="hide-changes far fa-rotate cursor-pointer text-green-600"
+                  data-tooltip-position="left"
+                  title="{{ Str::title('changes') }}"
+                  open-modal="changes-modal" />
 
-                    @endphp
+                <x-icon class="far fa-edit cursor-pointer text-orange-400"
+                  data-tooltip-position="left"
+                  title="{{ Str::title('edit') }}" />
+              </div>
+            </x-table.td>
 
-                    <x-icon class="far fa-rotate cursor-pointer text-green-600"
-                      data-modal="{{ json_encode([
-                          'title.text' => 'changes',
-                          'tbody.changes' => $logs,
-                      ]) }}"
-                      data-tooltip-position="left"
-                      title="{{ Str::title('changes') }}"
-                      open-modal="changes-modal" />
-                  @endif
+            {{-- <span class="hidden sm:inline pl-1 text-xs text-gray-400">(per mile)</span> --}}
 
-                  <x-icon class="far fa-edit cursor-pointer text-orange-400"
-                    data-tooltip-position="left"
-                    title="{{ Str::title('edit') }}" />
-                </div>
-              </x-table.td>
-            </x-table.tr>
-          @endforeach
+          </x-table.tr>
 
+          <tr class="keep">
+            <td class="text-center"
+              colspan="6">
+              <x-loader class="pb-6 pt-12"
+                id="spinner"
+                size="4"
+                color="bg-gray-500" />
+            </td>
+          </tr>
         </tbody>
 
       </table>
 
       @if (!$user->hasDSP())
         <div class="px-6 pt-6 text-center">{{ Msg::noResults('rates') }}</div>
+      @else
+        <div class="flex flex-wrap-reverse justify-center px-6 pt-6 sm:flex-nowrap sm:justify-between">
+          <div class="whitespace-nowrap"
+            id="counter"></div>
+          <div class="flex gap-1.5"
+            id="pagination"
+            data-page="{{ $_GET['page'] ?? 1 }}"></div>
+        </div>
       @endif
     </div>
   </x-section.one>
@@ -175,4 +206,5 @@
   @include('modal.changes')
   @include('modal.export')
 
+  @vite(['resources/js/table.js'])
 </x-layout.app>
