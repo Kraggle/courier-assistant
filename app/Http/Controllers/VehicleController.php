@@ -37,6 +37,6 @@ class VehicleController extends Controller {
             'reg' => $reg,
         ]);
 
-        return back()->with('info', Msg::added('vehicle'));
+        return back()->with('info', Msg::added('vehicle'))->with('vehicle', $user->vehicle()->id);
     }
 }

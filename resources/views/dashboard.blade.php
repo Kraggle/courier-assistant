@@ -48,6 +48,7 @@
         data-modal="{{ json_encode([
             'title.text' => Msg::add('refuel'),
             'form.action' => route('refuel.add'),
+            'vehicle.value' => old('vehicle', session()->get('vehicle') ?? ($user->refuels->first()->vehicle->id ?? ($user->vehicle()->id ?? null))),
             'date.value' => old('date', now()->format('Y-m-d')),
             'mileage.value' => old('mileage', ''),
             'cost.value' => old('cost', ''),
