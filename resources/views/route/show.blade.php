@@ -21,8 +21,9 @@
         @php
           $modal = null;
           $week = false;
-          if (isset($_GET['modal'])) {
-              $modal = $_GET['modal'];
+          $modal = $_GET['modal'] ?? null;
+          $r = null;
+          if ($modal && preg_match('/^editRoute/', $modal)) {
               $week = !preg_match('/^editRoute/', $modal);
               preg_match('/(\d+)$/', $modal, $m);
               $id = $m[1];

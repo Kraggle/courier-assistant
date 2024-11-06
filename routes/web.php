@@ -14,6 +14,7 @@ use App\Http\Controllers\RateController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DepotController;
 use App\Http\Controllers\RouteController;
+use App\Http\Controllers\ScoreController;
 use App\Http\Controllers\RefuelController;
 use App\Http\Controllers\WizardController;
 use App\Http\Controllers\ExpenseController;
@@ -49,6 +50,13 @@ Route::controller(PostController::class)->group(function () {
     Route::get('/post/{slug}', 'post')->name('post');
     Route::post('/posts', 'get')->name('posts');
 });
+
+Route::controller(ScoreController::class)->group(function () {
+    Route::get('/score', 'show')->name('score');
+    Route::get('/score/import', 'import')->name('score.import');
+    Route::put('/score/import', 'add')->name('score.add');
+});
+
 
 Route::middleware(['auth'])->group(function () { # not subscribed
 
