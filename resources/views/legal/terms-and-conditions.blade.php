@@ -17,7 +17,7 @@
         <li><strong>Affiliate</strong> means an entity that controls, is controlled by or is under common control with a party, where "control" means ownership of 50% or more of the shares, equity interest or other securities entitled to vote for election of directors or other managing authority.</li>
         <li><strong>Account</strong> means a unique account created for You to access our Service or parts of our Service.</li>
         <li><strong>Country</strong> refers to: United Kingdom</li>
-        <li><strong>Company</strong> (referred to as either "the Company", "We", "Us" or "Our" in this Agreement) refers to Amazon Logistics Assistant LTD, 22 The Close, Holywell, Flintshire, CH8 7JR.</li>
+        <li><strong>Company</strong> (referred to as either "the Company", "We", "Us" or "Our" in this Agreement) refers to Courier Assistant LTD, 22 The Close, Holywell, Flintshire, CH8 7JR.</li>
         <li><strong>Content</strong> refers to content such as text, images, or other information that can be posted, uploaded, linked to or otherwise made available by You, regardless of the form of that content.</li>
         <li><strong>Device</strong> means any device that can access the Service such as a computer, a cellphone or a digital tablet.</li>
         <li><strong>Feedback</strong> means feedback, innovations or suggestions sent by You regarding the attributes, performance or features of our Service.</li>
